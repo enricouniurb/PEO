@@ -8,7 +8,7 @@ La pagina iniziale
 
 .. thumbnail:: images/dashboard.png
 
-La pagina principale della piattaforma *peo.unical.it* offre all'utente una panoramica completa dei propri dati personali, come matricola, categoria economica, struttura di afferenza e le informazioni presenti sul sistema Cineca CSA (Carriere e Stipendi di Ateneo). È possibile in qualsiasi momento consultare lo stato della propria carriera e la lista degli incarichi retribuiti svolti nel corso del tempo.
+La pagina principale della piattaforma *peo.uniurb.it* offre all'utente una panoramica completa dei propri dati personali, come matricola, categoria economica, struttura di afferenza e le informazioni presenti sul sistema Cineca CSA (Carriere e Stipendi di Ateneo). È possibile in qualsiasi momento consultare lo stato della propria carriera e la lista degli incarichi retribuiti svolti nel corso del tempo.
 
 .. thumbnail:: images/dashboard_2.png
 

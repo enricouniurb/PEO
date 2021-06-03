@@ -6,4 +6,4 @@
 A chi è rivolta
 ===============
 
-La piattaforma *peo.unical.it* è rivolta al personale tecnico/amministrativo, al personale docente e ai ricercatori dell’Università della Calabria.
+La piattaforma *peo.uniurb.it* è rivolta al personale tecnico/amministrativo dell’Università degli Studi di Urbino.

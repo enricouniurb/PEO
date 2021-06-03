@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Procedura Elettronica Online (PEO)'
-copyright = '2018, Università della Calabria'
+copyright = '2021, Università degli Studi di Urbino'
 author = 'Università della Calabria'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '1.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -49,7 +49,7 @@ extensions = [
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['peo_templates']
 
-html_logo = "peo_static/unical_logo.svg"
+html_logo = "peo_static/logo-nh-uniurb.svg"
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:

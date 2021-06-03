@@ -26,5 +26,5 @@ Per raggiungere agevolmente risorse di particolare interesse
 Utile nel caso in cui si verificassero malfunzionamenti della piattaforma o semplicemente per l'assistenza nell'utilizzo delle procedure
 
 **Documentazione**: 
-Il link alla documentazione ufficiale di *peo.unical.it*
+Il link alla documentazione ufficiale di *peo.uniurb.it*
 

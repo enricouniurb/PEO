@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Accesso con credenziali S.O.L.DI
-================================
+Accesso con credenziali di Ateneo
+=================================
 
-L’utente si collega alla pagina web `https://peo.unical.it <https://peo.unical.it>`_, dopo aver inserito le credenziali utilizzate per la piattaforma **S.O.L.DI. (Servizi OnLine per i Dipendenti)**, il sistema riconosce l’utente stesso: in questo caso, si può procedere a compilare la domanda.
+L’utente si collega alla pagina web `https://peo.uniurb.it <https://peo.uniurb.it>`_, dopo aver inserito le credenziali il sistema riconosce l’utente e si può procedere a compilare la domanda.
 
-.. thumbnail:: images/unical_login.png
+
 

@@ -6,7 +6,7 @@
 La lista dei bandi
 ==================
 
-Questa sezione permette l'accesso a tutti i Bandi che sono stati configurati sulla piattaforma peo.unical.it nel corso del tempo.
+Questa sezione permette l'accesso a tutti i Bandi che sono stati configurati sulla piattaforma peo.uniurb.it nel corso del tempo.
 
 .. thumbnail:: images/lista_bandi.png
 

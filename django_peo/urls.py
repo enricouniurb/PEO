@@ -22,7 +22,7 @@ from django.conf.urls import handler404, handler500
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
-
+from django.views.static import serve
 from unical_template.views import *
 
 # Logging
@@ -40,11 +40,15 @@ admin.site.pretitle    = 'pretitle in urls.py'
 admin.site.site_title  = 'Pannello di amministrazione'
 
 urlpatterns = [
+   # re_path(r'^docs/', serve, {'document_root': 'PEO1/Documentazione/build/html', 'path': 'index.html'}),
+    re_path(r'^docs/(?P<path>.*)$', serve, {'document_root':  'PEO1/Documentazione/build/html'}),
+
     path('gestione/', admin.site.urls),
     path('logout/', logout_view, name='logout'),
     path('500/', test_500, name='test_500'),
-    path('timeout/<seconds>', test_timeout, name='test_timeout'),
+    path('timeout/<seconds>', test_timeout, name='test_timeout')
 ]
+  
 
 handler500 = error_500
 

@@ -6,11 +6,11 @@
 La Procedura Elettronica Online (PEO)
 =====================================
 
-La piattaforma *peo.unical.it* è il sistema sviluppato dall'Università della Calabria
+La piattaforma *peo.uniurb.it* è il sistema sviluppato dall'Università della Calabria
 per informatizzare la gestione di Bandi e procedure
 di valutazione e selezione.
 
-Sul profilo di utilizzo *peo.unical.it* è un sistema di classificazione
+Sul profilo di utilizzo *peo.uniurb.it* è un sistema di classificazione
 di titoli e di esperienze formative e professionalizzanti.
 Gli utenti possono compilare i moduli di partecipazione in corrispondenza dell’apertura
 di una procedura elettronica di valutazione e selezione, quale il bando PEO.

@@ -20,7 +20,6 @@ PEO - Documentazione ufficiale
 
    guida/credenziali/credenziali-attive.rst
    guida/credenziali/credenziali-scadute.rst
-   guida/credenziali/recupero-fallito.rst
 
 .. toctree::
    :maxdepth: 2

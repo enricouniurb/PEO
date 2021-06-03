@@ -6,7 +6,7 @@
 Modifica dati inseriti
 ======================
 
-Il sistema peo.unical.it permette la modifica dei dati inseriti a condizione che il **termine di presentazione** delle domande imposto dal Bando in questione **non sia scaduto**.
+Il sistema peo.uniurb.it permette la modifica dei dati inseriti a condizione che il **termine di presentazione** delle domande imposto dal Bando in questione **non sia scaduto**.
 
 Dalla schermata di dashboard della domanda, infatti, l'utente ha la possibilità di:
 

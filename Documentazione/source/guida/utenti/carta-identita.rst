@@ -8,7 +8,7 @@ Modifica documento di identità
 
 .. include:: browser.rst
 
-L'upload di un **documento di identità valido (fronte e retro)** è un requisito indispensabile per l'utilizzo degli strumenti messi a disposizione dalla piattaforma *peo.unical.it*.
+L'upload di un **documento di identità valido (fronte e retro)** è un requisito indispensabile per l'utilizzo degli strumenti messi a disposizione dalla piattaforma *peo.uniurb.it*.
 
 In qualsiasi momento l'utente può aggiornare i file caricati, in autonomia, tramite la sezione dedicata (vedi menu laterale).
 
