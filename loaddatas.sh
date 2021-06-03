@@ -8,6 +8,10 @@ echo "gestione_risorse_umane/dumps/tipo_invalidita.json"
 ./manage.py loaddata --app gestione_risorse_umane gestione_risorse_umane/dumps/tipo_invalidita.json
 # ./manage.py loaddata --app gestione_risorse_umane gestione_risorse_umane/dumps/tipo_profilo_professionale.json
 
+echo "gestione_risorse_umane/dumps/titolo_studio.json"
+./manage.py loaddata --app gestione_risorse_umane gestione_risorse_umane/dumps/titolo_studio.json
+
+
 echo "gestione_peo/dumps/gestione_peo.json"
 ./manage.py loaddata --app gestione_peo  gestione_peo/dumps/gestione_peo.json
 

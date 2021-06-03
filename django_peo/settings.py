@@ -23,6 +23,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+     # SameSite Cookie workaround
+     'djangosaml2.middleware.SamlSessionMiddleware'
 ]
 
 ROOT_URLCONF = 'django_peo.urls'
@@ -170,7 +173,7 @@ CLASSE_PROTOCOLLO = 'protocollo_ws.protocollo'
 
 # DjangoSAML2 conf
 if 'djangosaml2'  in INSTALLED_APPS:
-    # from . import sp_pysaml2
+    import saml2
     from . import sp_pysaml2_shibidp as sp_pysaml2
 
     # pySAML2 SP mandatory
@@ -185,6 +188,8 @@ if 'djangosaml2'  in INSTALLED_APPS:
     LOGOUT_URL = '/logout/'
     LOGIN_REDIRECT_URL = '/'
     LOGOUT_REDIRECT_URL = '/'
+
+    SAML_DEFAULT_BINDING = saml2.BINDING_HTTP_REDIRECT
 
     BASE_URL = sp_pysaml2.BASE_URL
 

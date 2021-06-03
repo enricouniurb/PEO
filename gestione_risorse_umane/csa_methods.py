@@ -38,7 +38,7 @@ class CSAMethods(object):
 
     def get_carriera_csa(self):
         anagrafica_csa = self.get_anagrafica_csa()
-        carriera = anagrafica_csa.get_carriera_docente_view() or anagrafica_csa.get_carriera_view()
+        carriera =  anagrafica_csa.get_carriera_view() #anagrafica_csa.get_carriera_docente_view() or
         if not carriera:
             raise CSAException(message=('Il dipendente non presenta '
                                         'alcuna carriera in CSA.'),
