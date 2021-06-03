@@ -25,7 +25,7 @@ class CustomUserAdmin(UserAdmin):
                             ,}),
                            
         
-        (_('Date accessi sistema UNICAL PEO'), {'fields': (('date_joined', 
+        (_('Date accessi sistema UNIURB PEO'), {'fields': (('date_joined', 
                                                             'last_login', ),
                                                           )}),
     )

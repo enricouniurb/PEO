@@ -232,7 +232,7 @@ class IndicatorePonderato(TimeStampedModel):
                                                   default=False,
                                                   help_text=("Se attivo, al punteggio derivante dagli inserimenti"
                                                              " del Dipendente, verrà sommato il punteggio relativo"
-                                                             " all'anzianità di servizio (Unical), rispettando"
+                                                             " all'anzianità di servizio (UniUrb), rispettando"
                                                              " sempre il max ottenibile"))
 
     ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento", blank=True, default=0)

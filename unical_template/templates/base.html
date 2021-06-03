@@ -2,10 +2,10 @@
 {% load static %}
 <head>
     <title>{{ title | default_if_none:"Servizi di rete Ospiti di Ateneo - Universitá della Calabria"}}</title>
-    <meta name="description" content="Universitá della Calabria">
+    <meta name="description" content="Universitá di Urbino">
     <meta charset="UTF-8">
 
-    <link rel="shortcut icon" href="https://www.unical.it/portale/images/favicon.ico">
+    <link rel="shortcut icon" href="https://www.uniurb.it/it/portale/components/logo-nh-uniurb.svg">
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -38,7 +38,7 @@
         {% block body_content %}
         <div class="row clearfix" style="padding-top:0px;">
             <div class="col-xs-12 column">
-                <div class="contenitore_body" style="margin-top: -10px;">
+                <div class="contenitore_body">
                     <div style="padding: 33px;">
 
                         {% block messages %}

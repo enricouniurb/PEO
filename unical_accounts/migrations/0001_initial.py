@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ['username'],
                 'permissions': (('can_view', 'Permesso in lettura'), ('can_view_his_own', 'Permesso in lettura esclusivamente dei propri inserimenti'), ('can_change', 'Permesso in modifica'), ('can_change_his_own', 'Permesso in modifica esclusivamente dei propri inserimenti'), ('can_delete', 'Permesso in cancellazione'), ('can_delete_his_own', 'Permesso in cancellazione  esclusivamente dei propri inserimenti')),
-                'verbose_name_plural': 'Utenti PEO UNICAL',
+                'verbose_name_plural': 'Utenti PEO UNIURB',
             },
             managers=[
                 ('objects', django.contrib.auth.models.UserManager()),
