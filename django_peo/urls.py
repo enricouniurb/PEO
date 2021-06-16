@@ -41,7 +41,7 @@ admin.site.site_title  = 'Pannello di amministrazione'
 
 urlpatterns = [
    # re_path(r'^docs/', serve, {'document_root': 'PEO1/Documentazione/build/html', 'path': 'index.html'}),
-    re_path(r'^docs/(?P<path>.*)$', serve, {'document_root':  'PEO1/Documentazione/build/html'}),
+    re_path(r'^docs/(?P<path>.*)$', serve, {'document_root':  'PEO/Documentazione/build/html'}),
 
     path('gestione/', admin.site.urls),
     path('logout/', logout_view, name='logout'),

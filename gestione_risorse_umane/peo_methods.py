@@ -86,7 +86,7 @@ class PeoMethods(object):
         bandi = bando_peo_model.objects.filter(Q(redazione=True)|\
                                                Q(collaudo=True)|\
                                                Q(pubblicato=True) )
-        if not bandi: return False
+        if not bandi: return []
         abilitazione_peo_model = apps.get_model(app_label='domande_peo',
                                                 model_name='AbilitazioneBandoDipendente')
         abilitazioni = []
