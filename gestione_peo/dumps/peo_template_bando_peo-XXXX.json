@@ -5,15 +5,14 @@
   "model_name": "Bando",
   "object": {
     "created": "2019-11-11T07:10:42.369000+00:00",
-    "modified": "2021-05-14T10:29:00.706285+00:00",
+    "modified": "2020-01-24T12:52:24.519000+00:00",
     "nome": "PEO XXXX",
-    "slug": "peo-XXXX-0714fc931e9e4dbeb45150b3c3b82a2d",
+    "slug": "peo-XXXX-5ff68bf04909462691653c48a1f9b76d",
     "data_inizio": "1999-11-12T11:00:00+00:00",
-    "data_fine": "2222-05-16T21:59:00+00:00",
-    "data_fine_presentazione_domande": "2222-05-16T21:59:00+00:00",
-    "ultima_progressione": "2017-01-01",
+    "data_fine": "2222-12-10T22:59:00+00:00",
+    "data_fine_presentazione_domande": "2222-12-10T22:59:00+00:00",
+    "ultima_progressione": "1999-01-01",
     "anni_servizio_minimi": 2,
-    "data_validita_titoli_inizio": "1999-01-01",
     "data_validita_titoli_fine": "2222-12-31",
     "agevolazione_soglia_anni": 3,
     "agevolazione_fatmol": 3,
@@ -945,36 +944,6 @@
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 8,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:40:29.190325+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Valutazione scheda (Arricchimento professionale - PEO 2019)\",\n  \"punteggio_dyn\": \"1\",\n  \"allegati\": {\n    \"scheda_di_arricchimento_professionale\": \"prova.pdf\"\n  }\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:40:29.187201+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
             }
           ],
           "depth": 2,
@@ -1532,36 +1501,6 @@
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 1,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T11:58:40.359436+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Corsi di formazione certificati con superamento di esame finale (Formazione certificata e pertinente - PEO 2019)\",\n  \"titolo_corso\": \"1\\u00b0Corso di formazione del Progetto Procedamus 2020\",\n  \"ente_erogatore\": \"LineaPA\",\n  \"data_inizio_dyn_inner\": \"14/09/2020\",\n  \"data_fine_dyn_inner\": \"15/09/2020\",\n  \"durata_come_intero\": \"11\",\n  \"valutazione\": \"si\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T11:58:40.358542+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
             }
           ],
           "depth": 2,
@@ -1967,36 +1906,6 @@
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 3,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:32:18.622075+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Corsi di formazione certificati senza superamento di esame finale (Formazione certificata e pertinente - PEO 2019)\",\n  \"titolo_corso\": \"Corso di formazione sui rischi specifici\",\n  \"ente_erogatore\": \"Universit\\u00e0 di Urbino\",\n  \"data_inizio_dyn_inner\": \"01/12/2020\",\n  \"data_fine_dyn_inner\": \"31/12/2020\",\n  \"durata_come_intero\": \"8\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:32:18.620877+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
             }
           ],
           "depth": 2,
@@ -2208,36 +2117,6 @@
                 "ordinamento",
                 "descrizione_indicatore",
                 "descrizione_indicatore_id"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 9,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:40:56.909639+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Valutazione scheda (Qualit\\u00e0 delle prestazioni individuali - PEO 2019)\",\n  \"punteggio_dyn\": \"2\",\n  \"allegati\": {\n    \"scheda_di_qualit\\u00e0_delle_prestazioni_individuali\": \"Prova prova.pdf\"\n  }\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:40:56.908594+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
               ],
               "m2m": [],
               "childrens": [],
@@ -2861,66 +2740,6 @@
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 4,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:34:44.759915+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Ulteriore titolo di studio (Titoli culturali e professionali - PEO 2019)\",\n  \"titolo_di_studio_superiore\": \"31\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2001\",\n  \"voto\": \"101\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:34:44.759246+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 5,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:35:15.142008+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Ulteriore titolo di studio (Titoli culturali e professionali - PEO 2019)\",\n  \"titolo_di_studio_superiore\": \"32\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2004\",\n  \"voto\": \"110 Lode\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:35:15.141860+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
             }
           ],
           "depth": 2,
@@ -3350,36 +3169,6 @@
                 "ordinamento",
                 "descrizione_indicatore",
                 "descrizione_indicatore_id"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 6,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:36:20.634026+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Dottorato di ricerca (Titoli culturali e professionali - PEO 2019)\",\n  \"descrizione\": \"DEIS\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2008\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:36:20.633783+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
               ],
               "m2m": [],
               "childrens": [],
@@ -7017,36 +6806,6 @@
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 7,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-05-14T12:36:38.542152+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"I coniugati e i non coniugati riguardo al numero dei figli a carico (Titoli di Preferenza - PEO 2019)\",\n  \"numero_dei_figli_a_carico\": \"3\"\n}",
-                "domanda_bando": 3,
-                "domanda_bando_id": 3,
-                "modified": "2021-05-14T12:36:38.542015+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
             }
           ],
           "depth": 2,
@@ -7757,353 +7516,6 @@
       ],
       "m2m": [],
       "childrens": [],
-      "depth": 1,
-      "save": true,
-      "related_field": "bando"
-    },
-    {
-      "source_pk": 1,
-      "duplicate": true,
-      "app_name": "gestione_peo",
-      "model_name": "CommissioneGiudicatrice",
-      "object": {
-        "created": "2019-12-10T08:34:52.880000+00:00",
-        "modified": "2020-02-18T13:03:55.331000+00:00",
-        "denominazione": "Commissione PEO 2019",
-        "data_inizio": "2019-12-11T14:00:00+00:00",
-        "data_fine": "2020-12-31T22:59:00+00:00",
-        "is_active": true
-      },
-      "fields": [
-        "modified_by",
-        "modified_by_id",
-        "created_by",
-        "created_by_id",
-        "created",
-        "modified",
-        "denominazione",
-        "bando",
-        "bando_id",
-        "data_inizio",
-        "data_fine",
-        "note",
-        "accettazione_clausole_text",
-        "is_active"
-      ],
-      "m2m": [],
-      "childrens": [],
-      "depth": 1,
-      "save": true,
-      "related_field": "bando"
-    },
-    {
-      "source_pk": 1,
-      "duplicate": true,
-      "app_name": "domande_peo",
-      "model_name": "AbilitazioneBandoDipendente",
-      "object": {
-        "created": "2021-05-14T10:27:32.818961+00:00",
-        "modified": "2021-05-14T10:27:32.818961+00:00",
-        "dipendente": 1,
-        "dipendente_id": 1
-      },
-      "fields": [
-        "created",
-        "modified",
-        "bando",
-        "bando_id",
-        "dipendente",
-        "dipendente_id"
-      ],
-      "m2m": [],
-      "childrens": [],
-      "depth": 1,
-      "save": true,
-      "related_field": "bando"
-    },
-    {
-      "source_pk": 3,
-      "duplicate": true,
-      "app_name": "domande_peo",
-      "model_name": "DomandaBando",
-      "object": {
-        "created": "2021-05-14T11:55:55.989773+00:00",
-        "dipendente": 1,
-        "dipendente_id": 1,
-        "modified": "2021-05-14T12:40:57.092570+00:00",
-        "livello": 1,
-        "livello_id": 1,
-        "data_presa_servizio": "2018-04-16",
-        "data_ultima_progressione": "2018-04-16",
-        "is_active": true
-      },
-      "fields": [
-        "created",
-        "bando",
-        "bando_id",
-        "dipendente",
-        "dipendente_id",
-        "modified",
-        "data_chiusura",
-        "numero_protocollo",
-        "data_protocollazione",
-        "livello",
-        "livello_id",
-        "data_presa_servizio",
-        "data_ultima_progressione",
-        "punteggio_anzianita_manuale",
-        "punteggio_calcolato",
-        "progressione_accettata",
-        "descrizione",
-        "commento_punteggio",
-        "presa_visione_utente",
-        "presa_visione_utente_id",
-        "presa_visione_data",
-        "is_active"
-      ],
-      "m2m": [],
-      "childrens": [
-        {
-          "source_pk": 1,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T11:58:40.359436+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Corsi di formazione certificati con superamento di esame finale (Formazione certificata e pertinente - PEO 2019)\",\n  \"titolo_corso\": \"1\\u00b0Corso di formazione del Progetto Procedamus 2020\",\n  \"ente_erogatore\": \"LineaPA\",\n  \"data_inizio_dyn_inner\": \"14/09/2020\",\n  \"data_fine_dyn_inner\": \"15/09/2020\",\n  \"durata_come_intero\": \"11\",\n  \"valutazione\": \"si\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 111,
-            "descrizione_indicatore_id": 111,
-            "modified": "2021-05-14T11:58:40.358542+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 3,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:32:18.622075+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Corsi di formazione certificati senza superamento di esame finale (Formazione certificata e pertinente - PEO 2019)\",\n  \"titolo_corso\": \"Corso di formazione sui rischi specifici\",\n  \"ente_erogatore\": \"Universit\\u00e0 di Urbino\",\n  \"data_inizio_dyn_inner\": \"01/12/2020\",\n  \"data_fine_dyn_inner\": \"31/12/2020\",\n  \"durata_come_intero\": \"8\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 112,
-            "descrizione_indicatore_id": 112,
-            "modified": "2021-05-14T12:32:18.620877+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 8,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:40:29.190325+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Valutazione scheda (Arricchimento professionale - PEO 2019)\",\n  \"punteggio_dyn\": \"1\",\n  \"allegati\": {\n    \"scheda_di_arricchimento_professionale\": \"prova.pdf\"\n  }\n}",
-            "descrizione_indicatore": 110,
-            "descrizione_indicatore_id": 110,
-            "modified": "2021-05-14T12:40:29.187201+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 9,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:40:56.909639+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Valutazione scheda (Qualit\\u00e0 delle prestazioni individuali - PEO 2019)\",\n  \"punteggio_dyn\": \"2\",\n  \"allegati\": {\n    \"scheda_di_qualit\\u00e0_delle_prestazioni_individuali\": \"Prova prova.pdf\"\n  }\n}",
-            "descrizione_indicatore": 113,
-            "descrizione_indicatore_id": 113,
-            "modified": "2021-05-14T12:40:56.908594+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 4,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:34:44.759915+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Ulteriore titolo di studio (Titoli culturali e professionali - PEO 2019)\",\n  \"titolo_di_studio_superiore\": \"31\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2001\",\n  \"voto\": \"101\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 115,
-            "descrizione_indicatore_id": 115,
-            "modified": "2021-05-14T12:34:44.759246+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 5,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:35:15.142008+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Ulteriore titolo di studio (Titoli culturali e professionali - PEO 2019)\",\n  \"titolo_di_studio_superiore\": \"32\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2004\",\n  \"voto\": \"110 Lode\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 115,
-            "descrizione_indicatore_id": 115,
-            "modified": "2021-05-14T12:35:15.141860+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 6,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:36:20.634026+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Dottorato di ricerca (Titoli culturali e professionali - PEO 2019)\",\n  \"descrizione\": \"DEIS\",\n  \"rilasciato_da\": \"Universit\\u00e0 Bologna\",\n  \"anno_di_conseguimento\": \"2008\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 117,
-            "descrizione_indicatore_id": 117,
-            "modified": "2021-05-14T12:36:20.633783+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 7,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-05-14T12:36:38.542152+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"I coniugati e i non coniugati riguardo al numero dei figli a carico (Titoli di Preferenza - PEO 2019)\",\n  \"numero_dei_figli_a_carico\": \"3\"\n}",
-            "descrizione_indicatore": 125,
-            "descrizione_indicatore_id": 125,
-            "modified": "2021-05-14T12:36:38.542015+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        }
-      ],
       "depth": 1,
       "save": true,
       "related_field": "bando"
