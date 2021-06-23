@@ -574,7 +574,7 @@ class Punteggio_TitoloStudio(TimeStampedModel):
                                blank=False, null=False, default=1)
     bando = models.ForeignKey(Bando, on_delete=models.CASCADE,
                               blank=False, null=False, default=1)
-    punteggio = models.PositiveIntegerField()
+    punteggio = models.FloatField()
     cumulabile = models.BooleanField(default=False,
                                      help_text=("Indica se più titoli equivalenti"
                                                 " possano essere cumulati in una "
