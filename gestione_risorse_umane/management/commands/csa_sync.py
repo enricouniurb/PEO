@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.core.mail import mail_admins
 from django.core.management.base import BaseCommand, CommandError
-
-from csa.models import V_ANAGRAFICA
+from csa.models import _get_matricola,V_ANAGRAFICA
 from gestione_risorse_umane.models import Dipendente
 
 import os
@@ -34,7 +33,8 @@ class Command(BaseCommand):
         print('Extracting Anagrafica ...')
         for dcsa in V_ANAGRAFICA.objects.all():
             print('Processing {}'.format(dcsa))
-            matricola = dcsa.matricola.lstrip('0')
+            #matricola = dcsa.matricola.lstrip('0')
+            matricola = _get_matricola(dcsa.matricola)
             dip = Dipendente.objects.filter(matricola=matricola).first()
             if not dip:
                 dip = Dipendente.objects.create(matricola=matricola,
