@@ -44,5 +44,31 @@ class PeoDynamicForm(BaseDynamicForm):
                          custom_params=custom_params,
                          *args, **kwargs)
 
+        
+        if 'sub_descrizione_indicatore_form' in self.data:
+            current_value = self.data.get('sub_descrizione_indicatore_form')
+            for key,field in self.fields.items():
+                name = getattr(field, 'name') if hasattr(field, 'name') else key
+                if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':
+                    field.disabled = True
+                    field.required = False
+                else:                     
+                    field.disabled = False
+                    
+        # Corretto per la classe base BaseDynamicForm
+        # if constructor_dict:
+        #     for key, value in constructor_dict.items():                        
+        #         if (hasattr(custom_field, 'name') and custom_field.name == 'sub_descrizione_indicatore_form'):
+        #             if 'sub_descrizione_indicatore_form' in self.data:
+        #                 current_value = self.data.get('sub_descrizione_indicatore_form')
+        #                 for field in fields:
+        #                     name = getattr(field, 'name') if hasattr(field, 'name') else field_id
+        #                     if not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form':
+        #                         field.disabled = True
+        #                         field.required = False
+        #                     else: 
+        #                         field.disabled = False
+         
+
     def clean(self, *args, **kwargs):
         super().clean(domanda_bando=self.domanda_bando)

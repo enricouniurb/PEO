@@ -39,6 +39,22 @@
                 $.datepicker.regional['it']
             );
 
+        var conditional_fields = $(".field>.submulti").parent();    
+        conditional_fields.hide();      
+
+        $("#id_sub_descrizione_indicatore_form").change(function(event) {                                      
+            conditional_fields.hide();            
+            $(".submulti").removeAttr('required');
+            $(".submulti").prop("disabled",true);
+            if ($(this.value)) {                
+                $(".field>.submulti_"+this.value).parent().show();            
+                $(".submulti_"+this.value).attr('required','true');
+                $(".submulti_"+this.value).prop('disabled',false);
+            } 
+        });
+
+        $('#id_sub_descrizione_indicatore_form').change();
+            
     });
     </script>
 {% endblock js_head %}

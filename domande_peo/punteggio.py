@@ -544,6 +544,8 @@ class PunteggioModuloDomandaBando(object):
         dati_inseriti = get_as_dict(json_dict)
         if "sub_descrizione_indicatore" in dati_inseriti:
             return dati_inseriti.get("sub_descrizione_indicatore")
+        if "sub_descrizione_indicatore_form" in dati_inseriti:
+            return dati_inseriti.get("sub_descrizione_indicatore_form")
 
     def calcolo_punteggio(self, save=False):
         """
@@ -571,8 +573,12 @@ class PunteggioModuloDomandaBando(object):
                 punteggio = float(punteggio_titolo[1])
 
             # Se il form prevede la selezione di un SubDescrizioneIndicatore
-            elif "sub_descrizione_indicatore" in dati_inseriti:
-                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")
+            elif "sub_descrizione_indicatore" in dati_inseriti or  "sub_descrizione_indicatore_form" in dati_inseriti:                
+                if "sub_descrizione_indicatore" in dati_inseriti:
+                    subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")
+                else:
+                    subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore_form")
+
                 subdescrind = descr_ind.subdescrizioneindicatore_set.filter(pk=subdescrind_id).first()
 
                 if subdescrind.punteggio_subdescrizioneindicatore_set.first():

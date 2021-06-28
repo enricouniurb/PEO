@@ -176,10 +176,54 @@ class PEO_SubDescrizioneIndicatoreField(ModelChoiceField, BaseCustomField):
         sub_descr_ind = None
         if descrizione_indicatore:
             sub_descr_ind = descrizione_indicatore. \
-                            subdescrizioneindicatore_set.all()
+                            subdescrizioneindicatore_set.all()           
         if sub_descr_ind:
             self.queryset = sub_descr_ind
+        
+   
+             
+class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
+    """
+    SelectBox con le sotto-categorie SubDescrizioneIndicatore
+    """
+    field_type = _("_PEO_  Selezione sotto-categorie con form DescrizioneIndicatore ")
+    name = 'sub_descrizione_indicatore_form'
 
+    def __init__(self, **data_kwargs):
+        # Di default, inserisce tutti i SubDescrizioneIndicatore
+        sub_descr_ind = apps.get_model('gestione_peo',
+                                       'SubDescrizioneIndicatore')
+        data_kwargs['queryset'] = sub_descr_ind.objects.all()
+        super().__init__(**data_kwargs)
+
+    def define_value(self, custom_value,**kwargs):
+        """
+        Se la DescrizioneIndicatore associata al Form prevede SubDescrInd
+        li sostituisce ai valori di default
+        """
+        domanda_bando = kwargs.get('domanda_bando')
+        descrizione_indicatore = kwargs.get('descrizione_indicatore')
+        sub_descr_ind = None
+        if descrizione_indicatore:
+            sub_descr_ind = descrizione_indicatore. \
+                            subdescrizioneindicatore_set.all()
+            self.sub_forms = [sub.get_form() for sub in sub_descr_ind]
+
+        if sub_descr_ind:
+            self.queryset = sub_descr_ind
+        
+
+    def get_fields(self):        
+        ereditati = super().get_fields()
+        for sub_form in self.sub_forms:
+            if sub_form:
+                for key, field in sub_form.fields.items():
+                    field.name = '{}_submulti_{}'.format(key,sub_form.descrizione_indicatore.id)        
+                    field.widget.attrs = {'class': 'submulti ' + 'submulti_{}'.format(sub_form.descrizione_indicatore.id)}           
+
+                #filtered_dict = {k:v for (k,v) in d.items() if filter_string != 'etichetta_inserimento'}.values()
+                ereditati.extend(sub_form.fields.values())
+        return ereditati
 
 class PEO_DateStartEndComplexField(DateStartEndComplexField):
     """

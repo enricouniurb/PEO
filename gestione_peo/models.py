@@ -744,6 +744,63 @@ class SubDescrizioneIndicatore(TimeStampedModel):
                     punteggio_max = punteggio_subdescr.punteggio_max
         return punteggio_max
 
+    def get_fields_order(self):
+        """
+        Ritorna l'ordinamento dei fields che compongono il form associato,
+        definito da backend
+        """
+        fields_order = [ETICHETTA_INSERIMENTI_ID,]
+        for i in self.submoduloinserimentocampi_set.all():
+            appended = False
+            class_name=sys.modules['gestione_peo.peo_formfields']
+            for m in inspect.getmembers(class_name, inspect.isclass):
+                is_complex = False
+                if hasattr(m[1], 'is_complex'):
+                    is_complex=getattr(m[1], 'is_complex')
+                to_check = is_complex or hasattr(m[1], 'name')
+                if m[0]==i.field_type and to_check:
+                    dyn_field=m[1]()
+                    if is_complex:
+                        fields = dyn_field.get_fields()
+                        for f in fields:
+                            if hasattr(f, 'name'):
+                                fields_order.append(f.name)
+                    else: fields_order.append(dyn_field.name)
+                    appended=True
+                if appended: break
+            if not appended:
+                fields_order.append(format_field_name(i.name))
+        return fields_order
+
+    def get_form(self,
+                 data=None,
+                 files=None,
+                 remove_filefields=False,
+                 remove_datafields=False,
+                 force_sorting=True,
+                 **kwargs):
+        """
+        files solitamente request.FILES vedi domande_peo.views.aggiungi_titolo
+        """
+        sub_moduli_inserimento = self.submoduloinserimentocampi_set.all()
+        if not sub_moduli_inserimento: return None
+
+        # Static method of DynamicFieldMap
+        constructor_dict = DynamicFieldMap.build_constructor_dict(sub_moduli_inserimento)
+        custom_params = {'domanda_bando': kwargs.get('domanda_bando'),
+                         'descrizione_indicatore': self}
+
+        fields_order=self.get_fields_order() if force_sorting else []
+        form = DynamicFieldMap.get_form(PeoDynamicForm,
+                                        constructor_dict=constructor_dict,
+                                        custom_params=custom_params,
+                                        data=data,
+                                        files=files,
+                                        remove_filefields=remove_filefields,
+                                        remove_datafields=remove_datafields,
+                                        fields_order=fields_order)
+        return form
+
     def __str__(self):
         return '{}'.format(self.nome)
 
@@ -882,6 +939,21 @@ class Punteggio_SubDescrizioneIndicatore_TimeDelta(models.Model):
                                        self.punteggio)
         return '{}: {}'.format(self.sub_descrizione_indicatore,
                                self.punteggio)
+
+
+class SubModuloInserimentoCampi(DynamicFieldMap):
+    """
+    Classe per la generazione dinamica di forms di inserimento relativi
+    ai titoli (descrizione indicatori ponderati) dei dipendenti
+    """
+    descrizione_indicatore = models.ForeignKey(SubDescrizioneIndicatore,
+                                               on_delete=models.CASCADE)
+    DynamicFieldMap._meta.get_field('field_type').choices = get_fields_types(peo_formfields)
+
+    class Meta:
+        ordering = ('ordinamento', )
+        verbose_name = _('Modulo di inserimento')
+        verbose_name_plural = _('Moduli di inserimento')
 
 
 class CategorieDisabilitate_DescrizioneIndicatore(models.Model):

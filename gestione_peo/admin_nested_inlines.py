@@ -127,6 +127,20 @@ class ModuloInserimentoCampiNestedInline(nested_admin.NestedTabularInline):
     form = ModuloInserimentoCampiModelForm
     classes = ['collapse',]
 
+class SubModuloInserimentoCampiModelForm(forms.ModelForm):
+    class Meta:
+        model = SubModuloInserimentoCampi
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput()}
+
+
+class SubModuloInserimentoCampiNestedInline(nested_admin.NestedTabularInline):
+    model = SubModuloInserimentoCampi
+    sortable_field_name = "ordinamento"
+    extra = 0
+    form = SubModuloInserimentoCampiModelForm
+    classes = ['collapse',]
+
 
 class DescrizioneIndicatoreNestedInline(DescrizioneIndicatoreAbstract,
                                   nested_admin.NestedTabularInline, ):

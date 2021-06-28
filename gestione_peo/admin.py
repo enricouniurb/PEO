@@ -181,8 +181,9 @@ class SubDescrizioneIndicatoreAdmin(nested_admin.NestedModelAdmin):
     list_filter = ('descrizione_indicatore__indicatore_ponderato__bando__nome',
                    'id_code')
     inlines = [ Punteggio_SubDescrizioneIndicatoreNestedInline,
-                Punteggio_SubDescrizioneIndicatore_TimeDeltaNestedInline,
-                PunteggioMax_SubDescrizioneIndicatore_PosEconomicaNestedInline,
+                Punteggio_SubDescrizioneIndicatore_TimeDeltaNestedInline,                 
+                PunteggioMax_SubDescrizioneIndicatore_PosEconomicaNestedInline,               
+                SubModuloInserimentoCampiNestedInline
                ]
 
     search_fields = ('nome',)
