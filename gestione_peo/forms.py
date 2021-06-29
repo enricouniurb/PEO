@@ -47,7 +47,8 @@ class PeoDynamicForm(BaseDynamicForm):
         
         if 'sub_descrizione_indicatore_form' in self.data:
             current_value = self.data.get('sub_descrizione_indicatore_form')
-            
+
+            # lato client   
             # if 'etichetta_inserimento' in self.data and 'etichetta_inserimento_submulti_{}'.format(current_value) in self.data:
             #     if self.data['etichetta_inserimento_submulti_{}'.format(current_value)] not in self.data['etichetta_inserimento']:
             #         self.data['etichetta_inserimento'] += ' ' + self.data['etichetta_inserimento_submulti_{}'.format(current_value)]
@@ -92,11 +93,11 @@ class PeoDynamicForm(BaseDynamicForm):
                 field = getattr(field, 'parent')
                 errors = field.raise_error(fname,
                                             cleaned_data,
-                                            **kwargs)
+                                            **{'domanda_bando': self.domanda_bando})
             else:
                 errors = field.raise_error(None,
                                             cleaned_data.get(fname),
-                                            **kwargs)
+                                            **{'domanda_bando': self.domanda_bando})
             if errors:
                 self.add_error(fname, errors)
                 continue
