@@ -47,14 +47,19 @@ class PeoDynamicForm(BaseDynamicForm):
         
         if 'sub_descrizione_indicatore_form' in self.data:
             current_value = self.data.get('sub_descrizione_indicatore_form')
+            
+            # if 'etichetta_inserimento' in self.data and 'etichetta_inserimento_submulti_{}'.format(current_value) in self.data:
+            #     if self.data['etichetta_inserimento_submulti_{}'.format(current_value)] not in self.data['etichetta_inserimento']:
+            #         self.data['etichetta_inserimento'] += ' ' + self.data['etichetta_inserimento_submulti_{}'.format(current_value)]
+
             for key,field in self.fields.items():
-                name = getattr(field, 'name') if hasattr(field, 'name') else key
+                name = getattr(field, 'name') if hasattr(field, 'name') else key                
                 if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':
                     field.disabled = True
                     field.required = False
-                else:                     
+                else:                                                             
                     field.disabled = False
-                    
+
         # Corretto per la classe base BaseDynamicForm
         # if constructor_dict:
         #     for key, value in constructor_dict.items():                        
@@ -71,4 +76,27 @@ class PeoDynamicForm(BaseDynamicForm):
          
 
     def clean(self, *args, **kwargs):
-        super().clean(domanda_bando=self.domanda_bando)
+        cleaned_data = super(forms.Form,self).clean()
+        for fname in self.fields:
+            field = self.fields[fname]
+            # se il campo è disabilitato NON va eseguita la validazione
+            if field.disabled and not field.required:                
+                continue
+            # formset is empty or not valid
+            if field.is_formset and not field.widget.formset.is_valid():
+                errors = field.widget.formset.errors
+                self.add_error(fname, errors)
+                continue
+            # other fields check
+            if hasattr(field, 'parent'):
+                field = getattr(field, 'parent')
+                errors = field.raise_error(fname,
+                                            cleaned_data,
+                                            **kwargs)
+            else:
+                errors = field.raise_error(None,
+                                            cleaned_data.get(fname),
+                                            **kwargs)
+            if errors:
+                self.add_error(fname, errors)
+                continue

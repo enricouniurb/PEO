@@ -218,8 +218,9 @@ class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
         for sub_form in self.sub_forms:
             if sub_form:
                 for key, field in sub_form.fields.items():
-                    field.name = '{}_submulti_{}'.format(key,sub_form.descrizione_indicatore.id)        
-                    field.widget.attrs = {'class': 'submulti ' + 'submulti_{}'.format(sub_form.descrizione_indicatore.id)}           
+                    field.name = '{}_submulti_{}'.format(key,sub_form.descrizione_indicatore.id)
+                    classes = field.widget.attrs.get("class")                     
+                    field.widget.attrs.update({'class': ('{} '.format(classes) if classes else '') + 'submulti submulti_{}'.format(sub_form.descrizione_indicatore.id)})           
 
                 #filtered_dict = {k:v for (k,v) in d.items() if filter_string != 'etichetta_inserimento'}.values()
                 ereditati.extend(sub_form.fields.values())
