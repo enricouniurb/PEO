@@ -135,7 +135,8 @@ def scelta_titolo_da_aggiungere(request, bando_id):
 
     dipendente = get_object_or_404(Dipendente, matricola=request.user.matricola)
     bando = _get_bando_queryset(bando_id).first()
-    indicatori_ponderati = bando.indicatoreponderato_set.all().order_by('id_code')
+    indicatori_ponderati = bando.indicatoreponderato_set.all().order_by('ordinamento')
+    
     # recupero la domanda peo del dipendente
     domanda_bando = DomandaBando.objects.filter(bando=bando,
                                                 dipendente=dipendente)

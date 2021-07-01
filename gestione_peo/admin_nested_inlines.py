@@ -103,7 +103,7 @@ class DescrizioneIndicatoreModelForm(forms.ModelForm):
     class Meta:
         model = DescrizioneIndicatore
         fields = ('__all__')
-        widgets = {'ordinamento': forms.HiddenInput()}
+        #widgets = {'ordinamento': forms.HiddenInput()}
 
 
 class SubDescrizioneIndicatoreModelForm(forms.ModelForm):
@@ -197,7 +197,7 @@ class Punteggio_TitoloStudioModelForm(forms.ModelForm):
     class Meta:
         model = Punteggio_TitoloStudio
         fields = ('__all__')
-        widgets = {'ordinamento': forms.HiddenInput()}
+       # widgets = {'ordinamento': forms.HiddenInput()}
 
 
 class Punteggio_TitoloStudioNestedInline(nested_admin.NestedTabularInline):

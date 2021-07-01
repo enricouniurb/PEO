@@ -130,6 +130,7 @@ class DescrizioneIndicatoreAdmin(DescrizioneIndicatoreAdminAbstract, nested_admi
               ('non_cancellabile'),
               ('is_required'),
               ('limite_inserimenti','numero_inserimenti'),
+              ('ordinamento'),
               ('get_anteprima_modulo_inserimento')
               )
 

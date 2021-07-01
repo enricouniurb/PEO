@@ -204,7 +204,7 @@ class Bando(TimeStampedModel):
         """
         excluded_cat = self.categoriedisabilitate_titolostudio_set.filter(posizione_economica=livello_pos_eco)
         excluded_titoli = [i.titolo_studio.pk for i in excluded_cat]
-        punteggi_titoli = self.punteggio_titolostudio_set.exclude(titolo__pk__in=excluded_titoli)
+        punteggi_titoli = self.punteggio_titolostudio_set.exclude(titolo__pk__in=excluded_titoli).order_by('ordinamento')
         return punteggi_titoli
 
     def get_titoli_pos_eco(self, livello_pos_eco):
@@ -584,6 +584,7 @@ class Punteggio_TitoloStudio(TimeStampedModel):
     class Meta:
         verbose_name = _('Punteggio per Titolo di Studio')
         verbose_name_plural = _('Punteggi per Titolo di Studio')
+        ordering = ['ordinamento']
 
     def __str__(self):
         return '{} - punti {}'.format(self.titolo,
