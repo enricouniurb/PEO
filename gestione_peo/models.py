@@ -789,7 +789,8 @@ class SubDescrizioneIndicatore(TimeStampedModel):
         # Static method of DynamicFieldMap
         constructor_dict = DynamicFieldMap.build_constructor_dict(sub_moduli_inserimento)
         custom_params = {'domanda_bando': kwargs.get('domanda_bando'),
-                         'descrizione_indicatore': self}
+                         'descrizione_indicatore': self,
+                         'subdescrizioneindicatoreformfield': kwargs.get('subdescrizioneindicatoreformfield')}
 
         fields_order=self.get_fields_order() if force_sorting else []
         form = DynamicFieldMap.get_form(PeoDynamicForm,

@@ -52,12 +52,11 @@
             if ($(this.value)) {                                            
                 etichetta = etichetta.replace(previus_value,'');                  
                 if (previus_value != 'empty')                        
-                    $("#id_etichetta_inserimento").val(etichetta + ' ' + ($("#id_etichetta_inserimento_submulti_"+this.value).val() || '') );
-                $(".field>.submulti_"+this.value).parent().show();            
-                $("#id_etichetta_inserimento_submulti_"+this.value).parent().hide();
+                    $("#id_etichetta_inserimento").val(etichetta + ' ' + ( $("#id_sub_descrizione_indicatore_form  option:selected").text() || '') );
+                $(".field>.submulti_"+this.value).parent().show();                          
                 $(".submulti_"+this.value).attr('required','true');
                 $(".submulti_"+this.value).prop('disabled',false);
-                previus_value = $("#id_etichetta_inserimento_submulti_"+this.value).val();    
+                previus_value = $("#id_sub_descrizione_indicatore_form  option:selected").text();    
             } 
         });
 

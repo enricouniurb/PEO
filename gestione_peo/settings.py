@@ -1,13 +1,13 @@
 NUMERAZIONI_CONSENTITE = [
-                            'Protocollo',
-                            'Decreto Rettorale (D.R.)',
-                            'Decreto del Direttore Generale (D.D.G.)',
-                            'Decreto del Direttore Dipartimento o Dirigente Struttura',
-                            'Decreto del Direttore del Centro Residenziale (D.CR.)',
-                            'Decreto del Prorettore (Centro Residenziale)',
+                            #'Protocollo',
+                            'Decreto o nota Rettorale (D.R.)',
+                            'Decreto o nota del Direttore Generale (D.D.G.)',
+                            'Decreto o nota del Direttore Dipartimento o Dirigente Struttura',
+                            #'Decreto del Direttore del Centro Residenziale (D.CR.)',
+                            #'Decreto del Prorettore (Centro Residenziale)',
                             'Delibera di Dipartimento/Facoltà',
-                            'Delibera del Senato',
-                            'Delibera del C.D.A.',
+                            #'Delibera del Senato',
+                            #'Delibera del C.D.A.',
                          ]
 
 # Campo testo "Etichetta" di default, creato automaticamente in ogni form
@@ -18,7 +18,7 @@ ETICHETTA_INSERIMENTI_LABEL = 'Etichetta dell\'inserimento'
 ETICHETTA_INSERIMENTI_HELP_TEXT = ('Il nome che desideri dare a questo modello compilato,'
                                    ' per individuarlo velocemente nella tua domanda')
 
-COMPLETE_EMAIL_SENDER = 'peo-noreply@unical.it'
+COMPLETE_EMAIL_SENDER = 'peo-noreply@uniurb.it'
 COMPLETE_EMAIL_SUBJECT = "{}, domanda trasmessa"
 COMPLETE_EMAIL_BODY = """Caro {dipendente},
 

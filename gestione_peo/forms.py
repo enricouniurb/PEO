@@ -35,8 +35,10 @@ class PeoDynamicForm(BaseDynamicForm):
                           'help_text': ETICHETTA_INSERIMENTI_HELP_TEXT}
         etichetta_field = getattr(peo_formfields,
                                   'CustomCharField')(**etichetta_data)
-        self.fields[etichetta_id] = etichetta_field
-        self.fields[etichetta_id].initial = self.descrizione_indicatore
+
+        if not(custom_params.get('subdescrizioneindicatoreformfield')):
+            self.fields[etichetta_id] = etichetta_field
+            self.fields[etichetta_id].initial = self.descrizione_indicatore
 
         super().__init__(fields_source=peo_formfields,
                          initial_fields=self.fields,
@@ -55,7 +57,7 @@ class PeoDynamicForm(BaseDynamicForm):
 
             for key,field in self.fields.items():
                 name = getattr(field, 'name') if hasattr(field, 'name') else key                
-                if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':
+                if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':                    
                     field.disabled = True
                     field.required = False
                 else:                                                             

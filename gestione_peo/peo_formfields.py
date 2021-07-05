@@ -205,9 +205,10 @@ class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
         descrizione_indicatore = kwargs.get('descrizione_indicatore')
         sub_descr_ind = None
         if descrizione_indicatore:
+            kwargs['subdescrizioneindicatoreformfield']= True
             sub_descr_ind = descrizione_indicatore. \
                             subdescrizioneindicatore_set.all()
-            self.sub_forms = [sub.get_form() for sub in sub_descr_ind]
+            self.sub_forms = [sub.get_form(**kwargs) for sub in sub_descr_ind]
 
         if sub_descr_ind:
             self.queryset = sub_descr_ind
