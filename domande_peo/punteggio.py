@@ -573,12 +573,8 @@ class PunteggioModuloDomandaBando(object):
                 punteggio = float(punteggio_titolo[1])
 
             # Se il form prevede la selezione di un SubDescrizioneIndicatore
-            elif "sub_descrizione_indicatore" in dati_inseriti or  "sub_descrizione_indicatore_form" in dati_inseriti:                
-                if "sub_descrizione_indicatore" in dati_inseriti:
-                    subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")
-                else:
-                    subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore_form")
-
+            elif "sub_descrizione_indicatore" in dati_inseriti:                 
+                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")                                
                 subdescrind = descr_ind.subdescrizioneindicatore_set.filter(pk=subdescrind_id).first()
 
                 if subdescrind.punteggio_subdescrizioneindicatore_set.first():
@@ -595,6 +591,31 @@ class PunteggioModuloDomandaBando(object):
                     punteggio = self.punteggio_descr_timedelta(cat_eco,
                                                                durata,
                                                                subdescrind)
+
+            # Se il form prevede la selezione di un SubDescrizioneIndicatore con form
+            elif "sub_descrizione_indicatore_form" in dati_inseriti:     
+                #punteggio_dyn_submulti_349                           
+                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore_form")
+                subdescrind = descr_ind.subdescrizioneindicatore_set.filter(pk=subdescrind_id).first()
+
+                if "punteggio_dyn_submulti_{}".format(subdescrind_id) in dati_inseriti:
+                    punteggio =  float(dati_inseriti.get("punteggio_dyn_submulti_{}".format(subdescrind_id)))
+
+                if subdescrind.punteggio_subdescrizioneindicatore_set.first():
+                    punteggio = self.punteggio_descrizione_indicatore(cat_eco,
+                                                                      subdescrind)
+                elif subdescrind.punteggio_subdescrizioneindicatore_timedelta_set.first():
+                    durata_inserita = int(dati_inseriti.get("durata_come_intero_submulti_{}".format(subdescrind_id), 0))
+                    durata = self.get_durata_int(durata_inserita,
+                                                 dati_inseriti.get("data_inizio_dyn_inner_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_fine_dyn_inner_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("in_corso_dyn_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_inizio_dyn_out_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_fine_dyn_out_submulti_{}".format(subdescrind_id)))
+                    punteggio = self.punteggio_descr_timedelta(cat_eco,
+                                                               durata,
+                                                               subdescrind)
+
             # Se la DescrizioneIndicatore prevede un punteggio "fisso" per categoria
             elif descr_ind.punteggio_descrizioneindicatore_set.first():
                 punteggio = self.punteggio_descrizione_indicatore(cat_eco)

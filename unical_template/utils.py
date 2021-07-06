@@ -45,3 +45,9 @@ def text_as_html(text):
     Sostituisce '\n' con '<br>' in un testo
     """
     return text.replace('\n', '<br>')
+
+def punteggio_ogni_3_ore(pt, durata):    
+    return (durata // 3) * pt + (pt if (durata % 3) > 1.5 else 0)
+
+def punteggio_ogni_5_ore(pt, durata):    
+    return (durata // 5) * pt + (pt if (durata % 3) > 2.5 else 0)

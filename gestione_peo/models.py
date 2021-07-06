@@ -18,7 +18,9 @@ from gestione_risorse_umane.models import (PosizioneEconomica,
                                            TitoloStudio)
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 from unical_template.models import TimeStampedModel, CreatedModifiedModel
-from unical_template.utils import text_as_html #differenza_date_in_mesi_aru non più chiamato
+from unical_template.utils import (text_as_html, #differenza_date_in_mesi_aru non più chiamato
+                                   punteggio_ogni_3_ore,
+                                   punteggio_ogni_5_ore)
 
 from . import peo_formfields
 # per la prima volta vedo un forms importato nel models (solitamente era il contrario!)
@@ -45,15 +47,19 @@ _UNITA_TEMPORALI_INT_MAP = {'y': 12, # anni in mesi
 _MATH_OPERATOR_FUNC_MAP = {'x': operator.mul,
                            '+': operator.add,
                            '-': operator.sub,
-                           '/': operator.truediv,
-                           'a': None} # assegna il valore così com'è, senza operazione
+                           '/': operator.truediv,                           
+                           'a': None, # assegna il valore così com'è, senza operazione
+                           'p' : punteggio_ogni_3_ore,
+                           'q' : punteggio_ogni_5_ore } #punti ogni tre ore 
 
 _OPERATORI_PUNTEGGIO = (('x', _('moltiplicatore')),
                         ('a', _('assegnazione')),
                         # inutilizzati, creati per opportuna generalizzazione
                         ('+', _('addizione')),
                         ('/', _('divisione')),
-                        ('-', _('sottrazione')))
+                        ('-', _('sottrazione')),
+                        ('p', _('punteggio_ogni_3_ore')),
+                        ('q', _('punteggio_ogni_5_ore')))
 
 
 class Bando(TimeStampedModel):
