@@ -27,7 +27,7 @@
         "model": "gestione_risorse_umane.titolostudio",
         "pk": 3,
         "fields": {
-            "nome": "TITOLO DI ISTRUZIONE SECONDARIA SUPERIORE (SCOLASTICA ED EXTRA-SCOLASTICA) CHE NON PERMETTE L'ACCESSO ALL'UNIVERSIT\u00c0",
+            "nome": "TITOLO DI ISTRUZIONE SECONDARIA SUPERIORE (SCOLASTICA ED EXTRA-SCOLASTICA) CHE NON PERMETTE L'ACCESSO ALL'UNIVERSITÀ",
             "istituto": "ISTITUTO PROFESSIONALE (PRIMO CICLO) - ISTITUTO D'ARTE (PRIMO CICLO) - SCUOLA MAGISTRALE  (3 ANNI) - ACCADEMIA DI DANZA (PRIMI 8 ANNI) - CONSERVATORIO ED ISTITUTO DI MUSICA PAREGGIATO",
             "codice_livello": 30,
             "codice_titolo_di_studio": 30000000,
@@ -75,7 +75,7 @@
         "model": "gestione_risorse_umane.titolostudio",
         "pk": 7,
         "fields": {
-            "nome": "Altri titoli di istruzione secondaria superiore (scolastica ed extra-scolastica) che non permettono l'accesso all'universit\u00e0",
+            "nome": "Altri titoli di istruzione secondaria superiore (scolastica ed extra-scolastica) che non permettono l'accesso all'università",
             "istituto": "ALTRI TIPI DI SCUOLE/ISTITUTI ",
             "codice_livello": 30,
             "codice_titolo_di_studio": 30999999,
@@ -291,12 +291,12 @@
         "model": "gestione_risorse_umane.titolostudio",
         "pk": 25,
         "fields": {
-            "nome": "TITOLO DI STUDIO POST-LAUREA",
+            "nome": "CORSO PERFEZIONAMENTO POST UNIVERSITARIO",
             "istituto": "CORSO DI PERFEZIONAMENTO SCIENTIFICO E DI ALTA FORMAZIONE PERMANENTE E RICORRENTE DI PRIMO LIVELLO E DI SECONDO LIVELLO, SCUOLA DI SPECIALIZZAZIONE",
             "codice_livello": 80,
             "codice_titolo_di_studio": 80000000,
             "isced_97_level": "5A",
-            "descrizione": ""
+            "descrizione": "TITOLO DI STUDIO POST-LAUREA"
         }
     },
     {
@@ -339,7 +339,7 @@
         "model": "gestione_risorse_umane.titolostudio",
         "pk": 29,
         "fields": {
-            "nome": "TITOLO DI DOTTORE DI RICERCA",
+            "nome": "DOTTORE DI RICERCA",
             "istituto": "CORSI DI DOTTORATO DI RICERCA",
             "codice_livello": 90,
             "codice_titolo_di_studio": 90000000,
@@ -357,6 +357,30 @@
             "codice_titolo_di_studio": 0,
             "isced_97_level": "",
             "descrizione": "Qualsiasi diploma di istruzione secondaria di secondo grado"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.titolostudio",
+        "pk": 31,
+        "fields": {
+            "nome": "SCUOLA DI SPECIALIZZAZIONE  (durata di 1 anno)",
+            "istituto": "SCUOLA DI SPECIALIZZAZIONE",
+            "codice_livello": 83,
+            "codice_titolo_di_studio": 83000000,
+            "isced_97_level": "5A",
+            "descrizione": "SCUOLA DI SPECIALIZZAZIONE"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.titolostudio",
+        "pk": 32,
+        "fields": {
+            "nome": "SCUOLA DI SPECIALIZZAZIONE  (durata di 2 anni)",
+            "istituto": "SCUOLA DI SPECIALIZZAZIONE",
+            "codice_livello": 83,
+            "codice_titolo_di_studio": 83000000,
+            "isced_97_level": "5A",
+            "descrizione": "SCUOLA DI SPECIALIZZAZIONE"
         }
     }
 ]
