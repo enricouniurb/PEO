@@ -386,12 +386,18 @@ def commissione_domanda_manage(request, commissione_id, domanda_id,
     if request.method == 'POST':
         # azione di calcolo punteggio
         if request.POST.get('calcola_punteggio'):
-            punteggio = domanda_bando.calcolo_punteggio_domanda(save=True)[1]
+
+            results = domanda_bando.calcolo_punteggio_domanda(save=True)           
+            punteggio = results[1]
             msg = ("Punteggio calcolato con successo "
                    "({}) per la domanda {}").format(punteggio,
                                                     domanda_bando)
             # mostra il messaggio
             messages.add_message(request, messages.SUCCESS, msg)
+            
+            for m in results[2]:
+                messages.add_message(request, messages.WARNING, m)
+
             # Logging di ogni azione compiuta sulla domanda dalla commissione
             LogEntry.objects.log_action(user_id = request.user.pk,
                                         content_type_id = ContentType.objects.get_for_model(domanda_bando).pk,

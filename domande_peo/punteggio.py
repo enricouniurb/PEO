@@ -58,10 +58,12 @@ class PunteggioDomandaBando(object):
                 elif not fascia.posizione_economica:
                     punteggio_categoria = fascia.punteggio
 
+            # I 2 anni costituiscon oil requisito minimo di anzianità per partecipare alle PEO quindi equvalgono al punteggio inizale per ciascuna 
+            # categoria (vedi bando)
             if unita_temporale=="m":
-                punteggio += punteggio_categoria*mesi_servizio
+                punteggio += punteggio_categoria*mesi_servizio - (punteggio_categoria * 12)
             elif unita_temporale=="y":
-                punteggio += punteggio_categoria*(mesi_servizio/12)
+                punteggio += ((punteggio_categoria*(mesi_servizio // 12) + (punteggio_categoria if (mesi_servizio % 12) >= 6 else 0)) - punteggio_categoria)
 
             # Se non è stata effettuata alcuna progressione e
             # l'anzianità è maggiore o uguale alla soglia di bonus
