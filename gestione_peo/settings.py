@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+
 NUMERAZIONI_CONSENTITE = [
                             #'Protocollo',
                             'Decreto o nota Rettorale (D.R.)',
@@ -9,6 +11,16 @@ NUMERAZIONI_CONSENTITE = [
                             #'Delibera del Senato',
                             #'Delibera del C.D.A.',
                          ]
+
+CLASSIFICATION_LIST = (#('protocollo', _('Protocollo')),
+                       ('decreto_rettorale', _('Decreto Rettorale (D.R.)')),
+                       ('decreto_direttore_generale', _('Decreto o nota del Direttore Generale (D.D.G.)')),
+                       ('decreto_dirigente_struttura', _('Decreto o nota del Direttore Dipartimento o Dirigente Struttura')),
+                       #('decreto_direttore_cr', _('Decreto del Direttore del Centro Residenziale (D.CR.)')),
+                       #('decreto_prorettore', _('Decreto del Prorettore (Centro Residenziale)')),
+                       ('delibera_dipartimento_facolta', _('Delibera di Dipartimento/Facoltà')))
+                       #('delibera_senato', _('Delibera del Senato')),
+                       #('delibera_cda', _('Delibera del C.D.A.')))
 
 # Campo testo "Etichetta" di default, creato automaticamente in ogni form
 # di inserimento. Serve per l'individuazione rapida del modulo

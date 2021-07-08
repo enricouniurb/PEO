@@ -15,7 +15,7 @@ from django_form_builder.dynamic_fields import *
 from django_form_builder.utils import _successivo_ad_oggi
 from gestione_risorse_umane.models import Dipendente, TitoloStudio
 
-from .settings import NUMERAZIONI_CONSENTITE
+from .settings import NUMERAZIONI_CONSENTITE, CLASSIFICATION_LIST
 
 
 def _inizio_validita_titoli(bando, ultima_progressione):
@@ -581,6 +581,17 @@ class PEO_ProtocolloField(ProtocolloField):
     def __init__(self, **data_kwargs):
         super().__init__(**data_kwargs)
         self.data.widget = forms.DateInput(attrs=_date_field_options)
+        self.tipo.label = _("Tipo atto")
+        self.tipo.help_text = _("Scegli il tipo atto, "
+                                "al quale la numerazione è riferita")
+        self.numero.label = _("Numero Delibera o Decreto")
+        self.numero.help_text = _("Indica il numero del "
+                                  "decreto o delibera")
+        self.data.label = _("Data Delibera o Decreto")
+        self.data.help_text = _("Indica la data del decreto o delibera")
+        self.tipo.choices = [('', 'Scegli una opzione')]
+        self.tipo.choices += [(i[0].lower().replace(' ', '_'), i[1]) \
+                             for i in CLASSIFICATION_LIST]
 
     def raise_error(self, name, cleaned_data, **kwargs):
         """
