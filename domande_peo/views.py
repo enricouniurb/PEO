@@ -39,6 +39,7 @@ from .decorators import (abilitato_a_partecipare,
 from .forms import *
 from .models import *
 from .utils import *
+from .protocol import WSTitulusClient
 
 # pdfs
 from PyPDF2 import PdfFileMerger
@@ -761,30 +762,43 @@ def chiudi_apri_domanda(request, bando_id,
                         'username' : settings.PROT_LOGIN,
                         'password' : settings.PROT_PASSW,
                         'aoo': settings.PROT_AOO,
-                        'template_xml_flusso': bando.protocollo_template,
+                        'template_xml_flusso': bando.protocollo_template, 
 
-                        'oggetto':'{} - {}'.format(bando, dipendente),
-                         # Variabili
-                        'matricola_dipendente': dipendente.matricola,
-                        'denominazione_persona': ' '.join((dipendente.nome,
-                                                           dipendente.cognome,)),
+                        'type': 'arrivo',
+                        'draft': 'no',    
+                        'object':'{} - {}'.format(bando, dipendente),
+
+                         #riferimento esterno
+                        'external_reference_code': dipendente.matricola, #'matricola_dipendente': dipendente.matricola, 
+                        'external_reference_name': ' '.join((dipendente.nome,
+                                                           dipendente.cognome,)), #riferimento esterno  'denominazione_persona'
+
+                        #riferimenti interni
+                        'internal_reference_office': "Ufficio Protocollo e Archivio" if settings.DEBUG else "Ufficio Amministrazione e Reclutamento Personale Docente",
+                        'internal_reference_name': "Cappellacci Marco" if settings.DEBUG else "Antonelli Gianluca",
 
                         # attributi creazione protocollo
-                        'id_titolario': bando.protocollo_cod_titolario, # settings.PROTOCOLLO_TITOLARIO_DEFAULT,
+                        'classification_code': bando.protocollo_cod_titolario, # settings.PROTOCOLLO_TITOLARIO_DEFAULT,
+
                         'fascicolo_numero': bando.protocollo_fascicolo_numero, # settings.PROTOCOLLO_FASCICOLO_DEFAULT,
                         'fascicolo_anno': timezone.localtime().year}
 
-            protclass = __import__(settings.CLASSE_PROTOCOLLO, globals(), locals(), ['*'])
-            wsclient = protclass.Protocollo(**peo_dict)
+            wsclient = WSTitulusClient(**peo_dict)            
+            #protclass = __import__(settings.CLASSE_PROTOCOLLO, globals(), locals(), ['*'])
+            #wsclient = protclass.Protocollo(**peo_dict)
 
             logger.info('Protocollazione Domanda {}'.format(domanda_bando))
             docPrinc = BytesIO()
             docPrinc.write(download_domanda_pdf(request, bando_id, domanda_bando_id).content)
             docPrinc.seek(0)
-            wsclient.aggiungi_docPrinc(docPrinc,
-                                       nome_doc="domanda_{}_{}.pdf".format(dipendente.matricola,
-                                                                           bando.pk),
-                                       tipo_doc='{} - {}'.format(bando.pk, dipendente.matricola))
+            wsclient.add_attachment("domanda_{}_{}.pdf".format(dipendente.matricola, bando.pk),
+                                        'domanda {} - {}'.format(bando.pk, dipendente.matricola),
+                                        docPrinc)
+
+            # wsclient.aggiungi_docPrinc(docPrinc,
+            #                            nome_doc="domanda_{}_{}.pdf".format(dipendente.matricola,
+            #                                                                bando.pk),
+            #                            tipo_doc='{} - {}'.format(bando.pk, dipendente.matricola))
 
             # allegati disabilitati
             # for modulo in domanda_bando.modulodomandabando_set.all():
@@ -801,14 +815,16 @@ def chiudi_apri_domanda(request, bando_id,
                                                                         # modulo.get_identificativo_veloce()),
                                            # fopen=allegato)
             # print(wsclient.is_valid())
-            logger.debug(wsclient.render_dataXML())
-            prot_resp = wsclient.protocolla()
-            domanda_bando.numero_protocollo = wsclient.numero
+            #logger.debug(wsclient.render_dataXML())           
+            #prot_resp = wsclient.protocolla()
+
+            result =  wsclient.protocol(peo_dict, True)
+            domanda_bando.numero_protocollo = result['Response']['Document']['doc']['@num_prot']
             logger.info('Avvenuta Protocollazione Domanda {} numero: {}'.format(domanda_bando,
                                                                                 domanda_bando.numero_protocollo))
             domanda_bando.data_protocollazione = timezone.localtime()
             # se non torna un numero di protocollo emerge l'eccezione
-            assert wsclient.numero
+            assert domanda_bando.numero_protocollo
 
         # chiusura in locale
         domanda_bando.data_chiusura = timezone.localtime()
