@@ -271,16 +271,29 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
         """
         controlla che gli allegati del modulo siano presenti se required
         """
+
         # allegati = dict(self.get_allegati())
         allegati = dict(get_allegati(self))
-        form = self.descrizione_indicatore.get_form()
-        for field in form.fields:
-            f = form.fields[field]
-            if (f.required and isinstance(f, forms.FileField)):
-                if not allegati:
-                    return False
-                if not field in allegati.keys():
-                    return False
+        form = self.descrizione_indicatore.get_form()        
+
+        modulo_compilato_dict = json.loads(self.modulo_compilato)
+        if 'sub_descrizione_indicatore_form' in modulo_compilato_dict:
+            current_value = modulo_compilato_dict.get('sub_descrizione_indicatore_form')
+            for field in form.fields:
+                f = form.fields[field]
+                if (f.required and isinstance(f, forms.FileField) and f.name.endswith('submulti_{}'.format(current_value))):
+                    if not allegati:
+                        return False
+                    if not field in allegati.keys():
+                        return False
+        else:
+            for field in form.fields:
+                f = form.fields[field]
+                if (f.required and isinstance(f, forms.FileField)):
+                    if not allegati:
+                        return False
+                    if not field in allegati.keys():
+                        return False
         # any fields returns as False
         return True
 
