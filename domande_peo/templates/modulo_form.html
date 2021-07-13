@@ -50,7 +50,8 @@
             var that = this.value;
             $("table tr td b").each(function() {                
                 if ($(this).text().endsWith('submulti_'+that)){           
-                    $('#allegati').show();  
+                    $('#allegati table').show();  
+                    $('#allegati h3').show();  
                     $(this).parent().parent().show();
                 }else{
                     $(this).parent().parent().hide();
@@ -59,9 +60,11 @@
 
             var len = $('table tr:visible').length;                   
             if (len > 2){
-                $('#allegati').show();  
+                $('#allegati table').show();  
+                $('#allegati h3').show();  
             } else {
-                $('#allegati').hide();  
+                $('#allegati table').hide(); 
+                $('#allegati h3').hide();  
             }
             
             //$(".submulti").removeAttr('required');

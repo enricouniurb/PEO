@@ -669,11 +669,27 @@ class PEO_ProtocolloField(ProtocolloField):
                                   "alla data: {}".format(inizio_validita_titoli))
             return errors
 
-class PEO_AllegatoLinkField(BaseCustomField):
+
+class PEO_URLField(CharField, BaseCustomField):
     """
-    Allegato o link al documento 
+    URL
     """
-    field_type = "_PEO_  Allegato o link a documento"
+    field_type = _("URL")
+
+    def __init__(self, *args, **data_kwargs):
+        super().__init__(*args, **data_kwargs)
+    
+    def raise_error(self, name, cleaned_data, **kwargs):    
+        if not cleaned_data: return []
+        if not re.match('^(https?:)?[a-zA-Z0-9_.+-/#~]+$', str(cleaned_data)):
+            return [_("URL non valido"),]
+
+
+class PEO_AllegatoURLField(BaseCustomField):
+    """
+    Allegato o URL al documento 
+    """
+    field_type = "_PEO_  Allegato o URL al documento"
     is_complex = True
 
     def __init__(self, *args, **data_kwargs):
@@ -683,15 +699,15 @@ class PEO_AllegatoLinkField(BaseCustomField):
         self.allegato.required = False
         self.allegato.parent = self
 
-        # Link
-        self.link = CustomCharField(*args, **data_kwargs)   
-        self.link.required = False
-        self.link.label = _("Link al documento")
-        self.link.name = "link_documento"        
-        self.link.parent = self      
+        # Url
+        self.url_documento = PEO_URLField(*args, **data_kwargs)   
+        self.url_documento.required = False
+        self.url_documento.label = _("URL al documento")
+        self.url_documento.name = "url_documento"        
+        self.url_documento.parent = self      
 
     def get_fields(self):
-        return [self.link, self.allegato]  
+        return [self.url_documento, self.allegato]  
 
     def raise_error(self, name, cleaned_data, **kwargs):
         """
@@ -705,8 +721,10 @@ class PEO_AllegatoLinkField(BaseCustomField):
             if (self.allegato.name in allegati):
                 allegato_value = allegati.get(self.allegato.name)        
                         
-        link_value = cleaned_data.get(self.link.name)
-        if not allegato_value and not link_value: 
-          errors.append("Si richiede di allegare il documento oppure inserire il link al documento")
-
+        url_value = cleaned_data.get(self.url_documento.name)     
+        if (url_value):
+            errors = self.url_documento.raise_error(self.url_documento.name, url_value, **kwargs)
+        if not allegato_value and not url_value: 
+          errors.append("Si richiede di allegare il documento oppure inserire l'URL al documento")
+        
         return errors
