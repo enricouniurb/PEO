@@ -695,6 +695,7 @@ class PEO_AllegatoURLField(BaseCustomField):
     def __init__(self, *args, **data_kwargs):
         # Allegato
         self.allegato = CustomFileField(*args, **data_kwargs)   
+        self.allegato.name = "allegato"     
         self.allegato.label = _("Documento")                
         self.allegato.required = False
         self.allegato.parent = self
@@ -717,7 +718,7 @@ class PEO_AllegatoURLField(BaseCustomField):
         allegato_value = cleaned_data.get(self.allegato.name)
 
         allegati = kwargs.get('allegati')
-        if (allegati):
+        if (allegati and type(allegati) is dict):
             if (self.allegato.name in allegati):
                 allegato_value = allegati.get(self.allegato.name)        
                         

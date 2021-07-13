@@ -397,6 +397,18 @@ class DescrizioneIndicatore(TimeStampedModel):
                                         remove_filefields=remove_filefields,
                                         remove_datafields=remove_datafields,
                                         fields_order=fields_order)
+
+        # if data and 'sub_descrizione_indicatore_form' in data:
+        #     current_value = data.get('sub_descrizione_indicatore_form')  
+
+        #     for key,field in form.fields.items():
+        #         name = getattr(field, 'name') if hasattr(field, 'name') else key                
+        #         if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':                    
+        #             field.disabled = True
+        #             field.required = False
+        #         else:                                                             
+        #             field.disabled = False
+
         return form
 
     def is_available_for_cateco(self, cateco):

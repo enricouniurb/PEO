@@ -651,6 +651,8 @@ def download_modulo_inserito_pdf(request, bando_id, modulo_compilato_id):
 
     descrizione_indicatore = mdb.descrizione_indicatore
     form = mdb.compiled_form(remove_filefields=True)
+    form.remove_not_compiled_fields()
+    
     d = {'form': form,
          'dipendente': dipendente,
          'bando': bando,
