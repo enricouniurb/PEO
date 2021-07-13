@@ -711,7 +711,7 @@ class PEO_AllegatoURLField(BaseCustomField):
 
     def raise_error(self, name, cleaned_data, **kwargs):
         """
-        Questo campo complesso richiede la compilazione o dell'allegato o del link
+        Questo campo complesso richiede la compilazione o dell'allegato o del url
         """
         errors = []
         allegato_value = cleaned_data.get(self.allegato.name)
