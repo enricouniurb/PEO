@@ -50,7 +50,7 @@
             var that = this.value;
             $("table tr td b").each(function() {                
                 if ($(this).text().endsWith('submulti_'+that)){           
-                    $('table').show();  
+                    $('#allegati').show();  
                     $(this).parent().parent().show();
                 }else{
                     $(this).parent().parent().hide();
@@ -59,9 +59,9 @@
 
             var len = $('table tr:visible').length;                   
             if (len > 2){
-                $('table').show();  
+                $('#allegati').show();  
             } else {
-                $('table').hide();  
+                $('#allegati').hide();  
             }
             
             //$(".submulti").removeAttr('required');
@@ -152,8 +152,10 @@
             </div>
         {% endfor %}
 
+        <div id="allegati">
         {% block allegati %}{% endblock allegati %}
-
+        <div>
+            
         {% block formbuttons %}
             {% block formbuttons_back %}
                 <a href="{% url 'domande_peo:dashboard_domanda' bando.slug %}#{{ bando.slug }}">

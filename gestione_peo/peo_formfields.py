@@ -186,7 +186,7 @@ class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
     """
     SelectBox con le sotto-categorie SubDescrizioneIndicatore
     """
-    field_type = _("_PEO_  Selezione sotto-categorie con form DescrizioneIndicatore ")
+    field_type = _("_PEO_  Selezione sotto-categorie con form DescrizioneIndicatore")
     name = 'sub_descrizione_indicatore_form'
 
     def __init__(self, **data_kwargs):
@@ -668,3 +668,45 @@ class PEO_ProtocolloField(ProtocolloField):
                     errors.append("La data del protocollo è precedente "
                                   "alla data: {}".format(inizio_validita_titoli))
             return errors
+
+class PEO_AllegatoLinkField(BaseCustomField):
+    """
+    Allegato o link al documento 
+    """
+    field_type = "_PEO_  Allegato o link a documento"
+    is_complex = True
+
+    def __init__(self, *args, **data_kwargs):
+        # Allegato
+        self.allegato = CustomFileField(*args, **data_kwargs)   
+        self.allegato.label = _("Documento")                
+        self.allegato.required = False
+        self.allegato.parent = self
+
+        # Link
+        self.link = CustomCharField(*args, **data_kwargs)   
+        self.link.required = False
+        self.link.label = _("Link al documento")
+        self.link.name = "link_documento"        
+        self.link.parent = self      
+
+    def get_fields(self):
+        return [self.link, self.allegato]  
+
+    def raise_error(self, name, cleaned_data, **kwargs):
+        """
+        Questo campo complesso richiede la compilazione o dell'allegato o del link
+        """
+        errors = []
+        allegato_value = cleaned_data.get(self.allegato.name)
+
+        allegati = kwargs.get('allegati')
+        if (allegati):
+            if (self.allegato.name in allegati):
+                allegato_value = allegati.get(self.allegato.name)        
+                        
+        link_value = cleaned_data.get(self.link.name)
+        if not allegato_value and not link_value: 
+          errors.append("Si richiede di allegare il documento oppure inserire il link al documento")
+
+        return errors

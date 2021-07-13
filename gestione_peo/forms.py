@@ -27,6 +27,7 @@ class PeoDynamicForm(BaseDynamicForm):
         self.fields = {}
         self.domanda_bando = custom_params.get('domanda_bando')
         self.descrizione_indicatore = custom_params.get('descrizione_indicatore')
+        self.remove_filefields = custom_params.get('remove_filefields')
 
         # Inserimento manuale del field ETICHETTA
         etichetta_id = format_field_name(ETICHETTA_INSERIMENTI_ID)
@@ -48,12 +49,7 @@ class PeoDynamicForm(BaseDynamicForm):
 
         
         if 'sub_descrizione_indicatore_form' in self.data:
-            current_value = self.data.get('sub_descrizione_indicatore_form')
-
-            # lato client   
-            # if 'etichetta_inserimento' in self.data and 'etichetta_inserimento_submulti_{}'.format(current_value) in self.data:
-            #     if self.data['etichetta_inserimento_submulti_{}'.format(current_value)] not in self.data['etichetta_inserimento']:
-            #         self.data['etichetta_inserimento'] += ' ' + self.data['etichetta_inserimento_submulti_{}'.format(current_value)]
+            current_value = self.data.get('sub_descrizione_indicatore_form')  
 
             for key,field in self.fields.items():
                 name = getattr(field, 'name') if hasattr(field, 'name') else key                
@@ -62,20 +58,6 @@ class PeoDynamicForm(BaseDynamicForm):
                     field.required = False
                 else:                                                             
                     field.disabled = False
-
-        # Corretto per la classe base BaseDynamicForm
-        # if constructor_dict:
-        #     for key, value in constructor_dict.items():                        
-        #         if (hasattr(custom_field, 'name') and custom_field.name == 'sub_descrizione_indicatore_form'):
-        #             if 'sub_descrizione_indicatore_form' in self.data:
-        #                 current_value = self.data.get('sub_descrizione_indicatore_form')
-        #                 for field in fields:
-        #                     name = getattr(field, 'name') if hasattr(field, 'name') else field_id
-        #                     if not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form':
-        #                         field.disabled = True
-        #                         field.required = False
-        #                     else: 
-        #                         field.disabled = False
          
 
     def clean(self, *args, **kwargs):
@@ -95,11 +77,13 @@ class PeoDynamicForm(BaseDynamicForm):
                 field = getattr(field, 'parent')
                 errors = field.raise_error(fname,
                                             cleaned_data,
-                                            **{'domanda_bando': self.domanda_bando})
+                                            **{'domanda_bando': self.domanda_bando,
+                                               'allegati': self.remove_filefields})
             else:
                 errors = field.raise_error(None,
                                             cleaned_data.get(fname),
-                                            **{'domanda_bando': self.domanda_bando})
+                                            **{'domanda_bando': self.domanda_bando,
+                                               'allegati': self.remove_filefields})
             if errors:
                 self.add_error(fname, errors)
                 continue
