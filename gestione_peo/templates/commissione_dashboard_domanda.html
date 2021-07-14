@@ -126,6 +126,9 @@
                             {{ ins.get_identificativo_veloce }}
                         </a>
                         <div class="ui list" style="color: grey;">
+                            <div class=""><i>Contenuto</i>: {{ ins.get_identificativo_veloce_lungo }} </div>
+                        </div>
+                        <div class="ui list" style="color: grey;">
                             <div class=""><i>Creato</i>: {{ ins.created|date:"j F Y H:i" }}</div>
                             <div class=""><i>Modificato</i>: {{ ins.modified|date:"j F Y H:i" }}</div>
                         </div>
