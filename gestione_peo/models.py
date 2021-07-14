@@ -341,7 +341,7 @@ class DescrizioneIndicatore(TimeStampedModel):
                     punteggio_max = punteggio_descr.punteggio_max
         return punteggio_max
 
-    def get_fields_order(self):
+    def get_fields_order(self, custom_params={}):
         """
         Ritorna l'ordinamento dei fields che compongono il form associato,
         definito da backend
@@ -355,9 +355,11 @@ class DescrizioneIndicatore(TimeStampedModel):
                 if hasattr(m[1], 'is_complex'):
                     is_complex=getattr(m[1], 'is_complex')
                 to_check = is_complex or hasattr(m[1], 'name')
-                if m[0]==i.field_type and to_check:
+                if m[0]==i.field_type and to_check:                    
                     dyn_field=m[1]()
                     if is_complex:
+                        if (hasattr(dyn_field,'name') and dyn_field.name == 'sub_descrizione_indicatore_form'):
+                            dyn_field.define_value('', **custom_params)
                         fields = dyn_field.get_fields()
                         for f in fields:
                             if hasattr(f, 'name'):
@@ -388,7 +390,7 @@ class DescrizioneIndicatore(TimeStampedModel):
                          'descrizione_indicatore': self,
                          'remove_filefields': remove_filefields}
 
-        fields_order=self.get_fields_order() if force_sorting else []
+        fields_order=self.get_fields_order(custom_params=custom_params) if force_sorting else []
         form = DynamicFieldMap.get_form(PeoDynamicForm,
                                         constructor_dict=constructor_dict,
                                         custom_params=custom_params,

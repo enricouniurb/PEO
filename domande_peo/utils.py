@@ -223,12 +223,12 @@ def aggiungi_titolo_form(request,
                                               mdb.pk)
             if 'sub_descrizione_indicatore_form' in json_stored:
                 current_value = json_stored['sub_descrizione_indicatore_form']
-                for key, value in request.FILES.items():     
-                    if ((key.endswith('submulti_{}'.format(current_value)))):               
+                for key, value in request.FILES.items():                         
+                    if (key.endswith('submulti_{}'.format(current_value)) or 'submulti' not in key):               
                         salva_file(request.FILES[key],
                                     path_allegati,
                                     request.FILES[key]._name)
-                        json_stored["allegati"]["{}".format(key)] = "{}".format(request.FILES[key]._name)
+                        json_stored["allegati"]["{}".format(key)] = "{}".format(request.FILES[key]._name)                           
             else:
                 for key, value in request.FILES.items():                                        
                     salva_file(request.FILES[key],
@@ -294,7 +294,7 @@ def modifica_titolo_form(request,
             #eliminare tutti gli allegati diversi da current_value
             copy_allegati = allegati.copy()
             for allegato in copy_allegati.keys():            
-                if (not (allegato.endswith('submulti_{}'.format(current_value)))):
+                if ('submulti_' in allegato and not (allegato.endswith('submulti_{}'.format(current_value)))):
                     nome_file = json_response["allegati"]["{}".format(allegato)]
                     # Rimuove il riferimento all'allegato dalla base dati
                     del json_response["allegati"]["{}".format(allegato)]       

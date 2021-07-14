@@ -188,6 +188,8 @@ class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
     """
     field_type = _("_PEO_  Selezione sotto-categorie con form DescrizioneIndicatore")
     name = 'sub_descrizione_indicatore_form'
+    is_complex = True
+    sub_forms = []
 
     def __init__(self, **data_kwargs):
         # Di default, inserisce tutti i SubDescrizioneIndicatore
@@ -215,7 +217,7 @@ class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
         
 
     def get_fields(self):        
-        ereditati = super().get_fields()
+        ereditati = super().get_fields()        
         for sub_form in self.sub_forms:
             if sub_form:
                 for key, field in sub_form.fields.items():
@@ -690,7 +692,7 @@ class PEO_AllegatoURLField(BaseCustomField):
     Allegato o URL al documento 
     """
     field_type = "_PEO_  Allegato o URL al documento"
-    is_complex = True
+    is_complex = True    
 
     def __init__(self, *args, **data_kwargs):
         # Allegato

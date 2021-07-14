@@ -50,14 +50,14 @@ class PeoDynamicForm(BaseDynamicForm):
         
         if 'sub_descrizione_indicatore_form' in self.data:
             current_value = self.data.get('sub_descrizione_indicatore_form')  
-
             for key,field in self.fields.items():
-                name = getattr(field, 'name') if hasattr(field, 'name') else key                
-                if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':                    
-                    field.disabled = True
-                    field.required = False
-                else:                                                             
-                    field.disabled = False
+                name = getattr(field, 'name') if hasattr(field, 'name') else key    
+                if ('submulti_' in name):            
+                    if not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':                    
+                        field.disabled = True
+                        field.required = False
+                    else:                                                             
+                        field.disabled = False
          
 
     def clean(self, *args, **kwargs):
