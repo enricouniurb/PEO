@@ -83,6 +83,8 @@ def _download_report_graduatoria(modeladmin,
                                  ignora_disabilitati=False):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(queryset.first().bando)
+    response.write(u'\ufeff'.encode('utf8'))
+    
     return export_graduatoria_csv(queryset=queryset,
                                   fopen=response,
                                   replace_dot_with=',',
