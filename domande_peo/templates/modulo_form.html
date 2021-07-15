@@ -48,6 +48,7 @@
         $("#id_sub_descrizione_indicatore_form").change(function(event) {                                      
             conditional_fields.hide();       
             var that = this.value;
+          
             $("table tr td b").each(function() {                
                 if (!($(this).text().includes('submulti')) || $(this).text().endsWith('submulti_'+that)){           
                     $('#allegati table').show();  
@@ -66,16 +67,26 @@
                 $('#allegati table').hide(); 
                 $('#allegati h3').hide();  
             }
-            
-            //$(".submulti").removeAttr('required');
+                       
             $(".submulti").prop("disabled",true);
-            if ($(this.value)) {                                            
+
+            if ($(this.value)) {                            
+                //copiare dal vecchio al nuovo  
+                $(".field>.submulti_"+previus_value).each(function() {                    
+                    var id = $(this).attr('id');                  
+                    var subName = id.substr(0, id.indexOf('submulti_')).replace('/','');                           
+                    if ($('#' + subName + 'submulti_' + that).length>0 && this.value){
+                        $('#' + subName + 'submulti_' + that).val(this.value);
+                    }
+                });
+
                 //etichetta = etichetta.replace(previus_value,'');                  
                 //if (previus_value != 'empty')                        
                 //    $("#id_etichetta_inserimento").val(etichetta + ' ' + ( $("#id_sub_descrizione_indicatore_form  option:selected").text() || '') );
                 $(".field>.submulti_"+this.value).parent().show();                                     
                 $(".submulti_"+this.value).prop('disabled',false);
-                //previus_value = $("#id_sub_descrizione_indicatore_form  option:selected").text();    
+                previus_value = that;   // $("#id_sub_descrizione_indicatore_form  option:selected").text();    
+                
             } 
         });
 
