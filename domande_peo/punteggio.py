@@ -496,7 +496,8 @@ class PunteggioModuloDomandaBando(object):
         if not durata: return punteggio
 
         # Accettati i Float ma valutati solo come Interi
-        durata = int(durata)
+        #cambio tipo
+        #durata = float(durata)
 
         descr_ind = self.descrizione_indicatore
 
@@ -583,7 +584,9 @@ class PunteggioModuloDomandaBando(object):
                     punteggio = self.punteggio_descrizione_indicatore(cat_eco,
                                                                       subdescrind)
                 elif subdescrind.punteggio_subdescrizioneindicatore_timedelta_set.first():
-                    durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale", 0))
+                    if (dati_inseriti.get("durata_come_decimale", 0) == 0):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
                     durata = self.get_durata_int(durata_inserita,
                                                  dati_inseriti.get("data_inizio_dyn_inner"),
                                                  dati_inseriti.get("data_fine_dyn_inner"),
@@ -607,7 +610,9 @@ class PunteggioModuloDomandaBando(object):
                     punteggio = self.punteggio_descrizione_indicatore(cat_eco,
                                                                       subdescrind)
                 elif subdescrind.punteggio_subdescrizioneindicatore_timedelta_set.first():
-                    durata_inserita = int(dati_inseriti.get("durata_come_intero_submulti_{}".format(subdescrind_id), 0))
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale_submulti_{}".format(subdescrind_id), 0))                    
+                    if (dati_inseriti.get("durata_come_decimale_submulti_{}".format(subdescrind_id), 0)):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero_submulti_{}".format(subdescrind_id), 0)) 
                     durata = self.get_durata_int(durata_inserita,
                                                  dati_inseriti.get("data_inizio_dyn_inner_submulti_{}".format(subdescrind_id)),
                                                  dati_inseriti.get("data_fine_dyn_inner_submulti_{}".format(subdescrind_id)),
@@ -625,7 +630,9 @@ class PunteggioModuloDomandaBando(object):
             # WARNING: stiamo usando costanti, da ricodare con metodi che tornano i valori/tipi
             elif descr_ind.punteggio_descrizioneindicatore_timedelta_set.first():
                 try:
-                    durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale", 0))
+                    if (dati_inseriti.get("durata_come_decimale", 0) == 0):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
                 except ValueError as excp:
                     durata_inserita = 0
                     # aggiungere logger.error in ogni dove ...

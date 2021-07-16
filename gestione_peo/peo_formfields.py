@@ -731,3 +731,11 @@ class PEO_AllegatoURLField(BaseCustomField):
           errors.append("Si richiede di allegare il documento oppure inserire l'URL al documento")
         
         return errors
+
+
+class DurataComePositiveFloatField(PositiveFloatField):
+    """
+    Durata come DecimalField positivo
+    """
+    field_type = _("Durata come numero decimale (anni,mesi,ore)")
+    name = 'durata_come_decimale'
