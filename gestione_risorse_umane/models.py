@@ -275,3 +275,37 @@ class Dipendente(TimeStampedModel, PeoMethods, CareerMethods):
         return '{} - {} {}'.format(self.matricola,
                                    self.nome,
                                    self.cognome)
+
+
+class FormazioneDipendente(TimeStampedModel):
+    """
+    """
+    matricola = models.CharField(max_length=6, blank=False, null=False)
+        
+    dipendente = models.ForeignKey(Dipendente, on_delete=models.CASCADE, null=True, blank=True)
+
+    partecipante = models.CharField(max_length=254, blank=True, default='', help_text="Valore letto in fase di importazione")
+    
+    evento_formativo = models.CharField(max_length=255, blank=False, null=False,
+                              help_text="Evento formativo")
+
+    ente_organizzatore = models.CharField(max_length=255, blank=False, null=False,
+                              help_text="Ente organizzatore")
+
+    data_inizio = models.DateField(null=True, blank=True)
+    data_fine = models.DateField(null=True, blank=True)
+
+    durata_ore = models.FloatField(default=0.0)
+    #durata_ore = models.DecimalField(default=0.0, max_digits=5, decimal_places=2)
+
+    ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento",
+                                              blank=True, default=0)    
+    is_active = models.BooleanField('Attivo', default=True)
+
+    class Meta:
+        ordering = ('ordinamento', )
+        verbose_name = _('Formazione dipendente')
+        verbose_name_plural = _('Formazione dipendenti')
+
+    def __str__(self):
+        return '({}) {}'.format(self.evento_formativo, self.ente_organizzatore)

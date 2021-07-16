@@ -207,3 +207,30 @@ class DipendenteAdmin(admin.ModelAdmin): # AdminAdvancedFiltersMixin,
         #admin_obj_url = reverse('admin:csa_v_anagrafica_change', args=(_get_matricola(obj.matricola),))
         #value = '<a href="{}">Cosulta Incarichi e Carriera CSA</a>.'.format(admin_obj_url)
         #return mark_safe(value)
+
+@admin.register(FormazioneDipendente)
+class FormazioneDipendenteAdmin(admin.ModelAdmin):
+    list_display = ('matricola', 'partecipante', 'evento_formativo', 'ente_organizzatore','data_inizio','data_fine','durata_ore')
+    list_filter = ('matricola', 'partecipante','evento_formativo')
+    search_fields = ('matricola', 'partecipante')
+
+    fieldsets = (
+             (None, {
+                        # 'classes': ('collapse',),
+                        'fields' : (
+                                      ('matricola', 'dipendente',),  
+                                      ('partecipante',),
+                                      ('evento_formativo',),                                
+                                      ('ente_organizzatore',),
+                                      ( 'data_inizio',),
+                                      ('data_fine',),
+                                      ('durata_ore',),
+                                      ('is_active', ),
+                                    )
+                       },
+             ),
+    )
+
+    list_per_page = 300
+    autocomplete_fields = ['dipendente',]
+    actions = []
