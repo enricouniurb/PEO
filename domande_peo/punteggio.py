@@ -190,6 +190,7 @@ class PunteggioDomandaBando(object):
                 # Lancio il metodo calcolo_punteggio che mi setta
                 # il punteggio del modulo sul backend 
                 # considera i punteggi dei sub_descrittori
+                # imposta il punteggio calcolato 
                 calcolo = mdb.calcolo_punteggio(save=save)
 
                 # Se si tratta di valutare un titolo di studio
@@ -281,7 +282,7 @@ class PunteggioDomandaBando(object):
                 # Imposto come punteggio di cui tener conto il max
                 results[1] = p_max_descr_ind
                 # Imposto la lista dei messaggi
-                results[2] = messaggi
+                results[2] = messaggi     
         return results
 
     def calcolo_punteggio_max_indicatore(self,

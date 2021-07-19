@@ -19,8 +19,10 @@ from gestione_risorse_umane.models import (PosizioneEconomica,
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 from unical_template.models import TimeStampedModel, CreatedModifiedModel
 from unical_template.utils import (text_as_html, #differenza_date_in_mesi_aru non più chiamato
-                                   punteggio_ogni_3_ore,
-                                   punteggio_ogni_5_ore)
+                                   punteggio_ogni_3_ore_max_02,
+                                   punteggio_ogni_5_ore_max_06,
+                                   punteggio_ogni_5_ore_max_05,
+                                   punteggio_ogni_5_ore_max_04)
 
 from . import peo_formfields
 # per la prima volta vedo un forms importato nel models (solitamente era il contrario!)
@@ -49,8 +51,10 @@ _MATH_OPERATOR_FUNC_MAP = {'x': operator.mul,
                            '-': operator.sub,
                            '/': operator.truediv,                           
                            'a': None, # assegna il valore così com'è, senza operazione
-                           'p' : punteggio_ogni_3_ore,
-                           'q' : punteggio_ogni_5_ore } #punti ogni tre ore 
+                           'p' : punteggio_ogni_3_ore_max_02,
+                           'q' : punteggio_ogni_5_ore_max_06,
+                           'r' : punteggio_ogni_5_ore_max_05,
+                           's' : punteggio_ogni_5_ore_max_04} #punti ogni tre ore 
 
 _OPERATORI_PUNTEGGIO = (('x', _('moltiplicatore')),
                         ('a', _('assegnazione')),
@@ -58,8 +62,11 @@ _OPERATORI_PUNTEGGIO = (('x', _('moltiplicatore')),
                         ('+', _('addizione')),
                         ('/', _('divisione')),
                         ('-', _('sottrazione')),
-                        ('p', _('punteggio_ogni_3_ore')),
-                        ('q', _('punteggio_ogni_5_ore')))
+                        ('p', _('punteggio_ogni_3_ore_max_02')),
+                        ('q', _('punteggio_ogni_5_ore_max_06')),
+                        ('r', _('punteggio_ogni_5_ore_max_05')),
+                        ('s', _('punteggio_ogni_5_ore_max_04'))
+                        )
 
 
 class Bando(TimeStampedModel):
