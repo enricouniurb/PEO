@@ -103,6 +103,98 @@ def elimina_directory(matricola, bando_slug, modulo_compilato_id = None):
         return False
 
 
+def export_graduatoria_indicatori_ponderati_csv(queryset, fopen,
+                           delimiter=';', quotechar='"',
+                           replace_dot_with='.',
+                           ignora_disabilitati=False):
+    # domande_bando selezionate
+    queryset = queryset.order_by('-punteggio_calcolato')
+    posizioni_economiche = PosizioneEconomica.objects.all().order_by('nome')
+
+    bando = queryset.first().bando
+    #Recupero tutti gli indcatori del bando in questione
+    indicatori_ponderati = bando.indicatoreponderato_set.all()
+   
+    intestazione = ['Prog', 'Cognome', 'Nome', 'Pos.Eco']
+
+    writer = csv.writer(fopen,
+                        delimiter = delimiter,
+                        quotechar = quotechar)
+    intestazione2 = []
+    lista_id_indicatore = []
+    # Creo le colonne dell'intestazione (Nome + ID code)
+    # Per ogni IndicatorePonderato del Bando
+    for indicatore in indicatori_ponderati:    
+        intestazione2.append('({}) {}'.format(indicatore.id_code, indicatore.nome))
+        lista_id_indicatore.append(indicatore.id_code)
+        
+    intestazione += intestazione2    
+    intestazione.append('Punti')
+    writer.writerow(intestazione)
+
+    # Per ogni posizione economica, controllo se ci sono domande
+    # cosi da ordinarle e avere una graduatoria
+    for pos_eco in posizioni_economiche:
+        livelli = LivelloPosizioneEconomica.objects.filter(posizione_economica=pos_eco).all().order_by('nome')
+        for livello in livelli:
+            # Filtro solo le domande con il livello economico che mi interessa
+            domande_queryset = queryset.filter(livello=livello)
+            # Se non ci sono domande nel livello, non scrivo righe
+            if not domande_queryset: continue
+            writer.writerow('')
+            index = 1
+            # Per ogni domanda del bando, recupero quelle fatte per
+            # un singolo Livello Economico
+            for domanda in domande_queryset:
+                # Se la domanda non è stata chiusa almeno una volta
+                if not domanda.numero_protocollo: continue
+                riga = [index,
+                        domanda.dipendente.cognome,
+                        domanda.dipendente.nome,
+                        livello.__str__()]
+                
+              
+                # Per ogni Indicatore ponderato nell'intestazione
+                for id_code in lista_id_indicatore:
+                    # Soglia massima assegnabile
+                    p_max_indicatore = indicatore.get_pmax_pos_eco(pos_eco)
+                    # Punteggio assegnato all'Indicatore Ponderato
+                    p_indicatore = 0
+                    # Punteggio assegnato all'Indicatore Ponderato senza soglie
+                    p_indicatore_senza_soglie = 0
+                    # Recupero l'oggetto                    
+                    indicatore = indicatori_ponderati.filter(id_code=id_code).first()    
+                    if id_code == 'D':
+                        # Anzianità Dipendente Università
+                        p_indicatore = domanda.get_punteggio_anzianita()                       
+                    else:    
+                                       
+                        for descr_ind in indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True):   
+                            # Recupero il punteggio max assegnato nella domanda         
+                            #  Lista ritornata come risultato
+                            # [0] = punteggio ottenuto senza tener conto di alcuna soglia
+                            # [1] = punteggio reale assegnato (max)
+                            # [2] = eventuale messaggio di sforamento           
+                            punteggio = domanda.calcolo_punteggio_max_descr_ind(descr_ind=descr_ind,
+                                                                                categoria_economica=pos_eco,
+                                                                                ignora_disabilitati=ignora_disabilitati)
+                            p_indicatore_senza_soglie += punteggio[0]
+                            p_indicatore += punteggio[1]
+                    # Controllo sul Max punteggio CatEco IndicatorePonderato
+                    if p_max_indicatore > 0 and p_indicatore > p_max_indicatore:
+                        p_indicatore =  p_max_indicatore
+                    riga.append(p_indicatore.__str__().replace('.', replace_dot_with))
+
+                punteggio_domanda = domanda.calcolo_punteggio_domanda(ignora_disabilitati=ignora_disabilitati)[1]
+                punteggio_str = punteggio_domanda.__str__().replace('.', replace_dot_with)
+                riga.append(punteggio_str)
+
+                writer.writerow(riga)
+                index += 1
+
+    writer.writerow('')
+    return fopen
+
 def export_graduatoria_csv(queryset, fopen,
                            delimiter=';', quotechar='"',
                            replace_dot_with='.',

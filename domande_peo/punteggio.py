@@ -188,7 +188,8 @@ class PunteggioDomandaBando(object):
                     continue
 
                 # Lancio il metodo calcolo_punteggio che mi setta
-                # il punteggio del modulo sul backend
+                # il punteggio del modulo sul backend 
+                # considera i punteggi dei sub_descrittori
                 calcolo = mdb.calcolo_punteggio(save=save)
 
                 # Se si tratta di valutare un titolo di studio

@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 
 from .models import *
-from .utils import export_graduatoria_csv
+from .utils import export_graduatoria_csv, export_graduatoria_indicatori_ponderati_csv
 
 
 def _calcolo_punteggio_domanda(modeladmin,
@@ -98,6 +98,27 @@ def download_report_graduatoria(modeladmin, request, queryset):
                                         request=request,
                                         queryset=queryset)
 download_report_graduatoria.short_description = "Download report risultati"
+
+def _download_report_graduatoria_indicatori_ponderati(modeladmin,
+                                 request,
+                                 queryset,
+                                 ignora_disabilitati=False):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(queryset.first().bando)
+    response.write(u'\ufeff'.encode('utf8'))
+    
+    return export_graduatoria_indicatori_ponderati_csv(queryset=queryset,
+                                  fopen=response,
+                                  replace_dot_with=',',
+                                  ignora_disabilitati=ignora_disabilitati)
+
+def download_report_graduatoria_indicatori_ponderati(modeladmin, request, queryset):
+    """
+    """
+    return _download_report_graduatoria_indicatori_ponderati(modeladmin=modeladmin,
+                                        request=request,
+                                        queryset=queryset)
+download_report_graduatoria_indicatori_ponderati.short_description = "Download report risultati per indicatore"
 
 
 def download_report_graduatoria_ignora_disabilitati(modeladmin,
