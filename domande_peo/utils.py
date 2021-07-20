@@ -115,7 +115,7 @@ def export_graduatoria_indicatori_ponderati_csv(queryset, fopen,
     #Recupero tutti gli indcatori del bando in questione
     indicatori_ponderati = bando.indicatoreponderato_set.all().order_by('ordinamento')
    
-    intestazione = ['Prog', 'Matricola', 'Cognome', 'Nome', 'Pos.Eco']
+    intestazione = ['Prog', 'Matricola', 'Cognome', 'Nome', 'Data ultimo avanzamento ' ,'Pos.Eco']
 
     writer = csv.writer(fopen,
                         delimiter = delimiter,
@@ -152,6 +152,7 @@ def export_graduatoria_indicatori_ponderati_csv(queryset, fopen,
                         domanda.dipendente.matricola.zfill(6),
                         domanda.dipendente.cognome,
                         domanda.dipendente.nome,
+                        domanda.data_ultima_progressione,
                         livello.__str__()]
                 
               
