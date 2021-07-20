@@ -684,7 +684,7 @@ class PEO_URLField(CharField, BaseCustomField):
     def raise_error(self, name, cleaned_data, **kwargs):    
         if not cleaned_data: return []
         if not re.match('^(https?:)?[a-zA-Z0-9_.+-/#~]+$', str(cleaned_data)):
-            return [_("URL non valido"),]
+            return [_("Indirizzo link non valido"),]
 
 
 class PEO_AllegatoURLField(BaseCustomField):
@@ -705,7 +705,7 @@ class PEO_AllegatoURLField(BaseCustomField):
         # Url
         self.url_documento = PEO_URLField(*args, **data_kwargs)   
         self.url_documento.required = False
-        self.url_documento.label = _("URL al documento")
+        self.url_documento.label = _("Indirizzo link al documento")
         self.url_documento.name = "url_documento"        
         self.url_documento.parent = self      
 
