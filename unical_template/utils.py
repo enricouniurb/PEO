@@ -51,20 +51,20 @@ def punteggio_ogni_3_ore(pt, durata):
 
 def punteggio_ogni_3_ore_max_02(pt, durata):    
     max = 0.2
-    pt = (durata // 3) * pt + (pt if (durata % 3) >= 1.5 else 0)
-    return max if pt > max else  float("{:.2f}".format(pt))
+    tot = (durata // 3) * pt + (pt if (durata % 3) >= 1.5 else 0)
+    return max if tot > max else  float("{:.2f}".format(tot))
 
 def punteggio_ogni_5_ore_max_06(pt, durata):    
     max = 0.6
-    pt = (durata // 5) * pt + (pt if (durata % 3) >= 2.5 else 0)
-    return max if pt > max else  float("{:.2f}".format(pt))
+    tot = (durata // 5) * pt + (pt if (durata % 5) >= 2.5 else 0)
+    return max if tot > max else  float("{:.2f}".format(tot))
 
 def punteggio_ogni_5_ore_max_05(pt, durata):    
     max = 0.5
-    pt = (durata // 5) * pt + (pt if (durata % 3) >= 2.5 else 0)
-    return max if pt > max else  float("{:.2f}".format(pt))
+    tot = (durata // 5) * pt + (pt if (durata % 5) >= 2.5 else 0)
+    return max if tot > max else  float("{:.2f}".format(tot))
 
 def punteggio_ogni_5_ore_max_04(pt, durata):    
     max = 0.4
-    pt = (durata // 5) * pt + (pt if (durata % 3) >= 2.5 else 0)
-    return max if pt > max else  float("{:.2f}".format(pt))
+    tot = (durata // 5) * pt + (pt if (durata % 5) >= 2.5 else 0)
+    return max if tot > max else  float("{:.2f}".format(tot))
