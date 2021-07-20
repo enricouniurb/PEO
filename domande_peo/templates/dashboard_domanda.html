@@ -156,6 +156,12 @@
                                                 <div class="header">Inserimento non valutato</div>
                                                 <p>{{ ins.motivazione }}</p>
                                             </div>
+                                        {% elif ins.punteggio_manuale %}
+                                        <div class="ui error message">
+                                            <div class="header">Inserito punteggio manuale</div>
+                                            <p>{{ ins.motivazione }}</p>                                            
+                                        </div>                          
+                                        {{ ins.punteggio_manuale }}              
                                         {% elif ins.punteggio_calcolato %}
                                             {{ ins.punteggio_calcolato }}
                                         {% else %}

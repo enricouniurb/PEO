@@ -10,6 +10,8 @@ from django.utils import timezone
 
 from django_form_builder.dynamic_fields import format_field_name
 from django_form_builder.forms import BaseDynamicForm
+from django_form_builder.dynamic_fields import *
+from django import forms
 
 from . import peo_formfields
 from . settings import (ETICHETTA_INSERIMENTI_ID,
@@ -87,3 +89,10 @@ class PeoDynamicForm(BaseDynamicForm):
             if errors:
                 self.add_error(fname, errors)
                 continue
+
+
+
+class MotivazioneForm(forms.Form):
+    motivazione = forms.CharField(label= "Motivazione:", widget=forms.Textarea(attrs={"rows":1}))
+    punteggio_manuale = PositiveFloatField(label="Punteggio manuale:", required=False)
+

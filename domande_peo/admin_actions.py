@@ -118,7 +118,7 @@ def download_report_graduatoria_indicatori_ponderati(modeladmin, request, querys
     return _download_report_graduatoria_indicatori_ponderati(modeladmin=modeladmin,
                                         request=request,
                                         queryset=queryset)
-download_report_graduatoria_indicatori_ponderati.short_description = "Download report risultati per indicatore"
+download_report_graduatoria_indicatori_ponderati.short_description = "Download report risultati per indicatore (TABELLONE)"
 
 
 def download_report_graduatoria_ignora_disabilitati(modeladmin,

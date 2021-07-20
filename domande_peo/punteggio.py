@@ -570,8 +570,8 @@ class PunteggioModuloDomandaBando(object):
             cat_eco = self.domanda_bando.get_livello_dipendente().posizione_economica
             # Se il form prevede un campo Punteggio
             if "punteggio_dyn" in dati_inseriti:
-                punteggio =  float(dati_inseriti.get("punteggio_dyn"))
-
+                #questo diventa il punteggio calcolato e salvato come punteggio calcolato
+                punteggio =  float(dati_inseriti.get("punteggio_dyn"))          
             # Se il form prevede un campo "Titolo di Studio" con punteggio
             elif "titolo_di_studio_superiore" in dati_inseriti:
                 punteggio_titolo = self.punteggio_titolo_studio()
@@ -649,4 +649,9 @@ class PunteggioModuloDomandaBando(object):
         if save:
             self.punteggio_calcolato = punteggio
             self.save()
+
+        #Se la commissione ha inserito un punteggio manuale restituisco quello
+        if (self.punteggio_manuale):                           
+            return self.punteggio_manuale
+                        
         return punteggio
