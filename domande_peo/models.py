@@ -251,7 +251,7 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
     punteggio_calcolato = models.FloatField(help_text="popolato da metodo .calcolo_punteggio",
                                             blank=True, null=True)
 
-    punteggio_manuale = models.FloatField(help_text="punteggio attribuito dalla commissione",
+    punteggio_manuale = models.FloatField(help_text="punteggio manuale attribuito dalla commissione in alternativa al punteggio automatico",
                                             blank=True, null=True)                                                                                  
 
     # sovrascrive il field di TimeStampedModel per tracciare solo le modifiche

@@ -45,6 +45,7 @@ class ModuloDomandaBandoInLines(admin.StackedInline):
     fields = ('descrizione_indicatore',
               'get_modulo_anteprima',
               'punteggio_calcolato',
+              'punteggio_manuale',
               ('get_modulo_grafica', 'download_pdf',),
               ('created', 'modified'),
               ('disabilita','motivazione',))

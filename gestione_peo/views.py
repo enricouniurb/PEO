@@ -745,13 +745,14 @@ def commissione_modulo_domanda_modifica(request, commissione_id, domanda_id,
                 if (form_motivazione.is_valid()):
                     etichetta = mdb.get_identificativo_veloce()
                     mdb.motivazione = form_motivazione.cleaned_data['motivazione']
-                    mdb.punteggio_manuale = form_motivazione.cleaned_data['punteggio_manuale']
-                    mdb.save(update_fields=['punteggio_manuale', 'motivazione'])
-
+                    mdb.punteggio_manuale =form_motivazione.cleaned_data['punteggio_manuale'] if form_motivazione.cleaned_data['punteggio_manuale'] != 0 else None                   
                     if (mdb.punteggio_manuale):
                         msg = ("Inserimento {} - Etichetta: {} - punteggio: {} impostato con successo").format(mdb, etichetta,  mdb.punteggio_manuale)
                     else:
-                        msg = ("Inserimento {} - Etichetta: {} - punteggio cancellato con successo").format(mdb, etichetta)                    
+                        mdb.motivazione = ''
+                        msg = ("Inserimento {} - Etichetta: {} - punteggio cancellato con successo").format(mdb, etichetta)        
+
+                    mdb.save(update_fields=['punteggio_manuale', 'motivazione'])            
                     messages.add_message(request, messages.SUCCESS, msg)
                     # Logging di ogni azione compiuta sulla domanda dalla commissione
                     LogEntry.objects.log_action(user_id = request.user.pk,
