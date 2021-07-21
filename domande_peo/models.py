@@ -148,6 +148,16 @@ class DomandaBando(TimeStampedModel, PunteggioDomandaBando):
                 if di in [ i.descrizione_indicatore for i in self.modulodomandabando_set.all()]:
                     return True
 
+    def descr_ind_by_id_code(self, id_code):
+        """
+        Torna il primo DescrizioneIndicatore id_code 
+        """
+        for ip in self.bando.indicatoreponderato_set.all():
+            descr_ind = ip.descrizioneindicatore_set.filter(id_code=id_code).first()
+            if descr_ind:
+                return descr_ind
+        
+
     def valida(self):
         """
         Torna True se il controllo su tutti i moduli.is_valid() tornano true

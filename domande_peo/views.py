@@ -148,12 +148,37 @@ def scelta_titolo_da_aggiungere(request, bando_id):
     if domanda_bando:
         domanda_bando = domanda_bando.last()
     elif not domanda_bando:
+        #creazione della domanda        
         domanda_bando = DomandaBando.objects.create(bando=bando,
                                                     dipendente=dipendente,
                                                     modified=timezone.localtime(),
                                                     livello=dipendente.livello,
                                                     data_presa_servizio=dipendente.get_data_presa_servizio_csa(),
                                                     data_ultima_progressione=dipendente.get_data_progressione())
+        #importazione della formazione
+        if bando.data_validita_titoli_inizio: 
+            lista_formazione = FormazioneDipendente.objects.filter(
+                        matricola=dipendente.matricola, data_inizio__gte=bando.data_validita_titoli_inizio)
+
+            descrizione_indicatore = domanda_bando.descr_ind_by_id_code("Ab")
+            
+            if lista_formazione and descrizione_indicatore:
+                for formazione in lista_formazione:                
+                        data = {}
+                        data['etichetta_inserimento']= str(descrizione_indicatore) + "- Importato"
+                        data['titolo_corso']=formazione.evento_formativo
+                        data['ente_erogatore']=formazione.ente_organizzatore
+                        data['data_inizio_dyn_inner']=formazione.data_inizio.strftime(settings.STRFTIME_DATE_FORMAT)
+                        data['data_fine_dyn_inner']=formazione.data_fine.strftime(settings.STRFTIME_DATE_FORMAT)
+                        data['durata_come_decimale']=formazione.durata_ore
+
+                        aggiungi_titolo_from_db(request=request,
+                                                datadb=data, 
+                                                bando=bando,
+                                                descrizione_indicatore=descrizione_indicatore,
+                                                domanda_bando=domanda_bando,
+                                                dipendente=dipendente)
+
     if not domanda_bando.is_active:
         return render(request, 'custom_message.html',
                       {'avviso': ("La tua Domanda è stata sospesa. Per avere "
