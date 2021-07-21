@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
+from django.forms.models import model_to_dict
 
 from django_form_builder.utils import (get_allegati,
                                        get_allegati_dict,
@@ -24,6 +25,7 @@ from domande_peo.models import *
 from gestione_peo.models import Bando, IndicatorePonderato, DescrizioneIndicatore
 from gestione_peo.settings import ETICHETTA_INSERIMENTI_ID
 from gestione_risorse_umane.models import Dipendente, PosizioneEconomica, LivelloPosizioneEconomica
+
 
 
 def get_fname_allegato(domanda_bando_id, bando_id):
@@ -282,6 +284,38 @@ def export_graduatoria_csv(queryset, fopen,
             writer.writerow('')
     return fopen
 
+def aggiungi_titolo_from_db(request,
+                         datadb,
+                         bando,
+                         descrizione_indicatore,
+                         domanda_bando,
+                         dipendente,                       
+                         log=False):
+
+    form = descrizione_indicatore.get_form(data = datadb,                                           
+                                           domanda_bando=domanda_bando)
+    if form.is_valid():
+        # qui chiedere conferma prima del salvataggio
+        #json_data = get_POST_as_json(request)
+        mdb_model = apps.get_model(app_label='domande_peo', model_name='ModuloDomandaBando')
+        mdb = mdb_model.objects.create(
+                domanda_bando = domanda_bando,
+                modulo_compilato = json.dumps(datadb, indent = 2),
+                descrizione_indicatore = descrizione_indicatore,
+                modified=timezone.localtime(),
+                )
+
+        msg = 'Inserimento {} - Etichetta: {} - effettuato con successo!'.format(mdb, datadb[ETICHETTA_INSERIMENTI_ID])   
+        #Allega il messaggio al redirect
+        messages.success(request, msg)
+        if log:
+            LogEntry.objects.log_action(user_id = request.user.pk,
+                                        content_type_id = ContentType.objects.get_for_model(domanda_bando).pk,
+                                        object_id       = domanda_bando.pk,
+                                        object_repr     = domanda_bando.__str__(),
+                                        action_flag     = CHANGE,
+                                        change_message  = msg)
+
 def aggiungi_titolo_form(request,
                          bando,
                          descrizione_indicatore,
@@ -289,6 +323,7 @@ def aggiungi_titolo_form(request,
                          dipendente,
                          return_url,
                          log=False):
+                         
     form = descrizione_indicatore.get_form(data=request.POST,
                                            files=request.FILES,
                                            domanda_bando=domanda_bando)
