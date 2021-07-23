@@ -7,7 +7,7 @@
     "created": "2019-11-11T07:10:42.369000+00:00",
     "modified": "2021-07-16T13:24:52.453336+00:00",
     "nome": "PEO XXXX",
-    "slug": "peo-XXXX-5ff68bf04909462691653c48a1f9b76d-a905c20479504637a9992dd12506777a-1768f83c7fbf4529bc9beb2c9d856356",
+    "slug": "peo-XXXX-5ff68bf04909462691653c48a1f9b76d-a905c20479504637a9992dd12506777a-833aa37fef5a4371a538e81a3455b0c4",
     "data_inizio": "1999-11-12T11:00:00+00:00",
     "data_fine": "2222-02-02T08:40:08+00:00",
     "data_fine_presentazione_domande": "2222-02-02T08:40:10+00:00",
@@ -2556,17 +2556,47 @@
               "related_field": "descrizione_indicatore"
             },
             {
-              "source_pk": 53,
+              "source_pk": 55,
               "duplicate": true,
               "app_name": "domande_peo",
               "model_name": "ModuloDomandaBando",
               "object": {
-                "created": "2021-07-15T07:37:20.963714+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione certificata e pertinente al ruolo ricoperto (Formazione certificata e pertinente al ruolo ricoperto - PEO XXXX)\",\n  \"titolo_corso\": \"titolo corso corrente\",\n  \"ente_erogatore\": \"uniurb\",\n  \"data_inizio_dyn_inner\": \"05/07/2020\",\n  \"data_fine_dyn_inner\": \"15/07/2020\",\n  \"durata_come_decimale\": \"150.5\",\n  \"attestato_di_frequenza\": \"\",\n  \"allegati\": {}\n}",
-                "domanda_bando": 14,
-                "domanda_bando_id": 14,
-                "punteggio_calcolato": 2.4000000000000004,
-                "modified": "2021-07-16T13:40:05.760028+00:00"
+                "created": "2021-07-21T13:00:20.242034+00:00",
+                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione certificata e pertinente al ruolo ricoperto (Formazione certificata e pertinente al ruolo ricoperto - PEO XXXX)- Importato\",\n  \"titolo_corso\": \"prova prova3\",\n  \"ente_erogatore\": \"uni uni uni\",\n  \"data_inizio_dyn_inner\": \"16/07/2019\",\n  \"data_fine_dyn_inner\": \"16/07/2019\",\n  \"durata_come_decimale\": \"16\",\n  \"attestato_di_frequenza\": \"\",\n  \"allegati\": {}\n}",
+                "domanda_bando": 16,
+                "domanda_bando_id": 16,
+                "modified": "2021-07-21T13:04:00.653472+00:00"
+              },
+              "fields": [
+                "created",
+                "modulo_compilato",
+                "domanda_bando",
+                "domanda_bando_id",
+                "descrizione_indicatore",
+                "descrizione_indicatore_id",
+                "disabilita",
+                "motivazione",
+                "punteggio_calcolato",
+                "punteggio_manuale",
+                "modified"
+              ],
+              "m2m": [],
+              "childrens": [],
+              "depth": 3,
+              "save": true,
+              "related_field": "descrizione_indicatore"
+            },
+            {
+              "source_pk": 57,
+              "duplicate": true,
+              "app_name": "domande_peo",
+              "model_name": "ModuloDomandaBando",
+              "object": {
+                "created": "2021-07-23T11:58:38.452532+00:00",
+                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione\",\n  \"titolo_corso\": \"G.D.P.R\",\n  \"ente_erogatore\": \"Universit\\u00e0 degli Studi di Urbino Carlo Bo\",\n  \"data_inizio_dyn_inner\": \"01/12/2020\",\n  \"data_fine_dyn_inner\": \"31/12/2020\",\n  \"durata_come_decimale\": \"3\",\n  \"attestato_di_frequenza\": \"\"\n}",
+                "domanda_bando": 17,
+                "domanda_bando_id": 17,
+                "modified": "2021-07-23T11:58:38.452447+00:00"
               },
               "fields": [
                 "created",
@@ -2851,7 +2881,7 @@
           "model_name": "DescrizioneIndicatore",
           "object": {
             "created": "2019-11-11T07:10:42.585000+00:00",
-            "modified": "2021-07-15T11:26:01.097167+00:00",
+            "modified": "2021-07-23T12:07:39.137831+00:00",
             "nome": "Titolo di studio",
             "id_code": "Eb",
             "calcolo_punteggio_automatico": true,
@@ -3003,6 +3033,33 @@
               "related_field": "descrizione_indicatore"
             },
             {
+              "source_pk": 261,
+              "duplicate": true,
+              "app_name": "gestione_peo",
+              "model_name": "ModuloInserimentoCampi",
+              "object": {
+                "name": "Corso di studi",
+                "field_type": "CustomCharField",
+                "is_required": true,
+                "ordinamento": 1
+              },
+              "fields": [
+                "name",
+                "field_type",
+                "valore",
+                "is_required",
+                "aiuto",
+                "ordinamento",
+                "descrizione_indicatore",
+                "descrizione_indicatore_id"
+              ],
+              "m2m": [],
+              "childrens": [],
+              "depth": 3,
+              "save": true,
+              "related_field": "descrizione_indicatore"
+            },
+            {
               "source_pk": 250,
               "duplicate": true,
               "app_name": "gestione_peo",
@@ -3011,7 +3068,7 @@
                 "name": "Rilasciato da",
                 "field_type": "CustomCharField",
                 "is_required": true,
-                "ordinamento": 1
+                "ordinamento": 2
               },
               "fields": [
                 "name",
@@ -3035,34 +3092,7 @@
               "app_name": "gestione_peo",
               "model_name": "ModuloInserimentoCampi",
               "object": {
-                "name": "Anno di conseguimento",
-                "field_type": "PositiveIntegerField",
-                "is_required": true,
-                "ordinamento": 2
-              },
-              "fields": [
-                "name",
-                "field_type",
-                "valore",
-                "is_required",
-                "aiuto",
-                "ordinamento",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 252,
-              "duplicate": true,
-              "app_name": "gestione_peo",
-              "model_name": "ModuloInserimentoCampi",
-              "object": {
-                "name": "Voto",
+                "name": "Citt\u00e0",
                 "field_type": "CustomCharField",
                 "is_required": true,
                 "ordinamento": 3
@@ -3084,17 +3114,43 @@
               "related_field": "descrizione_indicatore"
             },
             {
-              "source_pk": 51,
+              "source_pk": 260,
+              "duplicate": true,
+              "app_name": "gestione_peo",
+              "model_name": "ModuloInserimentoCampi",
+              "object": {
+                "name": "Data",
+                "field_type": "PEO_BaseDateField",
+                "is_required": true,
+                "ordinamento": 4
+              },
+              "fields": [
+                "name",
+                "field_type",
+                "valore",
+                "is_required",
+                "aiuto",
+                "ordinamento",
+                "descrizione_indicatore",
+                "descrizione_indicatore_id"
+              ],
+              "m2m": [],
+              "childrens": [],
+              "depth": 3,
+              "save": true,
+              "related_field": "descrizione_indicatore"
+            },
+            {
+              "source_pk": 56,
               "duplicate": true,
               "app_name": "domande_peo",
               "model_name": "ModuloDomandaBando",
               "object": {
-                "created": "2021-07-15T07:25:07.790103+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Titolo di studio (Titoli culturali e professionali - PEO XXXX)\",\n  \"titolo_di_studio_superiore\": \"20\",\n  \"rilasciato_da\": \"Universit\\u00e0 di Urbino\",\n  \"anno_di_conseguimento\": \"2004\",\n  \"voto\": \"101\"\n}",
-                "domanda_bando": 14,
-                "domanda_bando_id": 14,
-                "punteggio_calcolato": 1.0,
-                "modified": "2021-07-15T07:25:07.789996+00:00"
+                "created": "2021-07-23T11:57:05.106326+00:00",
+                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Titolo di studio\",\n  \"titolo_di_studio_superiore\": \"21\",\n  \"rilasciato_da\": \"Universit\\u00e0 degli Studi di Urbino Carlo Bo\",\n  \"anno_di_conseguimento\": \"2017\",\n  \"voto\": \"105\"\n}",
+                "domanda_bando": 17,
+                "domanda_bando_id": 17,
+                "modified": "2021-07-23T11:57:05.106226+00:00"
               },
               "fields": [
                 "created",
@@ -4368,72 +4424,6 @@
                   "related_field": "descrizione_indicatore"
                 }
               ],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 52,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-07-15T07:33:39.752820+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\u2019attivit\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\",\n  \"sub_descrizione_indicatore_form\": \"109\",\n  \"titolo_submulti_109\": \"prova prova titolo\",\n  \"autorei_submulti_109\": \"autore\",\n  \"nome_rivista_submulti_109\": \"nome rivista\",\n  \"anno_pubblicazione_submulti_109\": \"2019\",\n  \"url_documento\": \"https://ora.uniurb.it/handle/11576/2502161\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 14,
-                "domanda_bando_id": 14,
-                "disabilita": true,
-                "motivazione": "Disabilitazione per duplicazione in (Ea) Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\u2019attivit\u00e0 lavorativa",
-                "punteggio_calcolato": 0.3,
-                "modified": "2021-07-15T07:33:39.752711+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "punteggio_manuale",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
-              "depth": 3,
-              "save": true,
-              "related_field": "descrizione_indicatore"
-            },
-            {
-              "source_pk": 54,
-              "duplicate": true,
-              "app_name": "domande_peo",
-              "model_name": "ModuloDomandaBando",
-              "object": {
-                "created": "2021-07-15T07:46:06.606546+00:00",
-                "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\u2019attivit\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\",\n  \"sub_descrizione_indicatore_form\": \"108\",\n  \"titolo_submulti_108\": \"prova prova\",\n  \"autorei_submulti_108\": \"autore\",\n  \"casa_editrice_submulti_108\": \"casa editrice\",\n  \"anno_di_pubblicazione_submulti_108\": \"2018\",\n  \"url_documento\": \"https://ora.uniurb.it/handle/11576/2502161\",\n  \"allegato\": \"\"\n}",
-                "domanda_bando": 14,
-                "domanda_bando_id": 14,
-                "punteggio_calcolato": 0.3,
-                "modified": "2021-07-15T07:46:06.606448+00:00"
-              },
-              "fields": [
-                "created",
-                "modulo_compilato",
-                "domanda_bando",
-                "domanda_bando_id",
-                "descrizione_indicatore",
-                "descrizione_indicatore_id",
-                "disabilita",
-                "motivazione",
-                "punteggio_calcolato",
-                "punteggio_manuale",
-                "modified"
-              ],
-              "m2m": [],
-              "childrens": [],
               "depth": 3,
               "save": true,
               "related_field": "descrizione_indicatore"
@@ -6719,26 +6709,119 @@
       "related_field": "bando"
     },
     {
-      "source_pk": 14,
+      "source_pk": 25,
+      "duplicate": true,
+      "app_name": "domande_peo",
+      "model_name": "AbilitazioneBandoDipendente",
+      "object": {
+        "created": "2021-07-23T10:19:39.908666+00:00",
+        "modified": "2021-07-23T10:19:39.908666+00:00",
+        "dipendente": 477,
+        "dipendente_id": 477
+      },
+      "fields": [
+        "created",
+        "modified",
+        "bando",
+        "bando_id",
+        "dipendente",
+        "dipendente_id"
+      ],
+      "m2m": [],
+      "childrens": [],
+      "depth": 1,
+      "save": true,
+      "related_field": "bando"
+    },
+    {
+      "source_pk": 26,
+      "duplicate": true,
+      "app_name": "domande_peo",
+      "model_name": "AbilitazioneBandoDipendente",
+      "object": {
+        "created": "2021-07-23T10:57:48.056360+00:00",
+        "modified": "2021-07-23T10:57:48.056360+00:00",
+        "dipendente": 414,
+        "dipendente_id": 414
+      },
+      "fields": [
+        "created",
+        "modified",
+        "bando",
+        "bando_id",
+        "dipendente",
+        "dipendente_id"
+      ],
+      "m2m": [],
+      "childrens": [],
+      "depth": 1,
+      "save": true,
+      "related_field": "bando"
+    },
+    {
+      "source_pk": 27,
+      "duplicate": true,
+      "app_name": "domande_peo",
+      "model_name": "AbilitazioneBandoDipendente",
+      "object": {
+        "created": "2021-07-23T11:46:11.602259+00:00",
+        "modified": "2021-07-23T11:46:11.602259+00:00",
+        "dipendente": 398,
+        "dipendente_id": 398
+      },
+      "fields": [
+        "created",
+        "modified",
+        "bando",
+        "bando_id",
+        "dipendente",
+        "dipendente_id"
+      ],
+      "m2m": [],
+      "childrens": [],
+      "depth": 1,
+      "save": true,
+      "related_field": "bando"
+    },
+    {
+      "source_pk": 28,
+      "duplicate": true,
+      "app_name": "domande_peo",
+      "model_name": "AbilitazioneBandoDipendente",
+      "object": {
+        "created": "2021-07-23T11:46:25.652729+00:00",
+        "modified": "2021-07-23T11:46:25.652729+00:00",
+        "dipendente": 663,
+        "dipendente_id": 663
+      },
+      "fields": [
+        "created",
+        "modified",
+        "bando",
+        "bando_id",
+        "dipendente",
+        "dipendente_id"
+      ],
+      "m2m": [],
+      "childrens": [],
+      "depth": 1,
+      "save": true,
+      "related_field": "bando"
+    },
+    {
+      "source_pk": 16,
       "duplicate": true,
       "app_name": "domande_peo",
       "model_name": "DomandaBando",
       "object": {
-        "created": "2021-07-15T07:24:16.766999+00:00",
+        "created": "2021-07-21T13:00:20.213416+00:00",
         "dipendente": 416,
         "dipendente_id": 416,
-        "modified": "2021-07-15T07:46:06.612029+00:00",
-        "numero_protocollo": "2021-UNURCLE-0000302",
-        "data_protocollazione": "2021-07-15T07:39:12.942109+00:00",
+        "modified": "2021-07-21T13:00:15.445756+00:00",
         "livello": 1,
         "livello_id": 1,
         "data_presa_servizio": "2018-04-16",
         "data_ultima_progressione": "1999-01-01",
-        "punteggio_calcolato": 6.43,
-        "progressione_accettata": true,
-        "presa_visione_utente": 2,
-        "presa_visione_utente_id": 2,
-        "presa_visione_data": "2021-07-15T07:50:43.550938+00:00",
         "is_active": true
       },
       "fields": [
@@ -6768,46 +6851,94 @@
       "m2m": [],
       "childrens": [
         {
-          "source_pk": 4,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "RettificaDomandaBando",
-          "object": {
-            "created": "2021-07-15T12:42:00.131219+00:00",
-            "modified": "2021-07-15T12:42:00.131219+00:00",
-            "data_chiusura": "2021-07-15T07:39:12.942255+00:00",
-            "numero_protocollo": "2021-UNURCLE-0000302",
-            "data_protocollazione": "2021-07-15T07:39:12.942109+00:00",
-            "dump": "[\n  [\n    [\n      \"id\",\n      53\n    ],\n    [\n      \"created\",\n      \"2021-07-15 07:37:20.963714+00:00\"\n    ],\n    [\n      \"modified\",\n      \"2021-07-15 07:37:20.963621+00:00\"\n    ],\n    [\n      \"modulo_compilato\",\n      \"{\\n  \\\"etichetta_inserimento\\\": \\\"Formazione certificata e pertinente al ruolo ricoperto (Formazione certificata e pertinente al ruolo ricoperto - PEO XXXX)\\\",\\n  \\\"titolo_corso\\\": \\\"titolo corso corrente\\\",\\n  \\\"ente_erogatore\\\": \\\"uniurb\\\",\\n  \\\"data_inizio_dyn_inner\\\": \\\"05/07/2020\\\",\\n  \\\"data_fine_dyn_inner\\\": \\\"15/07/2020\\\",\\n  \\\"durata_come_intero\\\": \\\"120\\\",\\n  \\\"attestato_di_frequenza\\\": \\\"\\\"\\n}\"\n    ],\n    [\n      \"descrizione_indicatore_id\",\n      64\n    ]\n  ],\n  [\n    [\n      \"id\",\n      52\n    ],\n    [\n      \"created\",\n      \"2021-07-15 07:33:39.752820+00:00\"\n    ],\n    [\n      \"modified\",\n      \"2021-07-15 07:33:39.752711+00:00\"\n    ],\n    [\n      \"modulo_compilato\",\n      \"{\\n  \\\"etichetta_inserimento\\\": \\\"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\\\u2019attivit\\\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\\\",\\n  \\\"sub_descrizione_indicatore_form\\\": \\\"109\\\",\\n  \\\"titolo_submulti_109\\\": \\\"prova prova titolo\\\",\\n  \\\"autorei_submulti_109\\\": \\\"autore\\\",\\n  \\\"nome_rivista_submulti_109\\\": \\\"nome rivista\\\",\\n  \\\"anno_pubblicazione_submulti_109\\\": \\\"2019\\\",\\n  \\\"url_documento\\\": \\\"https://ora.uniurb.it/handle/11576/2502161\\\",\\n  \\\"allegato\\\": \\\"\\\"\\n}\"\n    ],\n    [\n      \"descrizione_indicatore_id\",\n      66\n    ]\n  ],\n  [\n    [\n      \"id\",\n      54\n    ],\n    [\n      \"created\",\n      \"2021-07-15 07:46:06.606546+00:00\"\n    ],\n    [\n      \"modified\",\n      \"2021-07-15 07:46:06.606448+00:00\"\n    ],\n    [\n      \"modulo_compilato\",\n      \"{\\n  \\\"etichetta_inserimento\\\": \\\"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\\\u2019attivit\\\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\\\",\\n  \\\"sub_descrizione_indicatore_form\\\": \\\"108\\\",\\n  \\\"titolo_submulti_108\\\": \\\"prova prova\\\",\\n  \\\"autorei_submulti_108\\\": \\\"autore\\\",\\n  \\\"casa_editrice_submulti_108\\\": \\\"casa editrice\\\",\\n  \\\"anno_di_pubblicazione_submulti_108\\\": \\\"2018\\\",\\n  \\\"url_documento\\\": \\\"https://ora.uniurb.it/handle/11576/2502161\\\",\\n  \\\"allegato\\\": \\\"\\\"\\n}\"\n    ],\n    [\n      \"descrizione_indicatore_id\",\n      66\n    ]\n  ],\n  [\n    [\n      \"id\",\n      51\n    ],\n    [\n      \"created\",\n      \"2021-07-15 07:25:07.790103+00:00\"\n    ],\n    [\n      \"modified\",\n      \"2021-07-15 07:25:07.789996+00:00\"\n    ],\n    [\n      \"modulo_compilato\",\n      \"{\\n  \\\"etichetta_inserimento\\\": \\\"Titolo di studio (Titoli culturali e professionali - PEO XXXX)\\\",\\n  \\\"titolo_di_studio_superiore\\\": \\\"20\\\",\\n  \\\"rilasciato_da\\\": \\\"Universit\\\\u00e0 di Urbino\\\",\\n  \\\"anno_di_conseguimento\\\": \\\"2004\\\",\\n  \\\"voto\\\": \\\"101\\\"\\n}\"\n    ],\n    [\n      \"descrizione_indicatore_id\",\n      65\n    ]\n  ]\n]"
-          },
-          "fields": [
-            "created",
-            "modified",
-            "domanda_bando",
-            "domanda_bando_id",
-            "data_chiusura",
-            "numero_protocollo",
-            "data_protocollazione",
-            "dump"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 53,
+          "source_pk": 55,
           "duplicate": true,
           "app_name": "domande_peo",
           "model_name": "ModuloDomandaBando",
           "object": {
-            "created": "2021-07-15T07:37:20.963714+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione certificata e pertinente al ruolo ricoperto (Formazione certificata e pertinente al ruolo ricoperto - PEO XXXX)\",\n  \"titolo_corso\": \"titolo corso corrente\",\n  \"ente_erogatore\": \"uniurb\",\n  \"data_inizio_dyn_inner\": \"05/07/2020\",\n  \"data_fine_dyn_inner\": \"15/07/2020\",\n  \"durata_come_decimale\": \"150.5\",\n  \"attestato_di_frequenza\": \"\",\n  \"allegati\": {}\n}",
+            "created": "2021-07-21T13:00:20.242034+00:00",
+            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione certificata e pertinente al ruolo ricoperto (Formazione certificata e pertinente al ruolo ricoperto - PEO XXXX)- Importato\",\n  \"titolo_corso\": \"prova prova3\",\n  \"ente_erogatore\": \"uni uni uni\",\n  \"data_inizio_dyn_inner\": \"16/07/2019\",\n  \"data_fine_dyn_inner\": \"16/07/2019\",\n  \"durata_come_decimale\": \"16\",\n  \"attestato_di_frequenza\": \"\",\n  \"allegati\": {}\n}",
             "descrizione_indicatore": 64,
             "descrizione_indicatore_id": 64,
-            "punteggio_calcolato": 2.4000000000000004,
-            "modified": "2021-07-16T13:40:05.760028+00:00"
+            "modified": "2021-07-21T13:04:00.653472+00:00"
+          },
+          "fields": [
+            "created",
+            "modulo_compilato",
+            "domanda_bando",
+            "domanda_bando_id",
+            "descrizione_indicatore",
+            "descrizione_indicatore_id",
+            "disabilita",
+            "motivazione",
+            "punteggio_calcolato",
+            "punteggio_manuale",
+            "modified"
+          ],
+          "m2m": [],
+          "childrens": [],
+          "depth": 2,
+          "save": true,
+          "related_field": "domanda_bando"
+        }
+      ],
+      "depth": 1,
+      "save": true,
+      "related_field": "bando"
+    },
+    {
+      "source_pk": 17,
+      "duplicate": true,
+      "app_name": "domande_peo",
+      "model_name": "DomandaBando",
+      "object": {
+        "created": "2021-07-23T11:53:32.581427+00:00",
+        "dipendente": 398,
+        "dipendente_id": 398,
+        "modified": "2021-07-23T11:58:38.460290+00:00",
+        "livello": 1,
+        "livello_id": 1,
+        "data_presa_servizio": "2016-07-06",
+        "data_ultima_progressione": "2016-07-06",
+        "is_active": true
+      },
+      "fields": [
+        "created",
+        "bando",
+        "bando_id",
+        "dipendente",
+        "dipendente_id",
+        "modified",
+        "data_chiusura",
+        "numero_protocollo",
+        "data_protocollazione",
+        "livello",
+        "livello_id",
+        "data_presa_servizio",
+        "data_ultima_progressione",
+        "punteggio_anzianita_manuale",
+        "punteggio_calcolato",
+        "progressione_accettata",
+        "descrizione",
+        "commento_punteggio",
+        "presa_visione_utente",
+        "presa_visione_utente_id",
+        "presa_visione_data",
+        "is_active"
+      ],
+      "m2m": [],
+      "childrens": [
+        {
+          "source_pk": 57,
+          "duplicate": true,
+          "app_name": "domande_peo",
+          "model_name": "ModuloDomandaBando",
+          "object": {
+            "created": "2021-07-23T11:58:38.452532+00:00",
+            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Formazione\",\n  \"titolo_corso\": \"G.D.P.R\",\n  \"ente_erogatore\": \"Universit\\u00e0 degli Studi di Urbino Carlo Bo\",\n  \"data_inizio_dyn_inner\": \"01/12/2020\",\n  \"data_fine_dyn_inner\": \"31/12/2020\",\n  \"durata_come_decimale\": \"3\",\n  \"attestato_di_frequenza\": \"\"\n}",
+            "descrizione_indicatore": 64,
+            "descrizione_indicatore_id": 64,
+            "modified": "2021-07-23T11:58:38.452447+00:00"
           },
           "fields": [
             "created",
@@ -6829,83 +6960,16 @@
           "related_field": "domanda_bando"
         },
         {
-          "source_pk": 52,
+          "source_pk": 56,
           "duplicate": true,
           "app_name": "domande_peo",
           "model_name": "ModuloDomandaBando",
           "object": {
-            "created": "2021-07-15T07:33:39.752820+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\u2019attivit\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\",\n  \"sub_descrizione_indicatore_form\": \"109\",\n  \"titolo_submulti_109\": \"prova prova titolo\",\n  \"autorei_submulti_109\": \"autore\",\n  \"nome_rivista_submulti_109\": \"nome rivista\",\n  \"anno_pubblicazione_submulti_109\": \"2019\",\n  \"url_documento\": \"https://ora.uniurb.it/handle/11576/2502161\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 66,
-            "descrizione_indicatore_id": 66,
-            "disabilita": true,
-            "motivazione": "Disabilitazione per duplicazione in (Ea) Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\u2019attivit\u00e0 lavorativa",
-            "punteggio_calcolato": 0.3,
-            "modified": "2021-07-15T07:33:39.752711+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "punteggio_manuale",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 54,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-07-15T07:46:06.606546+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Pubblicazioni e collaborazione in pubblicazioni in materie inerenti l\\u2019attivit\\u00e0 lavorativa (Titoli culturali e professionali - PEO XXXX)\",\n  \"sub_descrizione_indicatore_form\": \"108\",\n  \"titolo_submulti_108\": \"prova prova\",\n  \"autorei_submulti_108\": \"autore\",\n  \"casa_editrice_submulti_108\": \"casa editrice\",\n  \"anno_di_pubblicazione_submulti_108\": \"2018\",\n  \"url_documento\": \"https://ora.uniurb.it/handle/11576/2502161\",\n  \"allegato\": \"\"\n}",
-            "descrizione_indicatore": 66,
-            "descrizione_indicatore_id": 66,
-            "punteggio_calcolato": 0.3,
-            "modified": "2021-07-15T07:46:06.606448+00:00"
-          },
-          "fields": [
-            "created",
-            "modulo_compilato",
-            "domanda_bando",
-            "domanda_bando_id",
-            "descrizione_indicatore",
-            "descrizione_indicatore_id",
-            "disabilita",
-            "motivazione",
-            "punteggio_calcolato",
-            "punteggio_manuale",
-            "modified"
-          ],
-          "m2m": [],
-          "childrens": [],
-          "depth": 2,
-          "save": true,
-          "related_field": "domanda_bando"
-        },
-        {
-          "source_pk": 51,
-          "duplicate": true,
-          "app_name": "domande_peo",
-          "model_name": "ModuloDomandaBando",
-          "object": {
-            "created": "2021-07-15T07:25:07.790103+00:00",
-            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Titolo di studio (Titoli culturali e professionali - PEO XXXX)\",\n  \"titolo_di_studio_superiore\": \"20\",\n  \"rilasciato_da\": \"Universit\\u00e0 di Urbino\",\n  \"anno_di_conseguimento\": \"2004\",\n  \"voto\": \"101\"\n}",
+            "created": "2021-07-23T11:57:05.106326+00:00",
+            "modulo_compilato": "{\n  \"etichetta_inserimento\": \"Titolo di studio\",\n  \"titolo_di_studio_superiore\": \"21\",\n  \"rilasciato_da\": \"Universit\\u00e0 degli Studi di Urbino Carlo Bo\",\n  \"anno_di_conseguimento\": \"2017\",\n  \"voto\": \"105\"\n}",
             "descrizione_indicatore": 65,
             "descrizione_indicatore_id": 65,
-            "punteggio_calcolato": 1.0,
-            "modified": "2021-07-15T07:25:07.789996+00:00"
+            "modified": "2021-07-23T11:57:05.106226+00:00"
           },
           "fields": [
             "created",
