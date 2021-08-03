@@ -85,7 +85,7 @@ class DescrizioneIndicatoreModelForm(forms.ModelForm):
     class Meta:
         model = DescrizioneIndicatore
         fields = ('__all__')
-        widgets = {'ordinamento': forms.HiddenInput()}
+        #widgets = {'ordinamento': forms.HiddenInput()}
 
 
 class ModuloInserimentoCampiModelForm(forms.ModelForm):

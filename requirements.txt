@@ -12,24 +12,23 @@ cffi
 git+https://github.com/knaperek/djangosaml2.git
 
 # Admin nested inlines
-#git+https://github.com/peppelinux/django-nested-admin.git
 git+https://github.com/theatlantic/django-nested-admin.git
 
 # advanced filters
-#git+https://github.com/modlinltd/django-advanced-filters.git
 #git+https://github.com/brack3t/django-braces.git
 #git+https://github.com/peppelinux/django-advanced-filters.git
 
 django_admin_multiple_choice_list_filter
 
 #adminactions
-git+https://github.com/peppelinux/django-adminactions.git
+git+https://github.com/saxix/django-adminactions.git
+#git+https://github.com/peppelinux/django-adminactions.git
 
 # rangefilter
 git+https://github.com/silentsokolov/django-admin-rangefilter.git
 
 # CINECA CSA Interface
-git+https://github.com/UniversitaDellaCalabria/django-cineca-csa.git
+git+https://github.com/enricouniurb/django-cineca-csa.git
 
 # Oracle CSA support
 #cx_Oracle
@@ -53,9 +52,10 @@ pypdf2
 
 # SOAP Client protocollazione
 zeep
+xmltodict
 
-# csa model
-git+https://github.com/UniversitaDellaCalabria/django-cineca-csa.git
+# csa model 
+#git+https://github.com/UniversitaDellaCalabria/django-cineca-csa.git
 
 # auto serializer
 git+https://github.com/peppelinux/django-auto-serializer.git

@@ -58,10 +58,12 @@ class PunteggioDomandaBando(object):
                 elif not fascia.posizione_economica:
                     punteggio_categoria = fascia.punteggio
 
+            # I 2 anni costituiscon oil requisito minimo di anzianità per partecipare alle PEO quindi equvalgono al punteggio inizale per ciascuna 
+            # categoria (vedi bando)
             if unita_temporale=="m":
-                punteggio += punteggio_categoria*mesi_servizio
+                punteggio += punteggio_categoria*mesi_servizio - (punteggio_categoria * 12)
             elif unita_temporale=="y":
-                punteggio += punteggio_categoria*(mesi_servizio/12)
+                punteggio += ((punteggio_categoria*(mesi_servizio // 12) + (punteggio_categoria if (mesi_servizio % 12) >= 6 else 0)) - punteggio_categoria)
 
             # Se non è stata effettuata alcuna progressione e
             # l'anzianità è maggiore o uguale alla soglia di bonus
@@ -186,7 +188,9 @@ class PunteggioDomandaBando(object):
                     continue
 
                 # Lancio il metodo calcolo_punteggio che mi setta
-                # il punteggio del modulo sul backend
+                # il punteggio del modulo sul backend 
+                # considera i punteggi dei sub_descrittori
+                # imposta il punteggio calcolato 
                 calcolo = mdb.calcolo_punteggio(save=save)
 
                 # Se si tratta di valutare un titolo di studio
@@ -278,7 +282,7 @@ class PunteggioDomandaBando(object):
                 # Imposto come punteggio di cui tener conto il max
                 results[1] = p_max_descr_ind
                 # Imposto la lista dei messaggi
-                results[2] = messaggi
+                results[2] = messaggi     
         return results
 
     def calcolo_punteggio_max_indicatore(self,
@@ -494,7 +498,8 @@ class PunteggioModuloDomandaBando(object):
         if not durata: return punteggio
 
         # Accettati i Float ma valutati solo come Interi
-        durata = int(durata)
+        #cambio tipo
+        #durata = float(durata)
 
         descr_ind = self.descrizione_indicatore
 
@@ -544,6 +549,8 @@ class PunteggioModuloDomandaBando(object):
         dati_inseriti = get_as_dict(json_dict)
         if "sub_descrizione_indicatore" in dati_inseriti:
             return dati_inseriti.get("sub_descrizione_indicatore")
+        if "sub_descrizione_indicatore_form" in dati_inseriti:
+            return dati_inseriti.get("sub_descrizione_indicatore_form")
 
     def calcolo_punteggio(self, save=False):
         """
@@ -563,23 +570,25 @@ class PunteggioModuloDomandaBando(object):
             cat_eco = self.domanda_bando.get_livello_dipendente().posizione_economica
             # Se il form prevede un campo Punteggio
             if "punteggio_dyn" in dati_inseriti:
-                punteggio =  float(dati_inseriti.get("punteggio_dyn"))
-
+                #questo diventa il punteggio calcolato e salvato come punteggio calcolato
+                punteggio =  float(dati_inseriti.get("punteggio_dyn"))          
             # Se il form prevede un campo "Titolo di Studio" con punteggio
             elif "titolo_di_studio_superiore" in dati_inseriti:
                 punteggio_titolo = self.punteggio_titolo_studio()
                 punteggio = float(punteggio_titolo[1])
 
             # Se il form prevede la selezione di un SubDescrizioneIndicatore
-            elif "sub_descrizione_indicatore" in dati_inseriti:
-                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")
+            elif "sub_descrizione_indicatore" in dati_inseriti:                 
+                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore")                                
                 subdescrind = descr_ind.subdescrizioneindicatore_set.filter(pk=subdescrind_id).first()
 
                 if subdescrind.punteggio_subdescrizioneindicatore_set.first():
                     punteggio = self.punteggio_descrizione_indicatore(cat_eco,
                                                                       subdescrind)
                 elif subdescrind.punteggio_subdescrizioneindicatore_timedelta_set.first():
-                    durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale", 0))
+                    if (dati_inseriti.get("durata_come_decimale", 0) == 0):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
                     durata = self.get_durata_int(durata_inserita,
                                                  dati_inseriti.get("data_inizio_dyn_inner"),
                                                  dati_inseriti.get("data_fine_dyn_inner"),
@@ -589,6 +598,33 @@ class PunteggioModuloDomandaBando(object):
                     punteggio = self.punteggio_descr_timedelta(cat_eco,
                                                                durata,
                                                                subdescrind)
+
+            # Se il form prevede la selezione di un SubDescrizioneIndicatore con form
+            elif "sub_descrizione_indicatore_form" in dati_inseriti:     
+                #punteggio_dyn_submulti_349                           
+                subdescrind_id = dati_inseriti.get("sub_descrizione_indicatore_form")
+                subdescrind = descr_ind.subdescrizioneindicatore_set.filter(pk=subdescrind_id).first()
+
+                if "punteggio_dyn_submulti_{}".format(subdescrind_id) in dati_inseriti:
+                    punteggio =  float(dati_inseriti.get("punteggio_dyn_submulti_{}".format(subdescrind_id)))
+
+                if subdescrind.punteggio_subdescrizioneindicatore_set.first():
+                    punteggio = self.punteggio_descrizione_indicatore(cat_eco,
+                                                                      subdescrind)
+                elif subdescrind.punteggio_subdescrizioneindicatore_timedelta_set.first():
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale_submulti_{}".format(subdescrind_id), 0))                    
+                    if (dati_inseriti.get("durata_come_decimale_submulti_{}".format(subdescrind_id), 0)):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero_submulti_{}".format(subdescrind_id), 0)) 
+                    durata = self.get_durata_int(durata_inserita,
+                                                 dati_inseriti.get("data_inizio_dyn_inner_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_fine_dyn_inner_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("in_corso_dyn_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_inizio_dyn_out_submulti_{}".format(subdescrind_id)),
+                                                 dati_inseriti.get("data_fine_dyn_out_submulti_{}".format(subdescrind_id)))
+                    punteggio = self.punteggio_descr_timedelta(cat_eco,
+                                                               durata,
+                                                               subdescrind)
+
             # Se la DescrizioneIndicatore prevede un punteggio "fisso" per categoria
             elif descr_ind.punteggio_descrizioneindicatore_set.first():
                 punteggio = self.punteggio_descrizione_indicatore(cat_eco)
@@ -596,7 +632,9 @@ class PunteggioModuloDomandaBando(object):
             # WARNING: stiamo usando costanti, da ricodare con metodi che tornano i valori/tipi
             elif descr_ind.punteggio_descrizioneindicatore_timedelta_set.first():
                 try:
-                    durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
+                    durata_inserita = float(dati_inseriti.get("durata_come_decimale", 0))
+                    if (dati_inseriti.get("durata_come_decimale", 0) == 0):
+                        durata_inserita = int(dati_inseriti.get("durata_come_intero", 0))
                 except ValueError as excp:
                     durata_inserita = 0
                     # aggiungere logger.error in ogni dove ...
@@ -611,4 +649,9 @@ class PunteggioModuloDomandaBando(object):
         if save:
             self.punteggio_calcolato = punteggio
             self.save()
+
+        #Se la commissione ha inserito un punteggio manuale restituisco quello
+        if (self.punteggio_manuale):                           
+            return self.punteggio_manuale
+                        
         return punteggio

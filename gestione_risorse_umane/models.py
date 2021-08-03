@@ -11,8 +11,14 @@ from unical_template.utils import differenza_date_in_mesi_aru
 
 from .decorators import is_apps_installed
 from .peo_methods import PeoMethods
-from  csa.models import RUOLI
-from .csa_methods import CSAMethods
+
+
+if 'csa' in settings.INSTALLED_APPS:
+    from  csa.models import RUOLI
+    from .csa_methods import CSAMethods as CareerMethods
+else:
+    from .career_methods import CareerMethods
+    RUOLI = settings.RUOLI
 
 
 class Avviso(TimeStampedModel):
@@ -115,8 +121,8 @@ class LivelloPosizioneEconomica(models.Model):
                                             on_delete=models.CASCADE,
                                             blank=True, null=True)
     nome = models.CharField('Livello Posizione Economica', max_length=255, blank=False, null=False,
-                            help_text="Tradizionalmente: 1,2,3,4,5,6 ma"
-                                      " diamo spazio ad opportune generalizzazioni")
+                            help_text="Tradizionalmente: 1, 2, 3, 4, 5, 6 ma"
+                                      " o qualsivoglia valore")
     class Meta:
         verbose_name = _('Livello Categoria')
         verbose_name_plural = _('Livelli Categoria')
@@ -179,7 +185,7 @@ def _ci_upload(instance, filename):
     return os.path.join('dipendenti_unical/{}/carta_identita/{}'.format(  instance.matricola,
                                                          filename))
 
-class Dipendente(TimeStampedModel, PeoMethods, CSAMethods):
+class Dipendente(TimeStampedModel, PeoMethods, CareerMethods):
     matricola = models.CharField(max_length=6, blank=False, null=False)
     utente = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.SET_NULL,
@@ -269,3 +275,37 @@ class Dipendente(TimeStampedModel, PeoMethods, CSAMethods):
         return '{} - {} {}'.format(self.matricola,
                                    self.nome,
                                    self.cognome)
+
+
+class FormazioneDipendente(TimeStampedModel):
+    """
+    """
+    matricola = models.CharField(max_length=6, blank=False, null=False)
+        
+    dipendente = models.ForeignKey(Dipendente, on_delete=models.CASCADE, null=True, blank=True)
+
+    partecipante = models.CharField(max_length=254, blank=True, default='', help_text="Valore letto in fase di importazione")
+    
+    evento_formativo = models.CharField(max_length=255, blank=False, null=False,
+                              help_text="Evento formativo")
+
+    ente_organizzatore = models.CharField(max_length=255, blank=False, null=False,
+                              help_text="Ente organizzatore")
+
+    data_inizio = models.DateField(null=True, blank=True)
+    data_fine = models.DateField(null=True, blank=True)
+
+    durata_ore = models.FloatField(default=0.0)
+    #durata_ore = models.DecimalField(default=0.0, max_digits=5, decimal_places=2)
+
+    ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento",
+                                              blank=True, default=0)    
+    is_active = models.BooleanField('Attivo', default=True)
+
+    class Meta:
+        ordering = ('ordinamento', )
+        verbose_name = _('Formazione dipendente')
+        verbose_name_plural = _('Formazione dipendenti')
+
+    def __str__(self):
+        return '({}) {}'.format(self.evento_formativo, self.ente_organizzatore)

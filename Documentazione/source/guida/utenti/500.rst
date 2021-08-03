@@ -8,7 +8,7 @@ Problemi tecnici
 
 .. include:: browser.rst
 
-Nell'utilizzo della piattaforma *peo.unical.it* l'utente potrebbe imbattersi in una schermata come la seguente
+Nell'utilizzo della piattaforma *peo.uniurb.it* l'utente potrebbe imbattersi in una schermata come la seguente
 
 .. thumbnail:: images/500.png
 

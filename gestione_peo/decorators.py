@@ -4,11 +4,12 @@ from django.shortcuts import render
 from .models import Bando
 
 def _get_bando_queryset(bando_id):
-    if bando_id.isdigit(): bando_id = int(bando_id)
+    if isinstance(bando_id, str) and bando_id.isdigit(): bando_id = int(bando_id)    
     if isinstance(bando_id, int):
         bando = Bando.objects.filter(pk=bando_id)
     elif isinstance(bando_id, str):
         bando = Bando.objects.filter(slug=bando_id)
+    
     if not bando:
         raise Http404()
     return bando

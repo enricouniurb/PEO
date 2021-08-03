@@ -8,7 +8,7 @@ Compilazione di una nuova domanda
 
 .. include:: browser.rst
 
-La piattaforma peo.unical.it permette di configurare molteplici bandi e procedure di partecipazione contemporaneamente.
+La piattaforma peo.uniurb.it permette di configurare molteplici bandi e procedure di partecipazione contemporaneamente.
 Per questo motivo l'utente ha la possibilità di gestire domande di partecipazione multiple.
 
 I passi da seguire per la compilazione di una domanda di partecipazione sono i seguenti:

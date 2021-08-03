@@ -12,8 +12,7 @@ from django.db.models import Q
 
 from django.http import Http404
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import (get_object_or_404, render,
-                              render_to_response, redirect)
+from django.shortcuts import (get_object_or_404, render, redirect)
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import is_safe_url
@@ -387,12 +386,18 @@ def commissione_domanda_manage(request, commissione_id, domanda_id,
     if request.method == 'POST':
         # azione di calcolo punteggio
         if request.POST.get('calcola_punteggio'):
-            punteggio = domanda_bando.calcolo_punteggio_domanda(save=True)[1]
+
+            results = domanda_bando.calcolo_punteggio_domanda(save=True)           
+            punteggio = results[1]
             msg = ("Punteggio calcolato con successo "
                    "({}) per la domanda {}").format(punteggio,
                                                     domanda_bando)
             # mostra il messaggio
             messages.add_message(request, messages.SUCCESS, msg)
+            
+            for m in results[2]:
+                messages.add_message(request, messages.WARNING, m)
+
             # Logging di ogni azione compiuta sulla domanda dalla commissione
             LogEntry.objects.log_action(user_id = request.user.pk,
                                         content_type_id = ContentType.objects.get_for_model(domanda_bando).pk,
@@ -684,6 +689,9 @@ def commissione_modulo_domanda_modifica(request, commissione_id, domanda_id,
     commissioni = get_commissioni_attive(request.user)
     commissioni_in_corso = get_commissioni_in_corso(request.user, commissioni)
 
+    form_motivazione = MotivazioneForm(initial={'motivazione':mdb.motivazione,
+                                                'punteggio_manuale': mdb.punteggio_manuale})
+
     d = {
          'allegati': allegati,
          'bando': bando,
@@ -698,22 +706,25 @@ def commissione_modulo_domanda_modifica(request, commissione_id, domanda_id,
          'modulo_domanda_bando': mdb,
          'page_title': page_title,
          'path_allegati': path_allegati,
+         'form_motivazione': form_motivazione,
          }
 
     if request.method == 'POST':
         if request.POST.get('disable_input'):
             disabilita_abilita = request.POST.get('disabilita_abilita_inserimento')
+            modifica_punteggio = request.POST.get('modifica_punteggio')
             motivazione = request.POST.get('motivazione') or mdb.disabilita
             if disabilita_abilita and motivazione:
                 etichetta = mdb.get_identificativo_veloce()
-
-                mdb.disabilita = not mdb.disabilita
-                mdb.motivazione = motivazione
-                mdb.save(update_fields=['disabilita', 'motivazione'])
+                mdb.disabilita = not mdb.disabilita                              
                 if mdb.disabilita:
+                    mdb.motivazione = motivazione
+                    mdb.punteggio_manuale = None
                     msg = ("Inserimento {} - Etichetta: {} - disabilitato con successo").format(mdb, etichetta)
-                else:
+                else:         
+                    mdb.motivazione = ''          
                     msg = ("Inserimento {} - Etichetta: {} - abilitato con successo").format(mdb, etichetta)
+                mdb.save(update_fields=['disabilita', 'motivazione','punteggio_manuale'])
                 messages.add_message(request, messages.SUCCESS, msg)
                 # Logging di ogni azione compiuta sulla domanda dalla commissione
                 LogEntry.objects.log_action(user_id = request.user.pk,
@@ -722,11 +733,49 @@ def commissione_modulo_domanda_modifica(request, commissione_id, domanda_id,
                                             object_repr     = domanda_bando.__str__(),
                                             action_flag     = CHANGE,
                                             change_message  = msg)
+
+                calcolo_punteggio_domanda_log_save(domanda_bando, messages, request)                        
+
                 # Per evitare che al refresh
                 # possa essere effettuata una nuova richiesta POST
                 url = reverse('gestione_peo:commissione_domanda_manage',
                               args=[commissione_id, domanda_id])
                 return HttpResponseRedirect("{}#{}".format(url, mdb.pk))
+            elif (modifica_punteggio and motivazione): 
+                form_motivazione = MotivazioneForm(request.POST)
+                if (form_motivazione.is_valid()):
+                    etichetta = mdb.get_identificativo_veloce()
+                    mdb.motivazione = form_motivazione.cleaned_data['motivazione']
+                    mdb.punteggio_manuale =form_motivazione.cleaned_data['punteggio_manuale'] if form_motivazione.cleaned_data['punteggio_manuale'] != 0 else None                   
+                    if (mdb.punteggio_manuale):
+                        msg = ("Inserimento {} - Etichetta: {} - punteggio: {} impostato con successo").format(mdb, etichetta,  mdb.punteggio_manuale)
+                    else:
+                        mdb.motivazione = ''
+                        msg = ("Inserimento {} - Etichetta: {} - punteggio cancellato con successo").format(mdb, etichetta)        
+
+                    mdb.save(update_fields=['punteggio_manuale', 'motivazione'])            
+                    messages.add_message(request, messages.SUCCESS, msg)
+                    # Logging di ogni azione compiuta sulla domanda dalla commissione
+                    LogEntry.objects.log_action(user_id = request.user.pk,
+                                                content_type_id = ContentType.objects.get_for_model(domanda_bando).pk,
+                                                object_id       = domanda_bando.pk,
+                                                object_repr     = domanda_bando.__str__(),
+                                                action_flag     = CHANGE,
+                                                change_message  = msg)
+
+                    calcolo_punteggio_domanda_log_save(domanda_bando, messages, request)                      
+
+                    # Per evitare che al refresh
+                    # possa essere effettuata una nuova richiesta POST
+                    url = reverse('gestione_peo:commissione_domanda_manage',
+                              args=[commissione_id, domanda_id])
+                    return HttpResponseRedirect("{}#{}".format(url, mdb.pk))
+                
+                else:
+                    #caso form_motivazione errore validazione
+                    d['form_motivazione'] = form_motivazione
+                    return render(request, 'commissione_modulo_form_modifica.html', d)
+
             else:
                 msg = ("Per disabilitare un inserimento è necessario inserire una motivazione")
                 messages.add_message(request, messages.ERROR, msg)

@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
+from django.forms.models import model_to_dict
 
 from django_form_builder.utils import (get_allegati,
                                        get_allegati_dict,
@@ -24,6 +25,7 @@ from domande_peo.models import *
 from gestione_peo.models import Bando, IndicatorePonderato, DescrizioneIndicatore
 from gestione_peo.settings import ETICHETTA_INSERIMENTI_ID
 from gestione_risorse_umane.models import Dipendente, PosizioneEconomica, LivelloPosizioneEconomica
+
 
 
 def get_fname_allegato(domanda_bando_id, bando_id):
@@ -102,6 +104,100 @@ def elimina_directory(matricola, bando_slug, modulo_compilato_id = None):
     except:
         return False
 
+
+def export_graduatoria_indicatori_ponderati_csv(queryset, fopen,
+                           delimiter=';', quotechar='"',
+                           replace_dot_with='.',
+                           ignora_disabilitati=False):
+    # domande_bando selezionate
+    queryset = queryset.order_by('-punteggio_calcolato')
+    posizioni_economiche = PosizioneEconomica.objects.all().order_by('nome')
+
+    bando = queryset.first().bando
+    #Recupero tutti gli indcatori del bando in questione
+    indicatori_ponderati = bando.indicatoreponderato_set.all().order_by('ordinamento')
+   
+    intestazione = ['Prog', 'Matricola', 'Cognome', 'Nome', 'Data ultimo avanzamento ' ,'Pos.Eco']
+
+    writer = csv.writer(fopen,
+                        delimiter = delimiter,
+                        quotechar = quotechar)
+    intestazione2 = []
+    lista_id_indicatore = []
+    # Creo le colonne dell'intestazione (Nome + ID code)
+    # Per ogni IndicatorePonderato del Bando
+    for indicatore in indicatori_ponderati:    
+        intestazione2.append('({}) {}'.format(indicatore.id_code, indicatore.nome))
+        lista_id_indicatore.append(indicatore.id_code)
+        
+    intestazione += intestazione2    
+    intestazione.append('Punti')
+    writer.writerow(intestazione)
+
+    # Per ogni posizione economica, controllo se ci sono domande
+    # cosi da ordinarle e avere una graduatoria
+    for pos_eco in posizioni_economiche:
+        livelli = LivelloPosizioneEconomica.objects.filter(posizione_economica=pos_eco).all().order_by('nome')
+        for livello in livelli:
+            # Filtro solo le domande con il livello economico che mi interessa
+            domande_queryset = queryset.filter(livello=livello)
+            # Se non ci sono domande nel livello, non scrivo righe
+            if not domande_queryset: continue
+            writer.writerow('')
+            index = 1
+            # Per ogni domanda del bando, recupero quelle fatte per
+            # un singolo Livello Economico
+            for domanda in domande_queryset:
+                # Se la domanda non è stata chiusa almeno una volta
+                if not domanda.numero_protocollo: continue
+                riga = [index,
+                        domanda.dipendente.matricola.zfill(6),
+                        domanda.dipendente.cognome,
+                        domanda.dipendente.nome,
+                        domanda.data_ultima_progressione,
+                        livello.__str__()]
+                
+              
+                # Per ogni Indicatore ponderato nell'intestazione
+                for id_code in lista_id_indicatore:
+                    # Soglia massima assegnabile
+                    p_max_indicatore = indicatore.get_pmax_pos_eco(pos_eco)
+                    # Punteggio assegnato all'Indicatore Ponderato
+                    p_indicatore = 0
+                    # Punteggio assegnato all'Indicatore Ponderato senza soglie
+                    p_indicatore_senza_soglie = 0
+                    # Recupero l'oggetto                    
+                    indicatore = indicatori_ponderati.filter(id_code=id_code).first()    
+                    if id_code == 'D':
+                        # Anzianità Dipendente Università
+                        p_indicatore = domanda.get_punteggio_anzianita()                       
+                    else:    
+                                       
+                        for descr_ind in indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True):   
+                            # Recupero il punteggio max assegnato nella domanda         
+                            #  Lista ritornata come risultato
+                            # [0] = punteggio ottenuto senza tener conto di alcuna soglia
+                            # [1] = punteggio reale assegnato (max)
+                            # [2] = eventuale messaggio di sforamento           
+                            punteggio = domanda.calcolo_punteggio_max_descr_ind(descr_ind=descr_ind,
+                                                                                categoria_economica=pos_eco,
+                                                                                ignora_disabilitati=ignora_disabilitati)
+                            p_indicatore_senza_soglie += punteggio[0]
+                            p_indicatore += punteggio[1]
+                    # Controllo sul Max punteggio CatEco IndicatorePonderato
+                    if p_max_indicatore > 0 and p_indicatore > p_max_indicatore:
+                        p_indicatore =  p_max_indicatore
+                    riga.append(p_indicatore.__str__().replace('.', replace_dot_with))
+
+                punteggio_domanda = domanda.calcolo_punteggio_domanda(ignora_disabilitati=ignora_disabilitati)[1]
+                punteggio_str = punteggio_domanda.__str__().replace('.', replace_dot_with)
+                riga.append(punteggio_str)
+
+                writer.writerow(riga)
+                index += 1
+
+    writer.writerow('')
+    return fopen
 
 def export_graduatoria_csv(queryset, fopen,
                            delimiter=';', quotechar='"',
@@ -188,6 +284,37 @@ def export_graduatoria_csv(queryset, fopen,
             writer.writerow('')
     return fopen
 
+def aggiungi_titolo_from_db(request,
+                         datadb,
+                         bando,
+                         descrizione_indicatore,
+                         domanda_bando,
+                         dipendente,                       
+                         log=False):
+
+    form = descrizione_indicatore.get_form(data = datadb,                                           
+                                           domanda_bando=domanda_bando)
+    if form.is_valid():
+        # qui chiedere conferma prima del salvataggio
+        #json_data = get_POST_as_json(request)
+        mdb_model = apps.get_model(app_label='domande_peo', model_name='ModuloDomandaBando')
+        mdb = mdb_model.objects.create(
+                domanda_bando = domanda_bando,
+                modulo_compilato = json.dumps(datadb, indent = 2),
+                descrizione_indicatore = descrizione_indicatore,
+                modified=timezone.localtime(),
+                )
+
+        msg = 'Inserimento {} - Etichetta: {} - effettuato con successo!'.format(mdb, datadb[ETICHETTA_INSERIMENTI_ID])   
+        #Allega il messaggio al redirect
+        messages.success(request, msg)
+        if log:
+            LogEntry.objects.log_action(user_id = request.user.pk,
+                                        content_type_id = ContentType.objects.get_for_model(domanda_bando).pk,
+                                        object_id       = domanda_bando.pk,
+                                        object_repr     = domanda_bando.__str__(),
+                                        action_flag     = CHANGE,
+                                        change_message  = msg)
 
 def aggiungi_titolo_form(request,
                          bando,
@@ -196,6 +323,7 @@ def aggiungi_titolo_form(request,
                          dipendente,
                          return_url,
                          log=False):
+                         
     form = descrizione_indicatore.get_form(data=request.POST,
                                            files=request.FILES,
                                            domanda_bando=domanda_bando)
@@ -221,17 +349,26 @@ def aggiungi_titolo_form(request,
             path_allegati = get_path_allegato(dipendente.matricola,
                                               bando.slug,
                                               mdb.pk)
-            for key, value in request.FILES.items():
-                salva_file(request.FILES[key],
-                            path_allegati,
-                            request.FILES[key]._name)
-                json_stored["allegati"]["{}".format(key)] = "{}".format(request.FILES[key]._name)
+            if 'sub_descrizione_indicatore_form' in json_stored:
+                current_value = json_stored['sub_descrizione_indicatore_form']
+                for key, value in request.FILES.items():                         
+                    if (key.endswith('submulti_{}'.format(current_value)) or 'submulti' not in key):               
+                        salva_file(request.FILES[key],
+                                    path_allegati,
+                                    request.FILES[key]._name)
+                        json_stored["allegati"]["{}".format(key)] = "{}".format(request.FILES[key]._name)                           
+            else:
+                for key, value in request.FILES.items():                                        
+                    salva_file(request.FILES[key],
+                                path_allegati,
+                                request.FILES[key]._name)
+                    json_stored["allegati"]["{}".format(key)] = "{}".format(request.FILES[key]._name)
 
         set_as_dict(mdb, json_stored)
         # mdb.set_as_dict(json_stored)
         domanda_bando.mark_as_modified()
         msg = 'Inserimento {} - Etichetta: {} - effettuato con successo!'.format(mdb,
-                                                                                 request.POST.get(ETICHETTA_INSERIMENTI_ID))
+                                                                                 request.POST.get(ETICHETTA_INSERIMENTI_ID))                                                                                       
         #Allega il messaggio al redirect
         messages.success(request, msg)
         if log:
@@ -275,10 +412,23 @@ def modifica_titolo_form(request,
                             request.FILES[key]._name)
                 nome_allegato = request.FILES[key]._name
                 json_response["allegati"]["{}".format(key)] = "{}".format(nome_allegato)
-        else:
+        else:                    
             # Se non ho aggiornato i miei allegati lasciandoli invariati rispetto
-            # all'inserimento precedente
+            # all'inserimento precedente            
             json_response["allegati"] = allegati
+
+        if 'sub_descrizione_indicatore_form' in json_response:
+            current_value = json_response['sub_descrizione_indicatore_form']
+            #eliminare tutti gli allegati diversi da current_value
+            copy_allegati = allegati.copy()
+            for allegato in copy_allegati.keys():            
+                if ('submulti_' in allegato and not (allegato.endswith('submulti_{}'.format(current_value)))):
+                    nome_file = json_response["allegati"]["{}".format(allegato)]
+                    # Rimuove il riferimento all'allegato dalla base dati
+                    del json_response["allegati"]["{}".format(allegato)]       
+                    # Rimuove l'allegato dal disco
+                    elimina_file(path_allegati, nome_file)
+
 
         # salva il modulo
         set_as_dict(mdb, json_response)

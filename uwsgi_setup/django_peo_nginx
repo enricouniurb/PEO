@@ -5,7 +5,7 @@ upstream django_peo {
 
 # configuration of the server
 server {
-    if ($host = peo.unical.it) {
+    if ($host = peo.uniurb.it) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
@@ -14,7 +14,7 @@ server {
     listen      80;
     # the domain name it will serve for
 
-    server_name peo.unical.it;
+    server_name peo.uniurb.it;
     # substitute your machine's IP address or FQDN
 
     return 301 https://$host$request_uri;    
@@ -30,18 +30,18 @@ server {
 }
 
 server {
-    server_name peo.unical.it;
+    server_name peo.uniurb.it;
     listen 443 ssl;
 
-    ssl_certificate /etc/letsencrypt/live/peo.unical.it/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/peo.unical.it/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/peo.uniurb.it/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/peo.uniurb.it/privkey.pem; # managed by Certbot
 
 
 #    if ($scheme != "https") {
 #        rewrite ^ https://$host$uri permanent;
 #    } 
 
-    #return 301 https://peo.unical.it/;
+    #return 301 https://peo.uniurb.it/;
 
     access_log /var/log/nginx/peo.access.log;
     error_log  /var/log/nginx/peo.error.log error;

@@ -2,7 +2,7 @@ import inspect
 import operator
 import sys
 
-from csa.models import RUOLI
+
 from django.apps import apps
 from django.conf import settings
 from django.core.validators import EMPTY_VALUES
@@ -18,7 +18,11 @@ from gestione_risorse_umane.models import (PosizioneEconomica,
                                            TitoloStudio)
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 from unical_template.models import TimeStampedModel, CreatedModifiedModel
-from unical_template.utils import text_as_html #differenza_date_in_mesi_aru non più chiamato
+from unical_template.utils import (text_as_html, #differenza_date_in_mesi_aru non più chiamato
+                                   punteggio_ogni_3_ore_max_02,
+                                   punteggio_ogni_5_ore_max_06,
+                                   punteggio_ogni_5_ore_max_05,
+                                   punteggio_ogni_5_ore_max_04)
 
 from . import peo_formfields
 # per la prima volta vedo un forms importato nel models (solitamente era il contrario!)
@@ -27,6 +31,10 @@ from .settings import (ETICHETTA_INSERIMENTI_ID,
                        ETICHETTA_INSERIMENTI_LABEL,
                        ETICHETTA_INSERIMENTI_HELP_TEXT)
 
+if 'csa' in settings.INSTALLED_APPS:
+    from csa.models import RUOLI
+else:
+    RUOLI = settings.RUOLI
 
 _UNITA_TEMPORALI = (('h', _('ore')),
                     ('d', _('giorni')),
@@ -41,15 +49,24 @@ _UNITA_TEMPORALI_INT_MAP = {'y': 12, # anni in mesi
 _MATH_OPERATOR_FUNC_MAP = {'x': operator.mul,
                            '+': operator.add,
                            '-': operator.sub,
-                           '/': operator.truediv,
-                           'a': None} # assegna il valore così com'è, senza operazione
+                           '/': operator.truediv,                           
+                           'a': None, # assegna il valore così com'è, senza operazione
+                           'p' : punteggio_ogni_3_ore_max_02,
+                           'q' : punteggio_ogni_5_ore_max_06,
+                           'r' : punteggio_ogni_5_ore_max_05,
+                           's' : punteggio_ogni_5_ore_max_04} #punti ogni tre ore 
 
 _OPERATORI_PUNTEGGIO = (('x', _('moltiplicatore')),
                         ('a', _('assegnazione')),
                         # inutilizzati, creati per opportuna generalizzazione
                         ('+', _('addizione')),
                         ('/', _('divisione')),
-                        ('-', _('sottrazione')))
+                        ('-', _('sottrazione')),
+                        ('p', _('punteggio_ogni_3_ore_max_02')),
+                        ('q', _('punteggio_ogni_5_ore_max_06')),
+                        ('r', _('punteggio_ogni_5_ore_max_05')),
+                        ('s', _('punteggio_ogni_5_ore_max_04'))
+                        )
 
 
 class Bando(TimeStampedModel):
@@ -200,7 +217,7 @@ class Bando(TimeStampedModel):
         """
         excluded_cat = self.categoriedisabilitate_titolostudio_set.filter(posizione_economica=livello_pos_eco)
         excluded_titoli = [i.titolo_studio.pk for i in excluded_cat]
-        punteggi_titoli = self.punteggio_titolostudio_set.exclude(titolo__pk__in=excluded_titoli)
+        punteggi_titoli = self.punteggio_titolostudio_set.exclude(titolo__pk__in=excluded_titoli).order_by('ordinamento')
         return punteggi_titoli
 
     def get_titoli_pos_eco(self, livello_pos_eco):
@@ -228,7 +245,7 @@ class IndicatorePonderato(TimeStampedModel):
                                                   default=False,
                                                   help_text=("Se attivo, al punteggio derivante dagli inserimenti"
                                                              " del Dipendente, verrà sommato il punteggio relativo"
-                                                             " all'anzianità di servizio (Unical), rispettando"
+                                                             " all'anzianità di servizio (UniUrb), rispettando"
                                                              " sempre il max ottenibile"))
 
     ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento", blank=True, default=0)
@@ -331,7 +348,7 @@ class DescrizioneIndicatore(TimeStampedModel):
                     punteggio_max = punteggio_descr.punteggio_max
         return punteggio_max
 
-    def get_fields_order(self):
+    def get_fields_order(self, custom_params={}):
         """
         Ritorna l'ordinamento dei fields che compongono il form associato,
         definito da backend
@@ -345,9 +362,11 @@ class DescrizioneIndicatore(TimeStampedModel):
                 if hasattr(m[1], 'is_complex'):
                     is_complex=getattr(m[1], 'is_complex')
                 to_check = is_complex or hasattr(m[1], 'name')
-                if m[0]==i.field_type and to_check:
+                if m[0]==i.field_type and to_check:                    
                     dyn_field=m[1]()
                     if is_complex:
+                        if (hasattr(dyn_field,'name') and dyn_field.name == 'sub_descrizione_indicatore_form'):
+                            dyn_field.define_value('', **custom_params)
                         fields = dyn_field.get_fields()
                         for f in fields:
                             if hasattr(f, 'name'):
@@ -375,9 +394,10 @@ class DescrizioneIndicatore(TimeStampedModel):
         # Static method of DynamicFieldMap
         constructor_dict = DynamicFieldMap.build_constructor_dict(moduli_inserimento)
         custom_params = {'domanda_bando': kwargs.get('domanda_bando'),
-                         'descrizione_indicatore': self}
+                         'descrizione_indicatore': self,
+                         'remove_filefields': remove_filefields}
 
-        fields_order=self.get_fields_order() if force_sorting else []
+        fields_order=self.get_fields_order(custom_params=custom_params) if force_sorting else []
         form = DynamicFieldMap.get_form(PeoDynamicForm,
                                         constructor_dict=constructor_dict,
                                         custom_params=custom_params,
@@ -386,6 +406,18 @@ class DescrizioneIndicatore(TimeStampedModel):
                                         remove_filefields=remove_filefields,
                                         remove_datafields=remove_datafields,
                                         fields_order=fields_order)
+
+        # if data and 'sub_descrizione_indicatore_form' in data:
+        #     current_value = data.get('sub_descrizione_indicatore_form')  
+
+        #     for key,field in form.fields.items():
+        #         name = getattr(field, 'name') if hasattr(field, 'name') else key                
+        #         if name.find('submulti_') and not(name.endswith('submulti_{}'.format(current_value))) and name != 'sub_descrizione_indicatore_form' and name != 'etichetta_inserimento':                    
+        #             field.disabled = True
+        #             field.required = False
+        #         else:                                                             
+        #             field.disabled = False
+
         return form
 
     def is_available_for_cateco(self, cateco):
@@ -570,7 +602,7 @@ class Punteggio_TitoloStudio(TimeStampedModel):
                                blank=False, null=False, default=1)
     bando = models.ForeignKey(Bando, on_delete=models.CASCADE,
                               blank=False, null=False, default=1)
-    punteggio = models.PositiveIntegerField()
+    punteggio = models.FloatField()
     cumulabile = models.BooleanField(default=False,
                                      help_text=("Indica se più titoli equivalenti"
                                                 " possano essere cumulati in una "
@@ -580,6 +612,7 @@ class Punteggio_TitoloStudio(TimeStampedModel):
     class Meta:
         verbose_name = _('Punteggio per Titolo di Studio')
         verbose_name_plural = _('Punteggi per Titolo di Studio')
+        ordering = ['ordinamento']
 
     def __str__(self):
         return '{} - punti {}'.format(self.titolo,
@@ -740,6 +773,64 @@ class SubDescrizioneIndicatore(TimeStampedModel):
                     punteggio_max = punteggio_subdescr.punteggio_max
         return punteggio_max
 
+    def get_fields_order(self):
+        """
+        Ritorna l'ordinamento dei fields che compongono il form associato,
+        definito da backend
+        """
+        fields_order = [ETICHETTA_INSERIMENTI_ID,]
+        for i in self.submoduloinserimentocampi_set.all():
+            appended = False
+            class_name=sys.modules['gestione_peo.peo_formfields']
+            for m in inspect.getmembers(class_name, inspect.isclass):
+                is_complex = False
+                if hasattr(m[1], 'is_complex'):
+                    is_complex=getattr(m[1], 'is_complex')
+                to_check = is_complex or hasattr(m[1], 'name')
+                if m[0]==i.field_type and to_check:
+                    dyn_field=m[1]()
+                    if is_complex:
+                        fields = dyn_field.get_fields()
+                        for f in fields:
+                            if hasattr(f, 'name'):
+                                fields_order.append(f.name)
+                    else: fields_order.append(dyn_field.name)
+                    appended=True
+                if appended: break
+            if not appended:
+                fields_order.append(format_field_name(i.name))
+        return fields_order
+
+    def get_form(self,
+                 data=None,
+                 files=None,
+                 remove_filefields=False,
+                 remove_datafields=False,
+                 force_sorting=True,
+                 **kwargs):
+        """
+        files solitamente request.FILES vedi domande_peo.views.aggiungi_titolo
+        """
+        sub_moduli_inserimento = self.submoduloinserimentocampi_set.all()
+        if not sub_moduli_inserimento: return None
+
+        # Static method of DynamicFieldMap
+        constructor_dict = DynamicFieldMap.build_constructor_dict(sub_moduli_inserimento)
+        custom_params = {'domanda_bando': kwargs.get('domanda_bando'),
+                         'descrizione_indicatore': self,
+                         'subdescrizioneindicatoreformfield': kwargs.get('subdescrizioneindicatoreformfield')}
+
+        fields_order=self.get_fields_order() if force_sorting else []
+        form = DynamicFieldMap.get_form(PeoDynamicForm,
+                                        constructor_dict=constructor_dict,
+                                        custom_params=custom_params,
+                                        data=data,
+                                        files=files,
+                                        remove_filefields=remove_filefields,
+                                        remove_datafields=remove_datafields,
+                                        fields_order=fields_order)
+        return form
+
     def __str__(self):
         return '{}'.format(self.nome)
 
@@ -878,6 +969,21 @@ class Punteggio_SubDescrizioneIndicatore_TimeDelta(models.Model):
                                        self.punteggio)
         return '{}: {}'.format(self.sub_descrizione_indicatore,
                                self.punteggio)
+
+
+class SubModuloInserimentoCampi(DynamicFieldMap):
+    """
+    Classe per la generazione dinamica di forms di inserimento relativi
+    ai titoli (descrizione indicatori ponderati) dei dipendenti
+    """
+    descrizione_indicatore = models.ForeignKey(SubDescrizioneIndicatore,
+                                               on_delete=models.CASCADE)
+    DynamicFieldMap._meta.get_field('field_type').choices = get_fields_types(peo_formfields)
+
+    class Meta:
+        ordering = ('ordinamento', )
+        verbose_name = _('Modulo di inserimento')
+        verbose_name_plural = _('Moduli di inserimento')
 
 
 class CategorieDisabilitate_DescrizioneIndicatore(models.Model):

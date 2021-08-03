@@ -15,8 +15,9 @@
     {% else %}
     <form method='post' class="ui form info">
         <div class="field">
-            <label for="id_motivazione">Motivazione:</label>
-            <textarea name="motivazione" rows="1" id="id_motivazione" required></textarea>
+            {{ form_motivazione.motivazione.errors }}
+            <label for="{{ form_motivazione.motivazione.if_for_label }}">{{ form_motivazione.motivazione.label }}</label>
+            {{ form_motivazione.motivazione }}        
             <div class="ui info message">
                 <div class="header">Attenzione</div>
                 <p>Il testo inserito in questo campo sarà reso visibile al
@@ -25,9 +26,18 @@
             </div>
         </div>
         <div class="field">
+            {{ form_motivazione.punteggio_manuale.errors }}   
+            <label for="{{ form_motivazione.punteggio_manuale.if_for_label }}">Punteggio manuale:</label>
+            {{ form_motivazione.punteggio_manuale }}           
+        </div>
+        <div class="field">
             <button class="ui negative button" name="disabilita_abilita_inserimento" type="submit" value=1>
                 <i class="ban icon"></i>
                 Disabilita inserimento
+            </button>
+
+            <button class="ui primary button" name="modifica_punteggio" type="submit" value=1>              
+                Modifica punteggio
             </button>
         </div>
     {% endif %}

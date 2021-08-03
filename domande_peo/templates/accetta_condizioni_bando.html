@@ -11,7 +11,7 @@
 <div class="ui section divider"></div>
 
 <div class="ui grid stackable grid">
-    <div class="twelve wide column" id="dashboard_first_panel">
+    <div class="twelve wide column" id="sticky_reference_panel">
 
         {% include "dettaglio_bando_peo_fields.html" %}
         {% include "clausole.html" %}
@@ -38,3 +38,7 @@
 
 {% endwith %}
 {% endblock %}
+
+{% block bottom_scripts %}
+<script type="text/javascript" src="{% static 'js/lockbutton.js' %}"></script>
+{% endblock bottom_scripts %}

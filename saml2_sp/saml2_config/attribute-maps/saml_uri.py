@@ -187,6 +187,9 @@ MAP = {
         X500ATTR_OID+'53': 'deltaRevocationList',
         X500ATTR_OID+'54': 'dmdName',
         X500ATTR_OID+'65': 'pseudonym',
+        'urn:oid:1.3.6.1.4.1.4203.666.11.11.1.0': 'codiceFiscale',
+        'urn:oid:1.3.6.1.4.1.27280.1.20': 'matricola',    
+        'urn:oid:1.3.6.1.4.1.27280.1.13': 'ruolo'
     },
     'to': {
         'LegalPersonIdentifier': EIDAS_LEGALPERSON+'LegalPersonIdentifier',

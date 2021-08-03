@@ -103,7 +103,7 @@ class DescrizioneIndicatoreModelForm(forms.ModelForm):
     class Meta:
         model = DescrizioneIndicatore
         fields = ('__all__')
-        widgets = {'ordinamento': forms.HiddenInput()}
+        #widgets = {'ordinamento': forms.HiddenInput()}
 
 
 class SubDescrizioneIndicatoreModelForm(forms.ModelForm):
@@ -125,6 +125,20 @@ class ModuloInserimentoCampiNestedInline(nested_admin.NestedTabularInline):
     sortable_field_name = "ordinamento"
     extra = 0
     form = ModuloInserimentoCampiModelForm
+    classes = ['collapse',]
+
+class SubModuloInserimentoCampiModelForm(forms.ModelForm):
+    class Meta:
+        model = SubModuloInserimentoCampi
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput()}
+
+
+class SubModuloInserimentoCampiNestedInline(nested_admin.NestedTabularInline):
+    model = SubModuloInserimentoCampi
+    sortable_field_name = "ordinamento"
+    extra = 0
+    form = SubModuloInserimentoCampiModelForm
     classes = ['collapse',]
 
 
@@ -183,7 +197,7 @@ class Punteggio_TitoloStudioModelForm(forms.ModelForm):
     class Meta:
         model = Punteggio_TitoloStudio
         fields = ('__all__')
-        widgets = {'ordinamento': forms.HiddenInput()}
+       # widgets = {'ordinamento': forms.HiddenInput()}
 
 
 class Punteggio_TitoloStudioNestedInline(nested_admin.NestedTabularInline):

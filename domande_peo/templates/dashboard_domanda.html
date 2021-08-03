@@ -57,14 +57,11 @@
                     {% if domanda_bando.bando.indicatore_con_anzianita %}
                         <div class="ui message" style="padding-bottom:0; background:#fff">
                             <div class="header">
-                                Punteggio anzianità di servizio presso
-                                l'Università della Calabria (o altre Università)
+                                Punteggio anzianità di servizio
                             </div>
                             <div class="ui grid">
-                                <div class="fourteen wide column">
-                                    Il punteggio relativo al servizio prestato presso
-                                    l'Univeristà della Calabria (o altre Università) è attribuito
-                                    direttamente dall'Area Risorse Umane
+                                <div class="fourteen wide column">          
+                                    Punteggio anzianità di servizio calcolato                        
                                 </div>
                                 <div class="two wide column" style="text-align:right">
                                     <b>{{ domanda_bando.get_punteggio_anzianita }}</b>
@@ -123,6 +120,9 @@
                                         {{ ins.get_identificativo_veloce }}
                                     </a>
                                     <div class="ui list" style="color: grey;">
+                                        <div class=""><i>Contenuto</i>: {{ ins.get_identificativo_veloce_lungo }} </div>
+                                    </div>
+                                    <div class="ui list" style="color: grey;">
                                         <div class=""><i>Creato</i>: {{ ins.created|date:"j F Y H:i" }}</div>
                                         <div class=""><i>Modificato</i>: {{ ins.modified|date:"j F Y H:i" }}</div>
                                     </div>
@@ -156,6 +156,12 @@
                                                 <div class="header">Inserimento non valutato</div>
                                                 <p>{{ ins.motivazione }}</p>
                                             </div>
+                                        {% elif ins.punteggio_manuale %}
+                                        <div class="ui error message">
+                                            <div class="header">Inserito punteggio manuale</div>
+                                            <p>{{ ins.motivazione }}</p>                                            
+                                        </div>                          
+                                        {{ ins.punteggio_manuale }}              
                                         {% elif ins.punteggio_calcolato %}
                                             {{ ins.punteggio_calcolato }}
                                         {% else %}

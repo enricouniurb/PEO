@@ -1,2 +1,218 @@
-OpenSSL 1.0.2g  1 Mar 2016
-[{"model": "gestione_risorse_umane.posizioneeconomica", "pk": 2, "fields": {"nome": "B", "punti_organico": 0.0, "descrizione": "Qui chiedere ai colleghi di risorse umane di inserire le caratteristiche peculiari di ogni posizione economica, cos\u00ec da visualizzarli a sistema"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 3, "fields": {"nome": "C", "punti_organico": 0.0, "descrizione": ""}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 4, "fields": {"nome": "D", "punti_organico": 0.0, "descrizione": ""}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 5, "fields": {"nome": "EP", "punti_organico": 0.0, "descrizione": ""}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 6, "fields": {"nome": "PV", "punti_organico": 0.0, "descrizione": "Prof.Ordinario DPR 232/11 art.2 - t.pieno - cl. 2"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 7, "fields": {"nome": "PVA3", "punti_organico": 0.0, "descrizione": "Ricercatore DPR 232/11 art.2 - t.pieno - col. C- cl. 0 - III anno"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 8, "fields": {"nome": "PN", "punti_organico": 0.0, "descrizione": "Prof.Associato Legge 240/10 - t.pieno - classe 0"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 9, "fields": {"nome": "P2", "punti_organico": 0.0, "descrizione": "Ricercatore t.d.  art. 24 c. 3 lett. B Legge 240/10 (t.pieno) + 20%"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 10, "fields": {"nome": "PX", "punti_organico": 0.0, "descrizione": "Ricercatore t.d. art. 24 c. 3 lett. A Legge 240/10 (t.pieno)"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 11, "fields": {"nome": "DN", "punti_organico": 0.0, "descrizione": "Prof.Associato Legge 240/10 - t.definito - classe 0"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 12, "fields": {"nome": "DV", "punti_organico": 0.0, "descrizione": "Prof.Associato DPR 232/11 art.2 - t.definito - cl. 1"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 13, "fields": {"nome": "P", "punti_organico": 0.0, "descrizione": "Prof.Straord.  - tempo pieno"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 14, "fields": {"nome": "999", "punti_organico": 0.0, "descrizione": null}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 15, "fields": {"nome": "DVA3", "punti_organico": 0.0, "descrizione": "Ricercatore DPR 232/11 art.2 - t.definito - col. C- cl. 0 - III anno"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 16, "fields": {"nome": "00003", "punti_organico": 0.0, "descrizione": "Ricercatore non confermato (DLgs 19/2012 art.16)"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 17, "fields": {"nome": "PVA31", "punti_organico": 0.0, "descrizione": "Ricercatore DPR 232/11 art.2 - t.pieno - col. C- cl. 10 - III anno"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 18, "fields": {"nome": "000D", "punti_organico": 0.0, "descrizione": "Dirigente Superiore - liv. D - classe 0"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 19, "fields": {"nome": "001", "punti_organico": 0.0, "descrizione": "Tecnologo a t.det. art. 24-bis Legge 240/2010 equip. D3"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 20, "fields": {"nome": "DX", "punti_organico": 0.0, "descrizione": "Ricercatore t.d. art. 24 c. 3 lett. A Legge 240/10 (t.definito)"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 21, "fields": {"nome": "00005", "punti_organico": 0.0, "descrizione": "Direttore generale (Legge 240/2010)"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 22, "fields": {"nome": "2", "punti_organico": 0.0, "descrizione": "Docente a contratto - Legge 240/10, Art.23"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 23, "fields": {"nome": "1", "punti_organico": 0.0, "descrizione": "Collaborazione coordinata e continuativa"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 24, "fields": {"nome": "000002", "punti_organico": 0.0, "descrizione": "Ricercatore t.d. PON Ricerca e Innovaz. 2014-2020 ? Linea 1 ?Mobilita?"}}, {"model": "gestione_risorse_umane.posizioneeconomica", "pk": 25, "fields": {"nome": "000003", "punti_organico": 0.0, "descrizione": "Ricercatore t.d. PON Ricerca e Innovaz. 2014-2020 ? Linea 2 ?Attrazione?"}}]
+[
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 2,
+        "fields": {
+            "nome": "B",
+            "punti_organico": 0.0,
+            "descrizione": "Qui chiedere ai colleghi di risorse umane di inserire le caratteristiche peculiari di ogni posizione economica, cos\u00ec da visualizzarli a sistema"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 3,
+        "fields": {
+            "nome": "C",
+            "punti_organico": 0.0,
+            "descrizione": ""
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 4,
+        "fields": {
+            "nome": "D",
+            "punti_organico": 0.0,
+            "descrizione": ""
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 5,
+        "fields": {
+            "nome": "EP",
+            "punti_organico": 0.0,
+            "descrizione": ""
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 6,
+        "fields": {
+            "nome": "PV",
+            "punti_organico": 0.0,
+            "descrizione": "Prof.Ordinario DPR 232/11 art.2 - t.pieno - cl. 2"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 7,
+        "fields": {
+            "nome": "PVA3",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore DPR 232/11 art.2 - t.pieno - col. C- cl. 0 - III anno"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 8,
+        "fields": {
+            "nome": "PN",
+            "punti_organico": 0.0,
+            "descrizione": "Prof.Associato Legge 240/10 - t.pieno - classe 0"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 9,
+        "fields": {
+            "nome": "P2",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore t.d.  art. 24 c. 3 lett. B Legge 240/10 (t.pieno) + 20%"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 10,
+        "fields": {
+            "nome": "PX",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore t.d. art. 24 c. 3 lett. A Legge 240/10 (t.pieno)"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 11,
+        "fields": {
+            "nome": "DN",
+            "punti_organico": 0.0,
+            "descrizione": "Prof.Associato Legge 240/10 - t.definito - classe 0"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 12,
+        "fields": {
+            "nome": "DV",
+            "punti_organico": 0.0,
+            "descrizione": "Prof.Associato DPR 232/11 art.2 - t.definito - cl. 1"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 13,
+        "fields": {
+            "nome": "P",
+            "punti_organico": 0.0,
+            "descrizione": "Prof.Straord.  - tempo pieno"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 14,
+        "fields": {
+            "nome": "999",
+            "punti_organico": 0.0,
+            "descrizione": null
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 15,
+        "fields": {
+            "nome": "DVA3",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore DPR 232/11 art.2 - t.definito - col. C- cl. 0 - III anno"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 16,
+        "fields": {
+            "nome": "00003",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore non confermato (DLgs 19/2012 art.16)"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 17,
+        "fields": {
+            "nome": "PVA31",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore DPR 232/11 art.2 - t.pieno - col. C- cl. 10 - III anno"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 18,
+        "fields": {
+            "nome": "000D",
+            "punti_organico": 0.0,
+            "descrizione": "Dirigente Superiore - liv. D - classe 0"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 19,
+        "fields": {
+            "nome": "001",
+            "punti_organico": 0.0,
+            "descrizione": "Tecnologo a t.det. art. 24-bis Legge 240/2010 equip. D3"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 20,
+        "fields": {
+            "nome": "DX",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore t.d. art. 24 c. 3 lett. A Legge 240/10 (t.definito)"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 21,
+        "fields": {
+            "nome": "00005",
+            "punti_organico": 0.0,
+            "descrizione": "Direttore generale (Legge 240/2010)"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 22,
+        "fields": {
+            "nome": "2",
+            "punti_organico": 0.0,
+            "descrizione": "Docente a contratto - Legge 240/10, Art.23"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 23,
+        "fields": {
+            "nome": "1",
+            "punti_organico": 0.0,
+            "descrizione": "Collaborazione coordinata e continuativa"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 24,
+        "fields": {
+            "nome": "000002",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore t.d. PON Ricerca e Innovaz. 2014-2020 ? Linea 1 ?Mobilita?"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.posizioneeconomica",
+        "pk": 25,
+        "fields": {
+            "nome": "000003",
+            "punti_organico": 0.0,
+            "descrizione": "Ricercatore t.d. PON Ricerca e Innovaz. 2014-2020 ? Linea 2 ?Attrazione?"
+        }
+    }
+]

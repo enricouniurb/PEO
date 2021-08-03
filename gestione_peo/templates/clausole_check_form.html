@@ -1,4 +1,4 @@
-<form action='#' method='post' class="ui form">
+<form action='#' method='post' class="ui form" id="lockbutton_form">
     {% for field in form %}
     <div class="field">
         {{ field.errors }}
@@ -19,7 +19,7 @@
     </a>
 
 
-    <input class="ui primary button" type="submit" value="Accetta" />
+    <input class="ui primary button lockbutton_submit" type="submit" value="Accetta" />
     {% endblock %}
 
     {% csrf_token %}

@@ -20,9 +20,9 @@
 # mkdir /var/log/uwsgi/dexam
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-BASEDIR="/opt"
+BASEDIR="/var/www/peo"
 ENVDIR="$BASEDIR/django_peo.env"
-APPNAME="django_peo"
+APPNAME="PEO"
 APPDIR="$BASEDIR/$APPNAME"
 #DEBUG=""
 COMMAND="uwsgi --ini $APPDIR/uwsgi_setup/uwsgi.ini &"
@@ -32,17 +32,17 @@ RELOAD_CMD="source $ENVDIR/bin/activate && uwsgi --reload /tmp/$APPNAME.pid"
 
 case "$1" in
   start)
-	su -l wert -c "source $ENVDIR/bin/activate && $COMMAND"
+	su -l eoliva -c "source $ENVDIR/bin/activate && $COMMAND"
 	;;
   stop)
 	#kill -KILL  $(ps ax | grep $APPNAME | awk -F' ' {'print $1'} | xargs echo)
-	su -l wert -c "$STOP_CMD"
+	su -l eoliva -c "$STOP_CMD"
 	;;
   restart)
 	#$0 stop
 	#sleep 1
         #$0 start
-	su -l wert -c "$RELOAD_CMD"
+	su -l eoliva -c "$RELOAD_CMD"
 	;;
   *)
 	echo "Usage: motd [start|stop|restart]" >&2

@@ -1,14 +1,26 @@
+from django.utils.translation import ugettext_lazy as _
+
 NUMERAZIONI_CONSENTITE = [
-                            'Protocollo',
-                            'Decreto Rettorale (D.R.)',
-                            'Decreto del Direttore Generale (D.D.G.)',
-                            'Decreto del Direttore Dipartimento o Dirigente Struttura',
-                            'Decreto del Direttore del Centro Residenziale (D.CR.)',
-                            'Decreto del Prorettore (Centro Residenziale)',
+                            #'Protocollo',
+                            'Decreto o nota Rettorale (D.R.)',
+                            'Decreto o nota del Direttore Generale (D.D.G.)',
+                            'Decreto o nota del Direttore Dipartimento o Dirigente Struttura',
+                            #'Decreto del Direttore del Centro Residenziale (D.CR.)',
+                            #'Decreto del Prorettore (Centro Residenziale)',
                             'Delibera di Dipartimento/Facoltà',
-                            'Delibera del Senato',
-                            'Delibera del C.D.A.',
+                            #'Delibera del Senato',
+                            #'Delibera del C.D.A.',
                          ]
+
+CLASSIFICATION_LIST = (#('protocollo', _('Protocollo')),
+                       ('decreto_rettorale', _('Decreto Rettorale (D.R.)')),
+                       ('decreto_direttore_generale', _('Decreto o nota del Direttore Generale (D.D.G.)')),
+                       ('decreto_dirigente_struttura', _('Decreto o nota del Direttore Dipartimento o Dirigente Struttura')),
+                       #('decreto_direttore_cr', _('Decreto del Direttore del Centro Residenziale (D.CR.)')),
+                       #('decreto_prorettore', _('Decreto del Prorettore (Centro Residenziale)')),
+                       ('delibera_dipartimento_facolta', _('Delibera di Dipartimento/Facoltà')))
+                       #('delibera_senato', _('Delibera del Senato')),
+                       #('delibera_cda', _('Delibera del C.D.A.')))
 
 # Campo testo "Etichetta" di default, creato automaticamente in ogni form
 # di inserimento. Serve per l'individuazione rapida del modulo
@@ -18,7 +30,7 @@ ETICHETTA_INSERIMENTI_LABEL = 'Etichetta dell\'inserimento'
 ETICHETTA_INSERIMENTI_HELP_TEXT = ('Il nome che desideri dare a questo modello compilato,'
                                    ' per individuarlo velocemente nella tua domanda')
 
-COMPLETE_EMAIL_SENDER = 'peo-noreply@unical.it'
+COMPLETE_EMAIL_SENDER = 'peo-noreply@uniurb.it'
 COMPLETE_EMAIL_SUBJECT = "{}, domanda trasmessa"
 COMPLETE_EMAIL_BODY = """Caro {dipendente},
 

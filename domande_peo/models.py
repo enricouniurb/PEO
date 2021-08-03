@@ -149,6 +149,16 @@ class DomandaBando(TimeStampedModel, PunteggioDomandaBando):
                 if di in [ i.descrizione_indicatore for i in self.modulodomandabando_set.all()]:
                     return True
 
+    def descr_ind_by_id_code(self, id_code):
+        """
+        Torna il primo DescrizioneIndicatore id_code 
+        """
+        for ip in self.bando.indicatoreponderato_set.all():
+            descr_ind = ip.descrizioneindicatore_set.filter(id_code=id_code).first()
+            if descr_ind:
+                return descr_ind
+        
+
     def valida(self):
         """
         Torna True se il controllo su tutti i moduli.is_valid() tornano true
@@ -251,6 +261,10 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
                                    blank=True, default='')
     punteggio_calcolato = models.FloatField(help_text="popolato da metodo .calcolo_punteggio",
                                             blank=True, null=True)
+
+    punteggio_manuale = models.FloatField(help_text="punteggio manuale attribuito dalla commissione in alternativa al punteggio automatico",
+                                            blank=True, null=True)                                                                                  
+
     # sovrascrive il field di TimeStampedModel per tracciare solo le modifiche
     # dell'utente lato frontend. Es: in fase di calcolo del punteggio questo valore
     # verrebbe sfalsato
@@ -272,17 +286,34 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
         """
         controlla che gli allegati del modulo siano presenti se required
         """
+
         # allegati = dict(self.get_allegati())
         allegati = dict(get_allegati(self))
-        form = self.descrizione_indicatore.get_form()
-        for field in form.fields:
-            f = form.fields[field]
-            if (f.required and isinstance(f, forms.FileField)):
-                if not allegati:
-                    return False
-                if not field in allegati.keys():
-                    return False
-        # any fields returns as False
+        form = self.compiled_form(remove_filefields=allegati)
+        #form = self.descrizione_indicatore.get_form(remove_filefields= allegati)                                
+        if (not form.is_valid()):
+            return False
+
+        modulo_compilato_dict = json.loads(self.modulo_compilato)
+        if 'sub_descrizione_indicatore_form' in modulo_compilato_dict:
+            current_value = modulo_compilato_dict.get('sub_descrizione_indicatore_form')
+            for field in form.fields:
+                f = form.fields[field]
+                if (f.required and isinstance(f, forms.FileField) and \
+                        (f.name.endswith('submulti_{}'.format(current_value) or not ('submulti_' in f.name)))):
+                    if not allegati:
+                        return False
+                    if not field in allegati.keys():
+                        return False
+        else:
+            for field in form.fields:
+                f = form.fields[field]
+                if (f.required and isinstance(f, forms.FileField)):
+                    if not allegati:
+                        return False
+                    if not field in allegati.keys():
+                        return False
+        # any fields returns as False        
         return True
 
     def is_valid(self):
@@ -292,8 +323,9 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
         if not self.allegati_validi():
             return False
         # NON FARE ripopolamento+clean di ogni form, altrimenti rallenta!
-        # form = self.compiled_form()
-        # return form.is_valid()
+        #form = self.compiled_form()
+        #return form.is_valid()
+
         return True
 
     def get_allegati_path(self):
@@ -348,6 +380,28 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
     def get_identificativo_veloce(self):
         modulo_compilato_dict = json.loads(self.modulo_compilato)
         return modulo_compilato_dict.get(ETICHETTA_INSERIMENTI_ID)
+
+    def get_identificativo_veloce_lungo(self):
+        modulo_compilato_dict = json.loads(self.modulo_compilato)      
+
+        if ('sub_descrizione_indicatore_form' in modulo_compilato_dict):              
+            data = self.descrizione_indicatore.subdescrizioneindicatore_set.filter(id = modulo_compilato_dict['sub_descrizione_indicatore_form']).first()       
+            if (data):
+              modulo_compilato_dict['sub_descrizione_indicatore_form'] = data.nome  
+            
+        if ('sub_descrizione_indicatore' in modulo_compilato_dict):
+            data = self.descrizione_indicatore.subdescrizioneindicatore_set.filter(id = modulo_compilato_dict['sub_descrizione_indicatore']).first()       
+            if (data):
+              modulo_compilato_dict['sub_descrizione_indicatore'] = data.nome              
+
+        if ('titolo_di_studio_superiore' in modulo_compilato_dict):
+            data = self.domanda_bando.bando.punteggio_titolostudio_set.filter(id = modulo_compilato_dict['titolo_di_studio_superiore']).first()       
+            if (data):
+                modulo_compilato_dict['titolo_di_studio_superiore'] = data.titolo              
+ 
+        filtered = { k: v for k, v in modulo_compilato_dict.items() if not('allegato' in k or ETICHETTA_INSERIMENTI_ID == k) }
+        text = ' '.join([str(elem) for elem in filtered.values() if type(elem) is not dict] )[:200]+'...'
+        return text
 
     def added_by_user(self):
         bando = self.domanda_bando.bando

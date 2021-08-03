@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 'django_countries',
-    'advanced_filters',
+    # 'advanced_filters',
     'django_admin_multiple_choice_list_filter',
 
     # external libs
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
     # oracle dblink for cineca CSA if CSA_MODE == CSA_NATIVE
     # if CSA_MODE == CSA_REPLICA data will be copied in default DB
-    'csa',
+    # 'csa',
 
     # Django Form Builder
     'django_form_builder',
@@ -108,9 +108,6 @@ DATABASES = {
     }
 }
 
-
-## CSA
-# =======
 # CSA conf
 CSA_V_ANAGRAFICA = 'V_ANAGRAFICA'
 CSA_V_CARRIERA = 'V_CARRIERA'
@@ -142,8 +139,19 @@ elif CSA_MODE == CSA_REPLICA:
     CSA_REPL_SCRIPT = 'csa.sqlalchemy_repl'
 else:
     raise Exception('CSA_MODE non configured in settings.py')
-
 # END CSA
+
+RUOLI = [('ND', 'ND - Personale non docente'),
+         ('DC', 'DC - Dirigente a contratto'),
+         ('NB', 'NB - ND Centro Residenziale'),
+         ('D0', 'D0 - Dirigenti Superiori'),
+         ('NM', 'NM - Non docenti a tempo det.-Tesoro'),
+         ('NG', 'NG - Addetti ufficio stampa'),
+         ('PO', 'PO - Professori Ordinari'),
+         ('PA', 'PA - Professori Associati'),
+         ('RU', 'RU - Ricercatori Universitari'),
+         ('RM', 'RM - Ricercatori a tempo det-Tesoro'),
+         ('RD', 'RD - Ricercatori Legge 240/10 - t.det.')]
 
 LANGUAGE_CODE = 'it-it'
 TIME_ZONE = 'Europe/Rome'

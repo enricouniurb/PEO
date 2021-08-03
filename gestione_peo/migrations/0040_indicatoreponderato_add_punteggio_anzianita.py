@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='indicatoreponderato',
             name='add_punteggio_anzianita',
-            field=models.BooleanField(default=False, help_text="Se attivo, al punteggio derivante dagli inserimenti del Dipendente, verrà sommato il punteggio relativo all'anzianità di servizio (Unical), rispettando sempre il max ottenibile", verbose_name='Somma Punteggio Anzianità Servizio'),
+            field=models.BooleanField(default=False, help_text="Se attivo, al punteggio derivante dagli inserimenti del Dipendente, verrà sommato il punteggio relativo all'anzianità di servizio (UniUrb), rispettando sempre il max ottenibile", verbose_name='Somma Punteggio Anzianità Servizio'),
         ),
     ]

@@ -15,7 +15,22 @@ from django_form_builder.dynamic_fields import *
 from django_form_builder.utils import _successivo_ad_oggi
 from gestione_risorse_umane.models import Dipendente, TitoloStudio
 
-from .settings import NUMERAZIONI_CONSENTITE
+from .settings import NUMERAZIONI_CONSENTITE, CLASSIFICATION_LIST
+
+
+def _inizio_validita_titoli(bando, ultima_progressione):
+    """
+    Torna 'inizio_validita_titoli' del bando a cui la domanda
+    si riferisce
+    """
+    data_inizio_validita = bando.data_validita_titoli_inizio
+    if data_inizio_validita:
+        if not ultima_progressione: return data_inizio_validita
+        if bando.considera_ultima_progressione:
+            if data_inizio_validita <= ultima_progressione:
+                return ultima_progressione
+        return data_inizio_validita
+    return ultima_progressione
 
 
 def _inizio_validita_titoli(bando, ultima_progressione):
@@ -176,10 +191,58 @@ class PEO_SubDescrizioneIndicatoreField(ModelChoiceField, BaseCustomField):
         sub_descr_ind = None
         if descrizione_indicatore:
             sub_descr_ind = descrizione_indicatore. \
-                            subdescrizioneindicatore_set.all()
+                            subdescrizioneindicatore_set.all()           
         if sub_descr_ind:
             self.queryset = sub_descr_ind
+        
+   
+             
+class PEO_SubDescrizioneIndicatoreFormField(ModelChoiceField, BaseCustomField):
+    """
+    SelectBox con le sotto-categorie SubDescrizioneIndicatore
+    """
+    field_type = _("_PEO_  Selezione sotto-categorie con form DescrizioneIndicatore")
+    name = 'sub_descrizione_indicatore_form'
+    is_complex = True
+    sub_forms = []
 
+    def __init__(self, **data_kwargs):
+        # Di default, inserisce tutti i SubDescrizioneIndicatore
+        sub_descr_ind = apps.get_model('gestione_peo',
+                                       'SubDescrizioneIndicatore')
+        data_kwargs['queryset'] = sub_descr_ind.objects.all()
+        super().__init__(**data_kwargs)
+
+    def define_value(self, custom_value,**kwargs):
+        """
+        Se la DescrizioneIndicatore associata al Form prevede SubDescrInd
+        li sostituisce ai valori di default
+        """
+        domanda_bando = kwargs.get('domanda_bando')
+        descrizione_indicatore = kwargs.get('descrizione_indicatore')
+        sub_descr_ind = None
+        if descrizione_indicatore:
+            kwargs['subdescrizioneindicatoreformfield']= True
+            sub_descr_ind = descrizione_indicatore. \
+                            subdescrizioneindicatore_set.all()
+            self.sub_forms = [sub.get_form(**kwargs) for sub in sub_descr_ind]
+
+        if sub_descr_ind:
+            self.queryset = sub_descr_ind
+        
+
+    def get_fields(self):        
+        ereditati = super().get_fields()        
+        for sub_form in self.sub_forms:
+            if sub_form:
+                for key, field in sub_form.fields.items():
+                    field.name = '{}_submulti_{}'.format(key,sub_form.descrizione_indicatore.id)
+                    classes = field.widget.attrs.get("class")                     
+                    field.widget.attrs.update({'class': ('{} '.format(classes) if classes else '') + 'submulti submulti_{}'.format(sub_form.descrizione_indicatore.id)})           
+
+                #filtered_dict = {k:v for (k,v) in d.items() if filter_string != 'etichetta_inserimento'}.values()
+                ereditati.extend(sub_form.fields.values())
+        return ereditati
 
 class PEO_DateStartEndComplexField(DateStartEndComplexField):
     """
@@ -535,6 +598,17 @@ class PEO_ProtocolloField(ProtocolloField):
     def __init__(self, **data_kwargs):
         super().__init__(**data_kwargs)
         self.data.widget = forms.DateInput(attrs=_date_field_options)
+        self.tipo.label = _("Tipo atto")
+        self.tipo.help_text = _("Scegli il tipo atto, "
+                                "al quale la numerazione è riferita")
+        self.numero.label = _("Numero Delibera o Decreto")
+        self.numero.help_text = _("Indica il numero del "
+                                  "decreto o delibera")
+        self.data.label = _("Data Delibera o Decreto")
+        self.data.help_text = _("Indica la data del decreto o delibera")
+        self.tipo.choices = [('', 'Scegli una opzione')]
+        self.tipo.choices += [(i[0].lower().replace(' ', '_'), i[1]) \
+                             for i in CLASSIFICATION_LIST]
 
     def raise_error(self, name, cleaned_data, **kwargs):
         """
@@ -611,3 +685,72 @@ class PEO_ProtocolloField(ProtocolloField):
                     errors.append("La data del protocollo è precedente "
                                   "alla data: {}".format(inizio_validita_titoli))
             return errors
+
+
+class PEO_URLField(CharField, BaseCustomField):
+    """
+    URL
+    """
+    field_type = _("URL")
+
+    def __init__(self, *args, **data_kwargs):
+        super().__init__(*args, **data_kwargs)
+    
+    def raise_error(self, name, cleaned_data, **kwargs):    
+        if not cleaned_data: return []
+        if not re.match('^(https?:)?[a-zA-Z0-9_.+-/#~]+$', str(cleaned_data)):
+            return [_("Indirizzo link non valido"),]
+
+
+class PEO_AllegatoURLField(BaseCustomField):
+    """
+    Allegato o URL al documento 
+    """
+    field_type = "_PEO_  Allegato o URL al documento"
+    is_complex = True    
+
+    def __init__(self, *args, **data_kwargs):
+        # Allegato
+        self.allegato = CustomFileField(*args, **data_kwargs)   
+        self.allegato.name = "allegato"     
+        self.allegato.label = _("Documento")                
+        self.allegato.required = False
+        self.allegato.parent = self
+
+        # Url
+        self.url_documento = PEO_URLField(*args, **data_kwargs)   
+        self.url_documento.required = False
+        self.url_documento.label = _("Indirizzo link al documento")
+        self.url_documento.name = "url_documento"        
+        self.url_documento.parent = self      
+
+    def get_fields(self):
+        return [self.url_documento, self.allegato]  
+
+    def raise_error(self, name, cleaned_data, **kwargs):
+        """
+        Questo campo complesso richiede la compilazione o dell'allegato o del url
+        """
+        errors = []
+        allegato_value = cleaned_data.get(self.allegato.name)
+
+        allegati = kwargs.get('allegati')
+        if (allegati and type(allegati) is dict):
+            if (self.allegato.name in allegati):
+                allegato_value = allegati.get(self.allegato.name)        
+                        
+        url_value = cleaned_data.get(self.url_documento.name)     
+        if (url_value):
+            errors = self.url_documento.raise_error(self.url_documento.name, url_value, **kwargs)
+        if not allegato_value and not url_value: 
+          errors.append("Si richiede di allegare il documento oppure inserire l'URL al documento")
+        
+        return errors
+
+
+class DurataComePositiveFloatField(PositiveFloatField):
+    """
+    Durata come DecimalField positivo
+    """
+    field_type = _("Durata come numero decimale (anni,mesi,ore)")
+    name = 'durata_come_decimale'
