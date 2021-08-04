@@ -39,7 +39,7 @@ class PeoMethods(object):
         if self.data_ultima_progressione_manuale:
             return self.data_ultima_progressione_manuale
         else:
-            return self.data_presa_servizio_manuale or self.data_presa_servizio
+            return self.data_ultima_progressione or self.data_presa_servizio_manuale or self.data_presa_servizio
 
     @is_apps_installed(['gestione_peo', ])
     def idoneita_peo(self):

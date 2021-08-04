@@ -223,6 +223,8 @@ class Dipendente(TimeStampedModel, PeoMethods, CareerMethods):
                                             null=True, blank=True)
     data_cessazione_contratto = models.DateField('Data cessazione contratto (CSA)',
                                                  null=True,blank=True)
+    data_ultima_progressione = models.DateField('Data ultima progressione calcolata (CSA)',
+                                                null=True, blank=True)                                                 
 
 
     data_presa_servizio_manuale = models.DateField(null=True, blank=True)

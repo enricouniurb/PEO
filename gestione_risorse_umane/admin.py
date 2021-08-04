@@ -130,7 +130,7 @@ class DipendenteAdmin(admin.ModelAdmin): # AdminAdvancedFiltersMixin,
                         ('data_presa_servizio_manuale',
                          'data_ultima_progressione_manuale',
                          'data_cessazione_contratto_manuale',),
-                        ('data_presa_servizio', 'data_cessazione_contratto',),
+                        ('data_presa_servizio', 'data_ultima_progressione','data_cessazione_contratto'),
                       ),
         }),
         #('Dati CSA', {

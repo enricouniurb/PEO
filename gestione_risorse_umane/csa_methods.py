@@ -38,6 +38,7 @@ class CSAMethods(object):
 
     def get_carriera_csa(self):
         anagrafica_csa = self.get_anagrafica_csa()
+        #ordine decrescente per data_inizio
         carriera =  anagrafica_csa.get_carriera_view() #anagrafica_csa.get_carriera_docente_view() or
         if not carriera:
             raise CSAException(message=('Il dipendente non presenta '
@@ -146,10 +147,11 @@ class CSAMethods(object):
         if self.data_presa_servizio_manuale:
             return self.data_presa_servizio_manuale
 
-        c = self.get_first_carriera_csa()
+        #c = self.get_first_carriera_csa()
+        c = self.get_carriera_csa()
         # trovo la prima presa di servizio scartando le eventuali cessazioni
-        v =  c['data_inizio']
-        # v =  c[0][CARRIERA_FIELDS_MAP['data_inizio_rapporto']]
+        #v =  c['data_inizio']
+        v =  c[0]['data_inizio_rapporto']
         if not v:
             raise CSAException(message='Il dipendente non ha una data di presa servizio in CSA!',
                                errors=['dt_rap_ini è vuoto',])
@@ -168,6 +170,11 @@ class CSAMethods(object):
             if i['data_fine'] > v:
                 v = i['data_fine']
         return timezone.get_current_timezone().localize(v)
+
+    def get_data_ultima_progressione_csa(self):
+        c = self.get_carriera_csa()
+        v =  c[0]['data_avanzamento']      
+        return timezone.get_current_timezone().localize(v).date()
 
     def get_incarichi_csa(self):
         anagrafica_csa = self.get_anagrafica_csa()
@@ -206,6 +213,11 @@ class CSAMethods(object):
         self.ruolo = self.get_ruolo_csa()
         self.data_presa_servizio = self.get_data_presa_servizio_csa()
         self.data_cessazione_contratto = self.get_data_cessazione_servizio_csa()
+
+        data = self.get_data_ultima_progressione_csa()
+        if (self.data_presa_servizio < data):
+            self.data_ultima_progressione = data
+
         self.data_ultima_sincronizzazione = timezone.localtime()
         self.save()
         return self.data_ultima_sincronizzazione
