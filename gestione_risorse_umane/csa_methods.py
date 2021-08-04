@@ -172,8 +172,12 @@ class CSAMethods(object):
         return timezone.get_current_timezone().localize(v)
 
     def get_data_ultima_progressione_csa(self):
-        c = self.get_carriera_csa()
-        v =  c[0]['data_avanzamento']      
+        c = self.get_carriera_csa()     
+        #filtro gli eventi solo con l'ultimo inquadramento
+        filtered = filter(lambda x: x['inquadramento'] == self.livello.__str__(), c)
+        c_sorted = sorted(filtered, key=lambda x: x['data_avanzamento'], reverse=False)                   
+
+        v =  c_sorted[0]['data_avanzamento']      
         return timezone.get_current_timezone().localize(v).date()
 
     def get_incarichi_csa(self):
@@ -213,10 +217,8 @@ class CSAMethods(object):
         self.ruolo = self.get_ruolo_csa()
         self.data_presa_servizio = self.get_data_presa_servizio_csa()
         self.data_cessazione_contratto = self.get_data_cessazione_servizio_csa()
-
-        data = self.get_data_ultima_progressione_csa()
-        if (self.data_presa_servizio < data):
-            self.data_ultima_progressione = data
+       
+        self.data_ultima_progressione = self.get_data_ultima_progressione_csa()
 
         self.data_ultima_sincronizzazione = timezone.localtime()
         self.save()
