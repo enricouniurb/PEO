@@ -173,8 +173,15 @@ class CSAMethods(object):
 
     def get_data_ultima_progressione_csa(self):
         c = self.get_carriera_csa()     
+
+        livello = ''
+        if (self.livello.posizione_economica.nome == 'EP'):
+            livello = '{}{}'.format(self.livello.posizione_economica.nome,self.livello.nome)
+        else:
+            livello =  self.livello.__str__()
+
         #filtro gli eventi solo con l'ultimo inquadramento
-        filtered = filter(lambda x: x['inquadramento'] == self.livello.__str__(), c)
+        filtered = filter(lambda x: x['inquadramento'] == livello, c)
         c_sorted = sorted(filtered, key=lambda x: x['data_avanzamento'], reverse=False)                   
 
         v =  c_sorted[0]['data_avanzamento']      
