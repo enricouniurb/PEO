@@ -180,8 +180,17 @@ class CSAMethods(object):
         else:
             livello =  self.livello.__str__()
 
-        #filtro gli eventi solo con l'ultimo inquadramento
-        filtered = filter(lambda x: x['inquadramento'] == livello, c)
+        #cerco se tra gli eventi di cariera c'è una cessazione 0029 cessato
+        filtered=[]
+        evento = list(filter(lambda x: x['attivita'] == '0029', c))
+        if (evento and evento[0]):
+            #prendo tutti gli eventi successivi alla cessazione
+            data_fitro = evento[0]['data_fine_rapporto']  if (evento[0]['data_fine_rapporto'] < evento[0]['data_fine']) else evento[0]['data_fine']
+            filtered = filter(lambda x: x['inquadramento'] == livello and x['data_inizio_rapporto']>=data_fitro, c)
+        else:
+            #filtro gli eventi solo con l'ultimo inquadramento
+            filtered = filter(lambda x: x['inquadramento'] == livello, c)
+        
         c_sorted = sorted(filtered, key=lambda x: x['data_avanzamento'], reverse=False)                   
 
         v =  c_sorted[0]['data_avanzamento']      
