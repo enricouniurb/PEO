@@ -13,7 +13,8 @@ from django.utils.safestring import mark_safe
 
 from .admin_actions import (abilita_idoneita_peo,
                             disabilita_idoneita_peo,
-                            sincronizza_da_csa)
+                            sincronizza_da_csa,
+                            async_sincronizza_da_csa)
 from .admin_inlines import *
 from .admin_filters import *
 from .models import *
@@ -151,6 +152,7 @@ class DipendenteAdmin(admin.ModelAdmin): # AdminAdvancedFiltersMixin,
     actions = [abilita_idoneita_peo, disabilita_idoneita_peo]
     if settings.CSA_MODE == 'native':
         actions.append(sincronizza_da_csa)
+        actions.append(async_sincronizza_da_csa)
 
     class Media:
         js = ('js/textarea-autosize_legacy.js',)
