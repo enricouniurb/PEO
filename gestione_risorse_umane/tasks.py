@@ -1,11 +1,4 @@
 import logging
-try:
-    from uwsgidecorators import spool
-except:
-    def spool(func):
-        def func_wrapper(**arguments):
-            return func(arguments)
-        return func_wrapper
 from django.apps import apps
 from django.contrib import messages
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
@@ -16,10 +9,8 @@ from .models import *
 
 
 logger = logging.getLogger(__name__)
- 
-@spool
-def long_running_task(arguments):
-    queryset = arguments['queryset']
+
+def long_running_task(modeladmin, queryset):  
     num_sync = 0
     for i in queryset:
         if i.sync_csa():

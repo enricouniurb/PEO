@@ -5,6 +5,9 @@ from django.contrib.contenttypes.models import ContentType
 
 from gestione_peo.models import Bando
 from .models import *
+
+import threading 
+
 from .tasks import long_running_task
 
 def abilita_idoneita_peo(modeladmin, request, queryset):
@@ -86,7 +89,10 @@ def sincronizza_da_csa(modeladmin, request, queryset):
 sincronizza_da_csa.short_description = "Sincronizza i dati dei dipendenti selezionati da CSA"
 
 def async_sincronizza_da_csa(modeladmin, request, queryset):
-    long_running_task(modeladmin=modeladmin, queryset=queryset)
+    t = threading.Thread(target=long_running_task, args=(modeladmin, queryset, ), kwargs={})
+    t.setDaemon(True)
+    t.start()
+    
     messages.add_message(request, messages.INFO, 'Sincronizzazione in fase di esecuzione')
 
 async_sincronizza_da_csa.short_description = "Sincronizza asincrona i dati dei dipendenti selezionati da CSA"    
