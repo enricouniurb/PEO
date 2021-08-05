@@ -14,7 +14,7 @@ def long_running_task(modeladmin, queryset):
     logger.info('Inizio long_running_task sincronizzazione dipendenti da CSA')
     num_sync = 0
     for i in queryset:
-         try:
+        try:
             if i.sync_csa():
                 num_sync += 1
                 logger.info('{} Dipendente sincronizzato da CSA'.format(i.matricola))
