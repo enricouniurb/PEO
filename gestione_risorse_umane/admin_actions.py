@@ -1,3 +1,5 @@
+import logging
+
 from django.apps import apps
 from django.contrib import messages
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
@@ -9,6 +11,8 @@ from .models import *
 import threading 
 
 from .tasks import long_running_task
+
+logger = logging.getLogger(__name__)
 
 def abilita_idoneita_peo(modeladmin, request, queryset):
     bando = Bando.objects.filter(redazione=True).last()
@@ -79,9 +83,13 @@ disabilita_idoneita_peo.short_description = "Disabilita i selezionati a partecip
 def sincronizza_da_csa(modeladmin, request, queryset):
     num_sync = 0
     for i in queryset:
-        if i.sync_csa():
-            num_sync += 1
-        else:
+        try:
+            if i.sync_csa():
+                num_sync += 1
+            else:
+                messages.add_message(request, messages.ERROR, 'Sono incorsi errori nel sincronizzare {}'.format(i.__str__()))
+        except Exception as e:        
+            logger.exception(e)    
             messages.add_message(request, messages.ERROR, 'Sono incorsi errori nel sincronizzare {}'.format(i.__str__()))
     if num_sync:
         messages.add_message(request, messages.INFO, '{} Dipendenti sincronizzati da CSA'.format(num_sync))
