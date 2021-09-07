@@ -297,8 +297,8 @@ class FormazioneDipendente(TimeStampedModel):
     data_inizio = models.DateField(null=True, blank=True)
     data_fine = models.DateField(null=True, blank=True)
 
-    durata_ore = models.FloatField(default=0.0)
-    #durata_ore = models.DecimalField(default=0.0, max_digits=5, decimal_places=2)
+    #durata_ore = models.FloatField(default=0.0)
+    durata_ore = models.DecimalField(default=0.0, max_digits=5, decimal_places=2, null=True, blank=False)
 
     ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento",
                                               blank=True, default=0)    

@@ -41,6 +41,8 @@ from .models import *
 from .utils import *
 from .protocol import WSTitulusClient
 
+from decimal import Decimal
+
 # pdfs
 from PyPDF2 import PdfFileMerger
 from io import StringIO, BytesIO
@@ -170,7 +172,7 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                         data['ente_erogatore']=formazione.ente_organizzatore
                         data['data_inizio_dyn_inner']=formazione.data_inizio.strftime(settings.STRFTIME_DATE_FORMAT)
                         data['data_fine_dyn_inner']=formazione.data_fine.strftime(settings.STRFTIME_DATE_FORMAT)
-                        data['durata_come_decimale']=formazione.durata_ore
+                        data['durata_come_decimale']= (float(formazione.durata_ore) if isinstance(formazione.durata_ore, Decimal) else formazione.durata_ore)
 
                         aggiungi_titolo_from_db(request=request,
                                                 datadb=data, 

@@ -130,7 +130,13 @@ def import_file(request):
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'THIS IS NOT A CSV FILE')
 
-        data_set = csv_file.read().decode(settings.DEFAULT_CHARSET)
+        data_set = ''
+        try:
+            data_set = csv_file.read().decode(settings.DEFAULT_CHARSET)    
+        except:
+            csv_file.seek(0)
+            data_set = csv_file.read().decode('cp1252')     
+        
         # setup a stream which is when we loop through each line we are able to handle a data in a stream
         io_string = io.StringIO(data_set)
         next(io_string)
@@ -143,7 +149,7 @@ def import_file(request):
                     ente_organizzatore=column[3],
                     data_inizio= datetime.strptime(column[4], '%d/%m/%Y')if column[4] else None,
                     data_fine= datetime.strptime(column[5], '%d/%m/%Y')if column[4] else None,
-                    durata_ore=column[6]
+                    durata_ore= column[6] if column[6] else None
                 )
         context = {}
  
