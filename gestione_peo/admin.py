@@ -120,7 +120,8 @@ class DescrizioneIndicatoreAdmin(DescrizioneIndicatoreAdminAbstract, nested_admi
                ModuloInserimentoCampiNestedInline,
                CategorieDisabilitate_DescrizioneIndicatoreNestedInline,
                RuoliDisabilitati_DescrizioneIndicatoreNestedInline]
-
+               #FunzioneNomina_DescrizioneIndicatoreNestedInline
+                              
     readonly_fields = ('get_anteprima_modulo_inserimento',)
     search_fields = ('nome', 'indicatore_ponderato__bando__nome',)
     fields = ('indicatore_ponderato',
@@ -183,9 +184,9 @@ class SubDescrizioneIndicatoreAdmin(nested_admin.NestedModelAdmin):
                    'id_code')
     inlines = [ Punteggio_SubDescrizioneIndicatoreNestedInline,
                 Punteggio_SubDescrizioneIndicatore_TimeDeltaNestedInline,                 
-                PunteggioMax_SubDescrizioneIndicatore_PosEconomicaNestedInline,               
-                SubModuloInserimentoCampiNestedInline
-               ]
+                PunteggioMax_SubDescrizioneIndicatore_PosEconomicaNestedInline,                              
+                SubModuloInserimentoCampiNestedInline]
+                #FunzioneNomina_SubDescrizioneIndicatoreInline
 
     search_fields = ('nome',)
     fields = ('descrizione_indicatore',

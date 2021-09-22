@@ -290,11 +290,12 @@ def aggiungi_titolo_from_db(request,
                          descrizione_indicatore,
                          domanda_bando,
                          dipendente,                       
-                         log=False):
+                         log=False,
+                         checked=False):
 
     form = descrizione_indicatore.get_form(data = datadb,                                           
                                            domanda_bando=domanda_bando)
-    if form.is_valid():
+    if form.is_valid() or checked:
         # qui chiedere conferma prima del salvataggio
         #json_data = get_POST_as_json(request)
         mdb_model = apps.get_model(app_label='domande_peo', model_name='ModuloDomandaBando')

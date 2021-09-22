@@ -1,0 +1,299 @@
+[
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 1,
+        "fields": {
+            "created": "2021-09-20T13:48:42.274Z",
+            "modified": "2021-09-20T14:42:16.231Z",
+            "funzione": "NFUN25",
+            "descr": "RESPONSABILE DI SETTORE",
+            "id_code": "Eh-EP-1"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 2,
+        "fields": {
+            "created": "2021-09-20T14:40:43.039Z",
+            "modified": "2021-09-20T14:45:52.082Z",
+            "funzione": "NFU745",
+            "descr": "RESPOSABILE DI SERVIZIO",
+            "id_code": "Eh-EP-1"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 3,
+        "fields": {
+            "created": "2021-09-20T15:10:21.134Z",
+            "modified": "2021-09-20T15:10:23.343Z",
+            "funzione": "NFU502",
+            "descr": "RESPONSABILE DI SERVIZIO AD INTERMI",
+            "id_code": "Eh-EP-2"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 4,
+        "fields": {
+            "created": "2021-09-20T15:11:00.147Z",
+            "modified": "2021-09-20T15:11:00.147Z",
+            "funzione": "NFUN31",
+            "descr": "RESPONSABILE DI SETTORE AD INTERIM",
+            "id_code": "Eh-EP-2"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 5,
+        "fields": {
+            "created": "2021-09-20T15:15:12.356Z",
+            "modified": "2021-09-20T15:15:12.356Z",
+            "funzione": "NFUN67",
+            "descr": "RESPONSABILE DI UFFICIO",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 6,
+        "fields": {
+            "created": "2021-09-20T15:15:28.105Z",
+            "modified": "2021-09-20T15:15:33.464Z",
+            "funzione": "NFU597",
+            "descr": "COORDIANTORE DI PROCESSO",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 7,
+        "fields": {
+            "created": "2021-09-20T15:15:49.146Z",
+            "modified": "2021-09-20T15:15:49.146Z",
+            "funzione": "74",
+            "descr": "COORDINATORE TECNIO",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 8,
+        "fields": {
+            "created": "2021-09-20T15:16:28.758Z",
+            "modified": "2021-09-20T15:16:28.758Z",
+            "funzione": "NF0685",
+            "descr": "REFERENTE DI AREA BIBLIOTECA",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 9,
+        "fields": {
+            "created": "2021-09-20T15:17:00.735Z",
+            "modified": "2021-09-20T15:17:00.735Z",
+            "funzione": "NF0684",
+            "descr": "RESPONSABILE DI BIBLIOTECA",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 10,
+        "fields": {
+            "created": "2021-09-20T15:17:18.672Z",
+            "modified": "2021-09-20T15:17:18.672Z",
+            "funzione": "NF0329",
+            "descr": "RESPONSABILE DI PLESSO",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 11,
+        "fields": {
+            "created": "2021-09-20T15:17:38.670Z",
+            "modified": "2021-09-20T15:17:38.670Z",
+            "funzione": "NF0687",
+            "descr": "RESPONSABILE DI SERVIZI DI BIBLIOTECA",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 12,
+        "fields": {
+            "created": "2021-09-20T15:17:55.893Z",
+            "modified": "2021-09-20T15:17:55.893Z",
+            "funzione": "NFU583",
+            "descr": "RESPONSABILE DI UNITA'",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 13,
+        "fields": {
+            "created": "2021-09-20T15:18:26.570Z",
+            "modified": "2021-09-20T15:18:26.570Z",
+            "funzione": "NFUN69",
+            "descr": "RESPONSABILE DI UFFICIO AD INTERIM",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 14,
+        "fields": {
+            "created": "2021-09-20T15:18:47.388Z",
+            "modified": "2021-09-20T15:18:47.388Z",
+            "funzione": "NF0689",
+            "descr": "COORDINATORE DI PROCESSO AD INTERIM",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 15,
+        "fields": {
+            "created": "2021-09-20T15:19:18.091Z",
+            "modified": "2021-09-20T15:19:18.091Z",
+            "funzione": "NF0686",
+            "descr": "REFERENTE DI AREA DI BIBLIOTECA AD INTERIM",
+            "id_code": "D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 16,
+        "fields": {
+            "created": "2021-09-20T15:20:01.945Z",
+            "modified": "2021-09-20T15:20:01.945Z",
+            "funzione": "NF0693",
+            "descr": "FUNZIONE TECNICO/SPECIALISTICA",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 17,
+        "fields": {
+            "created": "2021-09-20T15:20:15.713Z",
+            "modified": "2021-09-20T15:20:15.713Z",
+            "funzione": "NFUN58",
+            "descr": "COORDINATORE",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 18,
+        "fields": {
+            "created": "2021-09-20T15:20:36.502Z",
+            "modified": "2021-09-20T15:20:36.502Z",
+            "funzione": "NF0692",
+            "descr": "COORDINATORE DI ATTIVITA'",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 19,
+        "fields": {
+            "created": "2021-09-20T15:21:06.629Z",
+            "modified": "2021-09-20T15:21:06.629Z",
+            "funzione": "NF0691",
+            "descr": "REFERENTE DI STRUTTURA",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 20,
+        "fields": {
+            "created": "2021-09-20T15:21:32.262Z",
+            "modified": "2021-09-20T15:21:32.262Z",
+            "funzione": "NFUN66",
+            "descr": "RESPONSABILE DI LINEA DI ATTIVITA'",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 21,
+        "fields": {
+            "created": "2021-09-20T15:21:46.559Z",
+            "modified": "2021-09-20T15:21:46.559Z",
+            "funzione": "NF0328",
+            "descr": "RESPONSABILE DIDATTICO",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 22,
+        "fields": {
+            "created": "2021-09-20T15:22:16.297Z",
+            "modified": "2021-09-20T15:22:16.297Z",
+            "funzione": "NFU100",
+            "descr": "RESPONSABILE DEL SERVIZIO DI PREVENZIONE E PROTEZIONE",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 23,
+        "fields": {
+            "created": "2021-09-20T15:22:44.848Z",
+            "modified": "2021-09-20T15:22:44.848Z",
+            "funzione": "NF0699",
+            "descr": "RESPONSABILE PER LA TRANSIZIONE DIGITALE",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 24,
+        "fields": {
+            "created": "2021-09-20T15:23:09.156Z",
+            "modified": "2021-09-20T15:23:09.156Z",
+            "funzione": "AFUR00",
+            "descr": "UFFICIALE ROGANTE",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 25,
+        "fields": {
+            "created": "2021-09-20T15:23:29.471Z",
+            "modified": "2021-09-20T15:23:29.471Z",
+            "funzione": "NF0330",
+            "descr": "VICE RESPONSABILE DI PLESSO",
+            "id_code": "B-C-D"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 26,
+        "fields": {
+            "created": "2021-09-20T15:23:52.417Z",
+            "modified": "2021-09-20T15:23:55.145Z",
+            "funzione": "NFU2013",
+            "descr": "REFERENTE",
+            "id_code": "B-C-D codice errato"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 27,
+        "fields": {
+            "created": "2021-09-20T15:32:17.109Z",
+            "modified": "2021-09-20T15:49:06.108Z",
+            "funzione": "NF0695",
+            "descr": "REFERENTE STATISTICO",
+            "id_code": "B-C-D"
+        }
+    }
+]

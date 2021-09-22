@@ -15,7 +15,8 @@ from django.utils.translation import ugettext_lazy as _
 from django_form_builder.dynamic_fields import format_field_name, get_fields_types
 from django_form_builder.models import DynamicFieldMap
 from gestione_risorse_umane.models import (PosizioneEconomica,
-                                           TitoloStudio)
+                                           TitoloStudio,
+                                           FunzioneNomina)
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 from unical_template.models import TimeStampedModel, CreatedModifiedModel
 from unical_template.utils import (text_as_html, #differenza_date_in_mesi_aru non più chiamato
@@ -687,6 +688,26 @@ class ModuloInserimentoCampi(DynamicFieldMap):
         verbose_name_plural = _('Moduli di inserimento')
 
 
+class FunzioneNomina_DescrizioneIndicatore(models.Model):
+    descrizione_indicatore = models.ForeignKey(DescrizioneIndicatore,
+                                               on_delete=models.CASCADE,
+                                               verbose_name='Descrizione Indicatore')    
+    funzione_nomina = models.ForeignKey(FunzioneNomina,
+                                on_delete=models.CASCADE,
+                                verbose_name='Funzione nomina',
+                                blank=True, null=True
+                                )    
+    ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento", blank=True, default=0)
+
+    class Meta:
+        verbose_name = _('Funzione nomina per descrizione indicatore')
+        verbose_name_plural = _('Funzioni nomina per descrizione indicatore')
+
+    def __str__(self):
+        return '{}, {}'.format(self.descrizione_indicatore,
+                                   self.funzione_nomina)
+
+
 class AvvisoBando(TimeStampedModel):
     """
     """
@@ -984,6 +1005,28 @@ class SubModuloInserimentoCampi(DynamicFieldMap):
         ordering = ('ordinamento', )
         verbose_name = _('Modulo di inserimento')
         verbose_name_plural = _('Moduli di inserimento')
+
+
+class FunzioneNomina_SubDescrizioneIndicatore(models.Model):
+    sub_descrizione_indicatore = models.ForeignKey(SubDescrizioneIndicatore,
+                                                   on_delete=models.CASCADE,
+                                                   verbose_name='Sub Descrizione Indicatore')
+
+    funzione_nomina = models.ForeignKey(FunzioneNomina,
+                                on_delete=models.CASCADE,
+                                verbose_name='Funzione',
+                                blank=True, null=True
+                                )    
+
+    ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento", blank=True, default=0)
+
+    class Meta:
+        verbose_name = _('Funzione nomina per sub descrizione indicatore')
+        verbose_name_plural = _('Funzioni nomina per sub descrizione indicatore')
+
+    def __str__(self):
+        return '{}, {}'.format(self.sub_descrizione_indicatore,
+                                   self.funzione_nomina)
 
 
 class CategorieDisabilitate_DescrizioneIndicatore(models.Model):

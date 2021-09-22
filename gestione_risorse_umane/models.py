@@ -311,3 +311,20 @@ class FormazioneDipendente(TimeStampedModel):
 
     def __str__(self):
         return '({}) {}'.format(self.evento_formativo, self.ente_organizzatore)
+
+class FunzioneNomina(TimeStampedModel):
+    """
+    """
+    funzione = models.CharField(max_length=7, blank=False, null=False)
+    descr = models.CharField(max_length=100, blank=False, null=False)
+    #codice indentificativo di un raggruppamento di indici (comune a più bandi)
+    id_code = models.CharField('Codice identificativo', max_length=33, blank=True,
+                            null=True,
+                            help_text='Lettera, numero o sequenza')
+
+    class Meta:        
+        verbose_name = _('Nomina nella funzione')
+        verbose_name_plural = _('Nomina nelle funzioni')
+
+    def __str__(self):
+        return '({}) {} {}'.format(self.funzione, self.descr, self.id_code if self.id_code else '')

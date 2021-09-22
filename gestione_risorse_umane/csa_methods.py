@@ -239,3 +239,4 @@ class CSAMethods(object):
         self.data_ultima_sincronizzazione = timezone.localtime()
         self.save()
         return self.data_ultima_sincronizzazione
+  

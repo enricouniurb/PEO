@@ -240,6 +240,20 @@ class PunteggioMax_SubDescrizioneIndicatore_PosEconomicaInline(admin.TabularInli
     classes = ['collapse',]
 
 
+class FunzioneNomina_SubDescrizioneIndicatoreModelForm(forms.ModelForm):
+    class Meta:
+        model = FunzioneNomina_SubDescrizioneIndicatore
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput()}
+
+
+class FunzioneNomina_SubDescrizioneIndicatoreInline(admin.TabularInline):
+    model = FunzioneNomina_SubDescrizioneIndicatore
+    form = FunzioneNomina_SubDescrizioneIndicatoreModelForm
+    sortable_field_name = "ordinamento"
+    extra = 0
+    classes = ['collapse',]
+
 class SubDescrizioneIndicatoreModelForm(forms.ModelForm):
     class Meta:
         model = SubDescrizioneIndicatore
@@ -288,6 +302,21 @@ class RuoliDisabilitati_DescrizioneIndicatoreInline(admin.TabularInline):
     extra = 0
     classes = ['collapse',]
 
+
+
+class FunzioneNomina_DescrizioneIndicatoreModelForm(forms.ModelForm):
+    class Meta:
+        model = FunzioneNomina_DescrizioneIndicatore
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput()}
+
+
+class FunzioneNomina_DescrizioneIndicatoreInline(admin.TabularInline):
+    model = FunzioneNomina_DescrizioneIndicatore
+    form = FunzioneNomina_DescrizioneIndicatoreModelForm
+    sortable_field_name = "ordinamento"
+    extra = 0
+    classes = ['collapse',]
 
 class CommissioneGiudicatriceModelForm(forms.ModelForm):
     class Meta:

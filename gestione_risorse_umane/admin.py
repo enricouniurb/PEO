@@ -14,7 +14,8 @@ from django.utils.safestring import mark_safe
 from .admin_actions import (abilita_idoneita_peo,
                             disabilita_idoneita_peo,
                             sincronizza_da_csa,
-                            async_sincronizza_da_csa)
+                            async_sincronizza_da_csa,
+                            scarica_template)
 from .admin_inlines import *
 from .admin_filters import *
 from .models import *
@@ -215,12 +216,13 @@ class FormazioneDipendenteAdmin(admin.ModelAdmin):
     list_display = ('matricola', 'partecipante', 'evento_formativo', 'ente_organizzatore','data_inizio','data_fine','durata_ore')
     list_filter = ('matricola', 'partecipante','evento_formativo')
     search_fields = ('matricola', 'partecipante')
+    readonly_fields = ('dipendente',) 
 
     fieldsets = (
              (None, {
                         # 'classes': ('collapse',),
                         'fields' : (
-                                      ('matricola', 'dipendente',),  
+                                      ('matricola', 'dipendente'),  
                                       ('partecipante',),
                                       ('evento_formativo',),                                
                                       ('ente_organizzatore',),
@@ -235,4 +237,26 @@ class FormazioneDipendenteAdmin(admin.ModelAdmin):
 
     list_per_page = 300
     autocomplete_fields = ['dipendente',]
-    actions = []
+    actions = [scarica_template]
+
+
+@admin.register(FunzioneNomina)
+class FunzioneNominaAdmin(admin.ModelAdmin):
+    list_display = ('funzione', 'descr', 'id_code')
+    list_filter = ('funzione', 'descr', 'id_code')
+    search_fields = ('funzione', 'descr', 'id_code')
+   
+    fieldsets = (
+             (None, {
+                        # 'classes': ('collapse',),
+                        'fields' : (
+                                      ('funzione'),  
+                                      ('descr',),
+                                      ('id_code',),                                                                   
+                                    )
+                       },
+             ),
+    )
+
+    list_per_page = 300
+    actions = [scarica_template]

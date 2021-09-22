@@ -271,6 +271,37 @@ class RuoliDisabilitati_DescrizioneIndicatoreNestedInline(nested_admin.NestedTab
     classes = ['collapse',]
 
 
+class FunzioneNomina_DescrizioneIndicatoreModelForm(forms.ModelForm):
+    class Meta:
+        model = FunzioneNomina_DescrizioneIndicatore
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput(),}
+                   #'ruolo': forms.CheckboxSelectMultiple()}
+
+class FunzioneNomina_DescrizioneIndicatoreNestedInline(nested_admin.NestedTabularInline):
+    model = FunzioneNomina_DescrizioneIndicatore
+    form = FunzioneNomina_DescrizioneIndicatoreModelForm
+    sortable_field_name = "ordinamento"
+    extra = 0
+    #max_num = 1
+    classes = ['collapse',]
+
+
+class FunzioneNomina_SubDescrizioneIndicatoreModelForm(forms.ModelForm):
+    class Meta:
+        model = FunzioneNomina_SubDescrizioneIndicatore
+        fields = ('__all__')
+        widgets = {'ordinamento': forms.HiddenInput(),}
+
+class FunzioneNomina_SubDescrizioneIndicatoreNestedInline(nested_admin.NestedTabularInline):
+    model = FunzioneNomina_SubDescrizioneIndicatore
+    form = FunzioneNomina_SubDescrizioneIndicatoreModelForm
+    sortable_field_name = "ordinamento"
+    extra = 0
+    #max_num = 1
+    classes = ['collapse',]
+
+
 class CommissioneGiudicatriceModelForm(forms.ModelForm):
     class Meta:
         model = CommissioneGiudicatrice

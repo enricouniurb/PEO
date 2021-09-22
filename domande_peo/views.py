@@ -46,6 +46,7 @@ from decimal import Decimal
 # pdfs
 from PyPDF2 import PdfFileMerger
 from io import StringIO, BytesIO
+from collections import OrderedDict
 
 import logging
 import gestione_peo.settings
@@ -179,7 +180,23 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                                                 bando=bando,
                                                 descrizione_indicatore=descrizione_indicatore,
                                                 domanda_bando=domanda_bando,
-                                                dipendente=dipendente)
+                                                dipendente=dipendente)                                                
+            #importazione incarichi
+            if bando.data_validita_titoli_inizio:
+                #se un dipendente è un EP o C o D 
+                if (dipendente.livello.posizione_economica.nome == 'EP'):                                                  
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-EP','Eh-EP-1')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-EP','Eh-EP-2')
+
+                if (dipendente.livello.posizione_economica.nome == 'D'):                                                  
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-D','Eh-D-1')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-D','Eh-D-2')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-BCD')
+
+                if (dipendente.livello.posizione_economica.nome == 'C' or dipendente.livello.posizione_economica.nome == 'B'):                  
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-BCD')   
+                  
+
 
     if not domanda_bando.is_active:
         return render(request, 'custom_message.html',
@@ -206,6 +223,70 @@ def scelta_titolo_da_aggiungere(request, bando_id):
         #"categorie_titoli": categorie_titoli,
     }
     return render(request, "scelta_titolo_da_aggiungere.html",context=context)
+
+def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, id_sub_code = None):
+    descrizione_indicatore = domanda_bando.descr_ind_by_id_code(id_code)                     
+    lista_funzioni = []
+    id_sub_descrizione_indicatore = None
+    if (id_sub_code):
+        subdescrizione_indicatore = descrizione_indicatore.subdescrizioneindicatore_set.filter(id_code = id_sub_code).first() 
+        id_sub_descrizione_indicatore = subdescrizione_indicatore.id
+        lista_funzioni = FunzioneNomina.objects.filter(id_code=id_sub_code)
+    else: 
+        lista_funzioni = FunzioneNomina.objects.filter(id_code=id_code)
+    dati = importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore)
+    #inserimento senza validazione
+    for key, value in dati.items():
+        aggiungi_titolo_from_db(request=request,
+                                datadb=value, 
+                                bando=bando,
+                                descrizione_indicatore=descrizione_indicatore,
+                                domanda_bando=domanda_bando,
+                                dipendente=dipendente,
+                                log=False,
+                                checked=True)
+
+
+def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore = None):
+    c = OrderedDict()    
+    if (lista_funzioni and descrizione_indicatore): 
+        #concatena i codici
+        code = []
+        for funzione_nomina in lista_funzioni: 
+            code.append(funzione_nomina.funzione)
+        in_clause = '{}'.format(', '.join(map(lambda x: "'{}'".format(x) ,code)))
+
+        csa_model = apps.get_model(app_label='csa', model_name='V_ANAGRAFICA')                        
+        q = "SELECT * FROM {} where matricola='{}' and funzione in ({}) and decorrenza <= to_date('{}','yyyy-mm-dd') \
+                    and termine >= to_date('{}','yyyy-mm-dd') order by decorrenza".format('V_IE_RU_INC_FUNZIONI',
+                            dipendente.matricola,
+                            in_clause,
+                            bando.data_validita_titoli_fine.isoformat(), 
+                            bando.data_validita_titoli_inizio.isoformat())
+
+        incarichi = csa_model.objects.raw(q)
+       
+        #attenzione caricare solo l'ultimo
+        for incarico in incarichi:                                                        
+            funzione = getattr(incarico,'funzione')
+            if (funzione in c):
+                data = c[funzione]
+            else:                                
+                data = {}
+            data['etichetta_inserimento']= str(descrizione_indicatore) + "- "+ getattr(incarico,'ds_funzione')                                                           
+            data['tipologia_di_incarico'] = getattr(incarico,'ds_funzione')
+            data['conferito_da'] = "Direttore Generale"       
+            if (id_sub_descrizione_indicatore):              
+                data['sub_descrizione_indicatore'] = str(id_sub_descrizione_indicatore)                  
+            data['area_o_struttura'] = getattr(incarico,'ds_aff_org')                            
+            data['data_inizio_dyn_inner'] = getattr(incarico,'decorrenza').strftime(settings.STRFTIME_DATE_FORMAT) if 'data_inizio_dyn_inner' not in data else data['data_inizio_dyn_inner']
+            data['data_fine_dyn_inner'] = getattr(incarico,'termine').strftime(settings.STRFTIME_DATE_FORMAT)            
+            data['funzione'] = getattr(incarico,'funzione')  #nascosto                                                
+            c[funzione] = data
+    return c    
+    
+
+
 
 @staff_member_required
 def anteprima_modulo_inserimento(request, bando_id, descrizione_indicatore_id):
