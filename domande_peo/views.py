@@ -187,16 +187,16 @@ def scelta_titolo_da_aggiungere(request, bando_id):
             if bando.data_validita_titoli_inizio:
                 #se un dipendente è un EP o C o D 
                 if (dipendente.livello.posizione_economica.nome == 'EP'):                                                  
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-EP','Eh-EP-1')
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-EP','Eh-EP-2')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-EP','Ba-EP-1')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-EP','Ba-EP-2')
 
                 if (dipendente.livello.posizione_economica.nome == 'D'):                                                  
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-D','Eh-D-1')
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-D','Eh-D-2')
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-BCD')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-D','Ba-D-1')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-D','Ba-D-2')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')
 
                 if (dipendente.livello.posizione_economica.nome == 'C' or dipendente.livello.posizione_economica.nome == 'B'):                  
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Eh-BCD')   
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')   
                   
 
 

@@ -7,7 +7,7 @@
             "modified": "2021-09-20T14:42:16.231Z",
             "funzione": "NFUN25",
             "descr": "RESPONSABILE DI SETTORE",
-            "id_code": "Eh-EP-1"
+            "id_code": "Ba-EP-1"
         }
     },
     {
@@ -18,7 +18,7 @@
             "modified": "2021-09-20T14:45:52.082Z",
             "funzione": "NFU745",
             "descr": "RESPOSABILE DI SERVIZIO",
-            "id_code": "Eh-EP-1"
+            "id_code": "Ba-EP-1"
         }
     },
     {
@@ -29,7 +29,7 @@
             "modified": "2021-09-20T15:10:23.343Z",
             "funzione": "NFU502",
             "descr": "RESPONSABILE DI SERVIZIO AD INTERMI",
-            "id_code": "Eh-EP-2"
+            "id_code": "Ba-EP-2"
         }
     },
     {
@@ -40,7 +40,7 @@
             "modified": "2021-09-20T15:11:00.147Z",
             "funzione": "NFUN31",
             "descr": "RESPONSABILE DI SETTORE AD INTERIM",
-            "id_code": "Eh-EP-2"
+            "id_code": "Ba-EP-2"
         }
     },
     {
@@ -51,7 +51,7 @@
             "modified": "2021-09-21T09:25:19.552Z",
             "funzione": "NFUN67",
             "descr": "RESPONSABILE DI UFFICIO",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -62,7 +62,7 @@
             "modified": "2021-09-21T09:25:29.095Z",
             "funzione": "NFU597",
             "descr": "COORDIANTORE DI PROCESSO",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -73,7 +73,7 @@
             "modified": "2021-09-21T09:25:41.109Z",
             "funzione": "74",
             "descr": "COORDINATORE TECNIO",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -84,7 +84,7 @@
             "modified": "2021-09-21T09:25:51.192Z",
             "funzione": "NF0685",
             "descr": "REFERENTE DI AREA BIBLIOTECA",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -95,7 +95,7 @@
             "modified": "2021-09-21T09:26:16.078Z",
             "funzione": "NF0684",
             "descr": "RESPONSABILE DI BIBLIOTECA",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -106,7 +106,7 @@
             "modified": "2021-09-21T09:26:27.598Z",
             "funzione": "NF0329",
             "descr": "RESPONSABILE DI PLESSO",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -117,7 +117,7 @@
             "modified": "2021-09-21T09:26:42.655Z",
             "funzione": "NF0687",
             "descr": "RESPONSABILE DI SERVIZI DI BIBLIOTECA",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -128,7 +128,7 @@
             "modified": "2021-09-21T09:26:55.759Z",
             "funzione": "NFU583",
             "descr": "RESPONSABILE DI UNITA'",
-            "id_code": "Eh-D-1"
+            "id_code": "Ba-D-1"
         }
     },
     {
@@ -139,7 +139,7 @@
             "modified": "2021-09-21T09:27:21.056Z",
             "funzione": "NFUN69",
             "descr": "RESPONSABILE DI UFFICIO AD INTERIM",
-            "id_code": "Eh-D-2"
+            "id_code": "Ba-D-2"
         }
     },
     {
@@ -150,7 +150,7 @@
             "modified": "2021-09-21T09:27:30.278Z",
             "funzione": "NF0689",
             "descr": "COORDINATORE DI PROCESSO AD INTERIM",
-            "id_code": "Eh-D-2"
+            "id_code": "Ba-D-2"
         }
     },
     {
@@ -161,7 +161,7 @@
             "modified": "2021-09-21T09:27:38.622Z",
             "funzione": "NF0686",
             "descr": "REFERENTE DI AREA DI BIBLIOTECA AD INTERIM",
-            "id_code": "Eh-D-2"
+            "id_code": "Ba-D-2"
         }
     },
     {
@@ -172,7 +172,7 @@
             "modified": "2021-09-21T09:30:15.863Z",
             "funzione": "NF0693",
             "descr": "FUNZIONE TECNICO/SPECIALISTICA",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -183,7 +183,7 @@
             "modified": "2021-09-21T09:30:28.037Z",
             "funzione": "NFUN58",
             "descr": "COORDINATORE",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -194,7 +194,7 @@
             "modified": "2021-09-21T09:30:37.225Z",
             "funzione": "NF0692",
             "descr": "COORDINATORE DI ATTIVITA'",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -205,7 +205,7 @@
             "modified": "2021-09-21T09:30:52.648Z",
             "funzione": "NF0691",
             "descr": "REFERENTE DI STRUTTURA",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -216,7 +216,7 @@
             "modified": "2021-09-21T09:31:07.779Z",
             "funzione": "NFUN66",
             "descr": "RESPONSABILE DI LINEA DI ATTIVITA'",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -227,7 +227,7 @@
             "modified": "2021-09-21T09:31:23.511Z",
             "funzione": "NF0328",
             "descr": "RESPONSABILE DIDATTICO",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -238,7 +238,7 @@
             "modified": "2021-09-21T09:31:39.959Z",
             "funzione": "NFU100",
             "descr": "RESPONSABILE DEL SERVIZIO DI PREVENZIONE E PROTEZIONE",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -249,7 +249,7 @@
             "modified": "2021-09-21T09:32:12.722Z",
             "funzione": "NF0699",
             "descr": "RESPONSABILE PER LA TRANSIZIONE DIGITALE",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -260,7 +260,7 @@
             "modified": "2021-09-21T09:32:25.129Z",
             "funzione": "AFUR00",
             "descr": "UFFICIALE ROGANTE",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -271,7 +271,7 @@
             "modified": "2021-09-21T09:32:35.783Z",
             "funzione": "NF0330",
             "descr": "VICE RESPONSABILE DI PLESSO",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -282,7 +282,7 @@
             "modified": "2021-09-21T09:32:49.368Z",
             "funzione": "NFU2013",
             "descr": "REFERENTE",
-            "id_code": "Eh-BCD codice errato"
+            "id_code": "Ba-BCD codice errato"
         }
     },
     {
@@ -293,7 +293,7 @@
             "modified": "2021-09-21T09:32:00.431Z",
             "funzione": "NF0695",
             "descr": "REFERENTE STATISTICO",
-            "id_code": "Eh-BCD"
+            "id_code": "Ba-BCD"
         }
     }
 ]
