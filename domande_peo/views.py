@@ -180,7 +180,9 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                                                 bando=bando,
                                                 descrizione_indicatore=descrizione_indicatore,
                                                 domanda_bando=domanda_bando,
-                                                dipendente=dipendente)                                                
+                                                dipendente=dipendente,
+                                                log=False,
+                                                checked=True)                                              
             #importazione incarichi
             if bando.data_validita_titoli_inizio:
                 #se un dipendente è un EP o C o D 
