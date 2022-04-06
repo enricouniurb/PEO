@@ -193,10 +193,14 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                 if (dipendente.livello.posizione_economica.nome == 'D'):                                                  
                     importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-D','Ba-D-1')
                     importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-D','Ba-D-2')
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')                    
 
                 if (dipendente.livello.posizione_economica.nome == 'C' or dipendente.livello.posizione_economica.nome == 'B'):                  
-                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')   
+                    importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')
+
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb-CR')
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb-C')   
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bc')
                   
 
 

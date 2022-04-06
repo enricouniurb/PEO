@@ -40,7 +40,11 @@ def scarica_template_bando(modeladmin, request, queryset):
     bandi_labels = []
     for bando in queryset:
         try:
-            si = SerializableInstance(bando)
+            si = SerializableInstance(bando, 
+                    excluded_fields=['created', 'modified'],
+                    excluded_childrens = ['domandabando',
+                                       'modulodomandabando',
+                                       'abilitazionebandodipendente'])
             st = si.serialize_tree()
             iofile.write(json.dumps(si.dict, indent=2))
         except Exception as e:
