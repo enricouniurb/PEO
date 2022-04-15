@@ -279,10 +279,10 @@
         "pk": 26,
         "fields": {
             "created": "2021-09-20T15:23:52.417Z",
-            "modified": "2021-09-21T09:32:49.368Z",
-            "funzione": "NFU2013",
+            "modified": "2022-04-06T08:54:25.833Z",
+            "funzione": "NFU213",
             "descr": "REFERENTE",
-            "id_code": "Ba-BCD codice errato"
+            "id_code": "Ba-BCD"
         }
     },
     {
@@ -294,6 +294,61 @@
             "funzione": "NF0695",
             "descr": "REFERENTE STATISTICO",
             "id_code": "Ba-BCD"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 28,
+        "fields": {
+            "created": "2022-04-06T10:15:52.970Z",
+            "modified": "2022-04-06T10:15:52.970Z",
+            "funzione": "NFU621",
+            "descr": "COORDINATORE DI GRUPPO DI LAVORO",
+            "id_code": "Bb-CR"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 29,
+        "fields": {
+            "created": "2022-04-06T10:16:12.798Z",
+            "modified": "2022-04-06T10:16:12.798Z",
+            "funzione": "NFU169",
+            "descr": "COMPONENTE DI GRUPPO DI LAVORO",
+            "id_code": "Bb-C"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 30,
+        "fields": {
+            "created": "2022-04-06T10:16:33.321Z",
+            "modified": "2022-04-06T10:16:33.321Z",
+            "funzione": "NF0690",
+            "descr": "RESPONSABLE/COORDINATORE",
+            "id_code": "Bb-CR"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 31,
+        "fields": {
+            "created": "2022-04-06T10:16:53.720Z",
+            "modified": "2022-04-06T10:16:53.720Z",
+            "funzione": "NFU159",
+            "descr": "COMPONENTE",
+            "id_code": "Bb-C"
+        }
+    },
+    {
+        "model": "gestione_risorse_umane.funzionenomina",
+        "pk": 32,
+        "fields": {
+            "created": "2022-04-06T10:17:08.087Z",
+            "modified": "2022-04-06T10:17:08.087Z",
+            "funzione": "NF0498",
+            "descr": "TITOLARE DI ALTRO INCARICO",
+            "id_code": "Bc"
         }
     }
 ]

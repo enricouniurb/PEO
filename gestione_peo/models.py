@@ -249,6 +249,12 @@ class IndicatorePonderato(TimeStampedModel):
                                                              " all'anzianità di servizio (UniUrb), rispettando"
                                                              " sempre il max ottenibile"))
 
+    # non_visibile_utente = models.BooleanField("Non visibile all'utente",
+    #                                               default=False,
+    #                                               help_text=("Se attivo, questo indicatore ponderale non comparirà"
+    #                                                          " nella maschera di inserimento della domanda del Dipendente."
+    #                                                          " Sarà presente nel tabellone finale e per la commissione."))
+
     ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento", blank=True, default=0)
 
     class Meta:

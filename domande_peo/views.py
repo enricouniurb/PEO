@@ -285,6 +285,7 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
             if (id_sub_descrizione_indicatore):              
                 data['sub_descrizione_indicatore'] = str(id_sub_descrizione_indicatore)                  
             data['area_o_struttura'] = getattr(incarico,'ds_aff_org')                            
+            #per incarichi con lo stesso codice prende come data di decorrenza quella del primo incarico
             data['data_inizio_dyn_inner'] = getattr(incarico,'decorrenza').strftime(settings.STRFTIME_DATE_FORMAT) if 'data_inizio_dyn_inner' not in data else data['data_inizio_dyn_inner']
             data['data_fine_dyn_inner'] = getattr(incarico,'termine').strftime(settings.STRFTIME_DATE_FORMAT)            
             data['funzione'] = getattr(incarico,'funzione')  #nascosto                                                
