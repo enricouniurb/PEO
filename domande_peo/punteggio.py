@@ -48,6 +48,14 @@ class PunteggioDomandaBando(object):
                                                       data_limite)
         unita_temporale = "m"
 
+        mesi_per_anzianita=0
+        #se non ho la data dell'ultima progressione usare la data di presa servizio
+        if (ultima_progressione):
+            mesi_per_anzianita = mesi_permanenza
+        else:
+            mesi_per_anzianita = mesi_servizio
+
+        
         # Se nel bando è impostata l'assegnazione di punti per l'anzianità
         if self.bando.punteggio_anzianita_servizio_set.first():
             for fascia in self.bando.punteggio_anzianita_servizio_set.all():
@@ -58,26 +66,28 @@ class PunteggioDomandaBando(object):
                 elif not fascia.posizione_economica:
                     punteggio_categoria = fascia.punteggio
 
-            # I 2 anni costituiscon oil requisito minimo di anzianità per partecipare alle PEO quindi equvalgono al punteggio inizale per ciascuna 
+            # I 2 anni costituiscon il requisito minimo di anzianità per partecipare alle PEO quindi equivalgono al punteggio inizale per ciascuna 
             # categoria (vedi bando)
             if unita_temporale=="m":
-                punteggio += punteggio_categoria*mesi_servizio - (punteggio_categoria * 12)
+                punteggio += punteggio_categoria*mesi_per_anzianita - (punteggio_categoria * 12)
             elif unita_temporale=="y":
-                punteggio += ((punteggio_categoria*(mesi_servizio // 12) + (punteggio_categoria if (mesi_servizio % 12) >= 6 else 0)) - punteggio_categoria)
+                punteggio += ((punteggio_categoria*(mesi_per_anzianita // 12) + (punteggio_categoria if (mesi_per_anzianita % 12) >= 6 else 0)) - punteggio_categoria)
 
-            # Se non è stata effettuata alcuna progressione e
+            # NON PREVISTA DAL REGOLAMENTO
+            # Se non è stata effettuata alcuna progressione e            
             # l'anzianità è maggiore o uguale alla soglia di bonus
-            if ultima_progressione == presa_servizio and \
-            mesi_servizio >= 12*self.bando.agevolazione_soglia_anni:
-                punteggio = punteggio*self.bando.agevolazione_fatmol
-            # Se la data di progressione è diversa dalla presa servizio
-            elif ultima_progressione != presa_servizio:
-                #Se è soddisfatta la condizione del bando, si applica il bonus di moltiplicazione
-                if mesi_permanenza >= 12*self.bando.agevolazione_soglia_anni:
-                    # Poichè i mesi di permanenza sono stati già considerati prima
-                    # la moltiplicazione la faccio per 'fatmol-1' e aggiungo il 'plus'
-                    bonus = punteggio_categoria*mesi_permanenza*(self.bando.agevolazione_fatmol-1)
-                    punteggio += bonus
+            # if ultima_progressione == presa_servizio and \
+            # mesi_servizio >= 12*self.bando.agevolazione_soglia_anni:
+            #     punteggio = punteggio*self.bando.agevolazione_fatmol
+            # # Se la data di progressione è diversa dalla presa servizio
+            # elif ultima_progressione != presa_servizio:
+            #     #Se è soddisfatta la condizione del bando, si applica il bonus di moltiplicazione
+            #     if mesi_permanenza >= 12*self.bando.agevolazione_soglia_anni:
+            #         # Poichè i mesi di permanenza sono stati già considerati prima
+            #         # la moltiplicazione la faccio per 'fatmol-1' e aggiungo il 'plus'
+            #         bonus = punteggio_categoria*mesi_permanenza*(self.bando.agevolazione_fatmol-1)
+            #         punteggio += bonus
+            
         return punteggio
 
     def get_punteggio_anzianita(self):
