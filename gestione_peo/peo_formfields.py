@@ -754,3 +754,11 @@ class DurataComePositiveFloatField(PositiveFloatField):
     """
     field_type = _("Durata come numero decimale (anni,mesi,ore)")
     name = 'durata_come_decimale'
+
+    def raise_error(self, name, cleaned_data, **kwargs):
+        """
+        Solo numeri (espressioni del tipo 16e50 non sono ammesse)
+        """
+        if not cleaned_data: return []
+        if not re.match('^[0-9]+\.?[0-9]?[0-9]?$', str(cleaned_data)):
+            return [_("Solo numeri ammessi"),]
