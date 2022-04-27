@@ -149,7 +149,7 @@ def import_file(request):
                     ente_organizzatore=column[3],
                     data_inizio= datetime.strptime(column[4], '%d/%m/%Y')if column[4] else None,
                     data_fine= datetime.strptime(column[5], '%d/%m/%Y')if column[4] else None,
-                    durata_ore= column[6] if column[6] else None
+                    durata_ore = round(float(column[6].replace(',','.')),2) if column[6] else None                    
                 )
         context = {}
  
