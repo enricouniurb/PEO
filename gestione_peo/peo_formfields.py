@@ -330,12 +330,12 @@ class PEO_DateInRangeComplexField(PEO_DateStartEndComplexField):
             if value > limite_validita_titoli:
                 errors.append("La data di inizio non può"
                               " essere successiva al"
-                              " {}".format(limite_validita_titoli))
+                              " {}".format(limite_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
             # Se la data di inizio è precedente alla presa di servizio
             if value < data_presa_servizio:
                 errors.append("La data di inizio non può essere precedente"
                               " alla presa di servizio:"
-                              " {}".format(data_presa_servizio))
+                              " {}".format(data_presa_servizio.strftime(settings.STRFTIME_DATE_FORMAT)))
 
             # Check con Field Protocollo se presente
             protocollo = PEO_ProtocolloField()
@@ -353,7 +353,7 @@ class PEO_DateInRangeComplexField(PEO_DateStartEndComplexField):
             # o al limite imposto dal bando
             if value < inizio_validita_titoli:
                 errors.append("La data di fine è precedente alla data:"
-                              " {}".format(inizio_validita_titoli))
+                              " {}".format(inizio_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
         return errors
 
 
@@ -463,17 +463,17 @@ class PEO_DateOutOfRangeComplexField(PEO_DateStartEndComplexField):
         # Si valuta 'Data Inizio'
         if name == self.start.name:
             # Se la data di inizio è successiva alla presa di servizio
-            if value > data_presa_servizio:
+            if value > data_presa_servizio:                
                 errors.append("La data di inizio non può essere successiva "
                               "alla presa di servizio: "
-                              "{}".format(data_presa_servizio))
+                              "{}".format(data_presa_servizio.strftime(settings.STRFTIME_DATE_FORMAT)))
         # Si valuta 'Data Fine'
         elif name == self.end.name:
             # Se la data di fine è successiva alla presa di servizio
             if value > data_presa_servizio:
                 errors.append("La data di fine non può essere successiva "
                               "alla presa di servizio: "
-                              "{}".format(data_presa_servizio))
+                              "{}".format(data_presa_servizio.strftime(settings.STRFTIME_DATE_FORMAT)))
         return errors
 
 
@@ -514,11 +514,11 @@ class PEO_DataLowerThanBandoField(PEO_BaseDateField):
         if value > limite_validita_titoli:
             errors.append("La data non può essere successiva "
                           "al limite imposto dal bando: "
-                          "{}".format(limite_validita_titoli))
+                          "{}".format(limite_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
         # Se la data è precedente a inizio_validita_titoli
         if inizio_validita_titoli and value < inizio_validita_titoli:
             errors.append("La data non può essere precedente"
-                          " a: {}".format(inizio_validita_titoli))
+                          " a: {}".format(inizio_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
         # Se la data è precedente all'ultima progressione
         # elif ultima_progressione and (value < ultima_progressione):
             # errors.append("La data non può essere precedente all'ultima "
@@ -527,7 +527,7 @@ class PEO_DataLowerThanBandoField(PEO_BaseDateField):
         # Se la data è precedente alla presa di servizio
         if value < data_presa_servizio:
             errors.append("La data non può essere precedente alla presa "
-                          "di servizio: {}".format(data_presa_servizio))
+                          "di servizio: {}".format(data_presa_servizio.strftime(settings.STRFTIME_DATE_FORMAT)))
         return errors
 
 
@@ -642,7 +642,7 @@ class PEO_ProtocolloField(ProtocolloField):
             if value > limite_validita_titoli:
                 errors.append("La data di protocollo non può "
                               "essere successiva al "
-                              "{}".format(limite_validita_titoli))
+                              "{}".format(limite_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
             # Se la data è successiva ad oggi
             if _successivo_ad_oggi(value):
                 errors.append("La data di protocollo non può essere "
@@ -651,7 +651,7 @@ class PEO_ProtocolloField(ProtocolloField):
             if value < data_presa_servizio:
                 errors.append("La data di protocollo non può essere "
                               "precedente alla presa di servizio: "
-                              "{}".format(data_presa_servizio))
+                              "{}".format(data_presa_servizio.strftime(settings.STRFTIME_DATE_FORMAT)))
 
             # Serve interfacciarsi con DateInRangeInCorsoComplexField
             d = PEO_DateInRangeInCorsoComplexField()
@@ -673,7 +673,7 @@ class PEO_ProtocolloField(ProtocolloField):
                     if value < inizio_validita_titoli:
                         errors.append("La data del protocollo "
                                       "è precedente alla data: "
-                                      "{}".format(inizio_validita_titoli))
+                                      "{}".format(inizio_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
 
             # Se non esistono i campi Data allora non
             # siamo in grado di capire se l'incarico è di tipo continuativo,
@@ -683,7 +683,7 @@ class PEO_ProtocolloField(ProtocolloField):
             if not data_inizio and inizio_validita_titoli:
                 if value < inizio_validita_titoli:
                     errors.append("La data del protocollo è precedente "
-                                  "alla data: {}".format(inizio_validita_titoli))
+                                  "alla data: {}".format(inizio_validita_titoli.strftime(settings.STRFTIME_DATE_FORMAT)))
             return errors
 
 
