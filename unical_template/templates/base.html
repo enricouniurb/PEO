@@ -39,11 +39,11 @@
         <div class="row clearfix" style="padding-top:0px;">
             <div class="col-xs-12 column">
                 <div class="contenitore_body" >
-                    <div style="padding: 33px; max-height: 200px; overflow: auto;">
+                    <div style="padding: 33px;">
 
                         {% block messages %}
                             {% if messages %}
-                                <ul class="messages">
+                                <ul class="messages" style="max-height: 200px; overflow: auto;">
                                     {% for message in messages %}
                                         <li{% if message.tags %} class="ui {{ message.tags }} message"{% endif %}>
                                             {{ message }}
