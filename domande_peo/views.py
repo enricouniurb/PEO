@@ -278,13 +278,11 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
                 v.descr as ds_aff_org, \
                 p.num_doc, \
                 p.data_doc, \
-                p.tipo_doc, \
-                t.descr as ds_tipo_doc \
+                p.tipo_doc \
                 from {} c \
                     inner join PROVVEDIMENTI p on c.provvedimento = p.provvedimento \
                     left join FUNZIONI f on f.funzione = c.funzione \
                     left join VISTA_ORG v on v.uo = c.aff_org \
-                    left join TIPI_DOCUMENTO t on t.tipo_doc = p.tipo_doc \
                     where c.matricola = '{}' and c.funzione in ({}) and c.decorrenza <= to_date('{}','yyyy-mm-dd') \
                          and c.termine >= to_date('{}','yyyy-mm-dd') order by c.decorrenza".format('CARRIERE',
                             dipendente.matricola,
