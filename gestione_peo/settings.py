@@ -11,14 +11,14 @@ NUMERAZIONI_CONSENTITE = [
                             #'Delibera del Senato',
                             #'Delibera del C.D.A.',
                          ]
-
+#(codice, descrizione, tipo_doc)
 CLASSIFICATION_LIST = (#('protocollo', _('Protocollo')),
-                       ('decreto_rettorale', _('Decreto Rettorale (D.R.)')),
-                       ('decreto_direttore_generale', _('Decreto o nota del Direttore Generale (D.D.G.)')),
-                       ('decreto_dirigente_struttura', _('Decreto o nota del Direttore Dipartimento o Dirigente Struttura')),
+                       ('decreto_rettorale', _('Decreto Rettorale (D.R.)'),['003'],'Rettore'), #,['003']
+                       ('decreto_direttore_generale', _('Decreto o nota del Direttore Generale (D.D.G.)'), ['071','808'],'Direttore Generale'), #, ['071','808']
+                       ('decreto_dirigente_struttura', _('Decreto o nota del Direttore Dipartimento o Dirigente Struttura'), ['827','010'],'Direttore di Dipartimento'), #, ['827','010']
                        #('decreto_direttore_cr', _('Decreto del Direttore del Centro Residenziale (D.CR.)')),
                        #('decreto_prorettore', _('Decreto del Prorettore (Centro Residenziale)')),
-                       ('delibera_dipartimento_facolta', _('Delibera di Dipartimento/Facoltà')))
+                       ('delibera_dipartimento_facolta', _('Delibera di Dipartimento/Facoltà'),['091'],'Consiglio di Dipartimento')) #,['091']
                        #('delibera_senato', _('Delibera del Senato')),
                        #('delibera_cda', _('Delibera del C.D.A.')))
 

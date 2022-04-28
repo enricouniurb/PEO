@@ -262,16 +262,57 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
             code.append(funzione_nomina.funzione)
         in_clause = '{}'.format(', '.join(map(lambda x: "'{}'".format(x) ,code)))
 
-        csa_model = apps.get_model(app_label='csa', model_name='V_ANAGRAFICA')                        
-        q = "SELECT * FROM {} where matricola='{}' and funzione in ({}) and decorrenza <= to_date('{}','yyyy-mm-dd') \
-                    and termine >= to_date('{}','yyyy-mm-dd') order by decorrenza".format('V_IE_RU_INC_FUNZIONI',
+        csa_model = apps.get_model(app_label='csa', model_name='V_ANAGRAFICA')                  
+
+        q = "select \
+                c.comparto, \
+                c.ruolo, \
+                c.matricola, \
+                c.decorrenza, \
+                c.evento, \
+                c.progressivo, \
+                c.termine, \
+                c.funzione, \
+                c.provvedimento, \
+                f.descr as ds_funzione, \
+                v.descr as ds_aff_org, \
+                p.num_doc, \
+                p.data_doc, \
+                p.tipo_doc, \
+                t.descr as ds_tipo_doc \
+                from {} c \
+                    inner join PROVVEDIMENTI p on c.provvedimento = p.provvedimento \
+                    left join FUNZIONI f on f.funzione = c.funzione \
+                    left join VISTA_ORG v on v.uo = c.aff_org \
+                    left join TIPI_DOCUMENTO t on t.tipo_doc = p.tipo_doc \
+                    where c.matricola = '{}' and c.funzione in ({}) and c.decorrenza <= to_date('{}','yyyy-mm-dd') \
+                         and c.termine >= to_date('{}','yyyy-mm-dd') order by c.decorrenza".format('CARRIERE',
                             dipendente.matricola,
                             in_clause,
                             bando.data_validita_titoli_fine.isoformat(), 
-                            bando.data_validita_titoli_inizio.isoformat())
+                            bando.data_validita_titoli_inizio.isoformat())                 
+
+        # q = "SELECT * FROM {} where matricola='{}' and funzione in ({}) and decorrenza <= to_date('{}','yyyy-mm-dd') \
+        #             and termine >= to_date('{}','yyyy-mm-dd') order by decorrenza".format('V_IE_RU_INC_FUNZIONI',
+        #                     dipendente.matricola,
+        #                     in_clause,
+        #                     bando.data_validita_titoli_fine.isoformat(), 
+        #                     bando.data_validita_titoli_inizio.isoformat())
 
         incarichi = csa_model.objects.raw(q)
        
+        # struttura dati inserimento incarico
+        # {
+        # 'etichetta_inserimento': '...', 
+        # 'tipologia_di_incarico': 'aaaaaaa', 
+        # 'conferito_da': 'aaaaaaaa', 
+        # 'tipo_numerazione_dyn': 'decreto_rettorale', 
+        # 'numero_protocollo_dyn': '123', 
+        # 'data_protocollo_dyn': '11/12/2020', 
+        # 'data_inizio_dyn_inner': '11/12/2020', 
+        # 'data_fine_dyn_inner': '31/12/2020'
+        # }
+
         #attenzione caricare solo l'ultimo
         for incarico in incarichi:                                                        
             funzione = getattr(incarico,'funzione')
@@ -281,12 +322,21 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
                 data = {}
             data['etichetta_inserimento']= str(descrizione_indicatore) + "- "+ getattr(incarico,'ds_funzione')                                                           
             data['tipologia_di_incarico'] = getattr(incarico,'ds_funzione')
-            data['conferito_da'] = "Direttore Generale"       
+            
+            for tipo_numerazione in gestione_peo.settings.CLASSIFICATION_LIST:
+                if getattr(incarico,'tipo_doc') in tipo_numerazione[2]:
+                    data['tipo_numerazione_dyn'] = tipo_numerazione[0]
+                    data['conferito_da'] = tipo_numerazione[3]
+                    break
+
+            data['numero_protocollo_dyn'] = getattr(incarico,'num_doc')    
+            data['data_protocollo_dyn'] = getattr(incarico,'data_doc').strftime(settings.STRFTIME_DATE_FORMAT)   
+
             if (id_sub_descrizione_indicatore):              
                 data['sub_descrizione_indicatore'] = str(id_sub_descrizione_indicatore)                  
             data['area_o_struttura'] = getattr(incarico,'ds_aff_org')                            
             #per incarichi con lo stesso codice prende come data di decorrenza quella del primo incarico
-            data['data_inizio_dyn_inner'] = getattr(incarico,'decorrenza').strftime(settings.STRFTIME_DATE_FORMAT) if 'data_inizio_dyn_inner' not in data else data['data_inizio_dyn_inner']
+            data['data_inizio_dyn_inner'] = getattr(incarico,'decorrenza').strftime(settings.STRFTIME_DATE_FORMAT) #if 'data_inizio_dyn_inner' not in data else data['data_inizio_dyn_inner']
             data['data_fine_dyn_inner'] = getattr(incarico,'termine').strftime(settings.STRFTIME_DATE_FORMAT)            
             data['funzione'] = getattr(incarico,'funzione')  #nascosto                                                
             c[funzione] = data
