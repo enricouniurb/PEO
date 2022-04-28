@@ -9,7 +9,7 @@ from django_form_builder.utils import get_allegati, get_as_dict, set_as_dict
 from gestione_peo.models import (Bando,
                                  DescrizioneIndicatore,
                                  Punteggio_TitoloStudio)
-from gestione_peo.settings import (ETICHETTA_INSERIMENTI_ID,
+from gestione_peo.settings import (CLASSIFICATION_LIST, ETICHETTA_INSERIMENTI_ID,
                                    ETICHETTA_INSERIMENTI_LABEL,
                                    ETICHETTA_INSERIMENTI_HELP_TEXT)
 from gestione_risorse_umane.models import *
@@ -398,7 +398,12 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
             data = self.domanda_bando.bando.punteggio_titolostudio_set.filter(id = modulo_compilato_dict['titolo_di_studio_superiore']).first()       
             if (data):
                 modulo_compilato_dict['titolo_di_studio_superiore'] = data.titolo              
- 
+
+        if ('tipo_numerazione_dyn' in modulo_compilato_dict):
+            data = [el for el in CLASSIFICATION_LIST if el[0]== modulo_compilato_dict['tipo_numerazione_dyn']]
+            if (data):
+                modulo_compilato_dict['tipo_numerazione_dyn'] = data[0][1]
+
         filtered = { k: v for k, v in modulo_compilato_dict.items() if not('allegato' in k or ETICHETTA_INSERIMENTI_ID == k) }
         text = ' '.join([str(elem) for elem in filtered.values() if type(elem) is not dict] )[:200]+'...'
         return text
