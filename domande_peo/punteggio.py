@@ -39,8 +39,6 @@ class PunteggioDomandaBando(object):
         presa_servizio = self.get_presa_servizio_dipendente()
         mesi_servizio = differenza_date_in_mesi_aru(presa_servizio,
                                                     data_limite)
-        if mesi_servizio == 0:
-            return punteggio
 
         # Permanenza nella stessa categoria
         ultima_progressione = self.get_ultima_progressione_dipendente()
@@ -55,6 +53,8 @@ class PunteggioDomandaBando(object):
         else:
             mesi_per_anzianita = mesi_servizio
 
+        if mesi_per_anzianita == 0:
+            return punteggio
         
         # Se nel bando è impostata l'assegnazione di punti per l'anzianità
         if self.bando.punteggio_anzianita_servizio_set.first():
@@ -91,7 +91,7 @@ class PunteggioDomandaBando(object):
         return punteggio
 
     def get_punteggio_anzianita(self):
-        if self.punteggio_anzianita_manuale:
+        if self.punteggio_anzianita_manuale != None:
             punteggio =  self.punteggio_anzianita_manuale
         else:
             punteggio = self.calcola_punteggio_anzianita_automatico()
