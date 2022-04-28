@@ -198,9 +198,9 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                 if (dipendente.livello.posizione_economica.nome == 'C' or dipendente.livello.posizione_economica.nome == 'B'):                  
                     importazione_incarichi(request, bando, domanda_bando, dipendente, 'Ba-BCD')
 
-                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb-CR')
-                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb-C')   
-                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bc')
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb', 'Bb-CR','multiplo')
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb', 'Bb-C','multiplo')   
+                importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bc', None, 'multiplo')
                   
 
 
@@ -230,7 +230,7 @@ def scelta_titolo_da_aggiungere(request, bando_id):
     }
     return render(request, "scelta_titolo_da_aggiungere.html",context=context)
 
-def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, id_sub_code = None):
+def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, id_sub_code = None, tipo = 'singolo'):
     descrizione_indicatore = domanda_bando.descr_ind_by_id_code(id_code)                     
     lista_funzioni = []
     id_sub_descrizione_indicatore = None
@@ -240,7 +240,7 @@ def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, i
         lista_funzioni = FunzioneNomina.objects.filter(id_code=id_sub_code)
     else: 
         lista_funzioni = FunzioneNomina.objects.filter(id_code=id_code)
-    dati = importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore)
+    dati = importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore, tipo)
     #inserimento senza validazione
     for key, value in dati.items():
         aggiungi_titolo_from_db(request=request,
@@ -253,7 +253,7 @@ def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, i
                                 checked=True)
 
 
-def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore = None):
+def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, bando, dipendente, id_sub_descrizione_indicatore = None, tipo = 'singolo'):
     c = OrderedDict()    
     if (lista_funzioni and descrizione_indicatore): 
         #concatena i codici
@@ -274,6 +274,7 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
                 c.termine, \
                 c.funzione, \
                 c.provvedimento, \
+                c.testo_libero, \
                 f.descr as ds_funzione, \
                 v.descr as ds_aff_org, \
                 p.num_doc, \
@@ -314,12 +315,17 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
         #attenzione caricare solo l'ultimo
         for incarico in incarichi:                                                        
             funzione = getattr(incarico,'funzione')
-            if (funzione in c):
+            provvedimento = getattr(incarico,'provvedimento')
+
+            #se la funzione è già stata caricata la rileggo e scrivo sopra
+            if (tipo == 'singolo' and funzione in c):
                 data = c[funzione]
             else:                                
+                #caso di caricamento multiplo
                 data = {}
-            data['etichetta_inserimento']= str(descrizione_indicatore) + "- "+ getattr(incarico,'ds_funzione')                                                           
-            data['tipologia_di_incarico'] = getattr(incarico,'ds_funzione')
+
+            data['etichetta_inserimento']= str(descrizione_indicatore) + "- "+ getattr(incarico,'ds_funzione')+ "- "+ getattr(incarico,'testo_libero')
+            data['tipologia_di_incarico'] = getattr(incarico,'ds_funzione')+ "- "+ getattr(incarico,'testo_libero')
             
             for tipo_numerazione in gestione_peo.settings.CLASSIFICATION_LIST:
                 if getattr(incarico,'tipo_doc') in tipo_numerazione[2]:
@@ -337,7 +343,11 @@ def importazione_incarichi_lettura_dati(lista_funzioni,descrizione_indicatore, b
             data['data_inizio_dyn_inner'] = getattr(incarico,'decorrenza').strftime(settings.STRFTIME_DATE_FORMAT) #if 'data_inizio_dyn_inner' not in data else data['data_inizio_dyn_inner']
             data['data_fine_dyn_inner'] = getattr(incarico,'termine').strftime(settings.STRFTIME_DATE_FORMAT)            
             data['funzione'] = getattr(incarico,'funzione')  #nascosto                                                
-            c[funzione] = data
+
+            if (tipo== 'singolo'):
+                c[funzione] = data
+            else:
+                c[provvedimento] = data
     return c    
     
 
