@@ -3,6 +3,7 @@
 
 # SPDX-License-Identifier: GPL-3.0
 
+from pickle import FALSE
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -148,10 +149,12 @@ def scelta_titolo_da_aggiungere(request, bando_id):
     # se non c'è alcuna domanda, la creo
     # se la domanda c'è ma is_active==False, ritorno un messaggio di errore
     # altrimenti si prosegue con la domanda attualmente presente
+    creazione = False
     if domanda_bando:
         domanda_bando = domanda_bando.last()
     elif not domanda_bando:
         #creazione della domanda        
+        creazione = True
         domanda_bando = DomandaBando.objects.create(bando=bando,
                                                     dipendente=dipendente,
                                                     modified=timezone.localtime(),
@@ -213,22 +216,28 @@ def scelta_titolo_da_aggiungere(request, bando_id):
     dashboard_domanda_url = reverse('domande_peo:dashboard_domanda',
                                     args=[bando.slug])
 
-    page_title = 'Selezione Modulo di Inserimento'
+    if creazione:
+        #se ho eseguito la creazione e dopo l'importazione automatica vai alla vista della domanda dove vengono mostrati i vari inserimenti
+        return HttpResponseRedirect(dashboard_domanda_url)
+    else:
+        #altrimenti apro la pagine di selezione del modulo
+        page_title = 'Selezione Modulo di Inserimento'
 
-    _breadcrumbs.reset()
-    _breadcrumbs.add_url((dashboard_domanda_url, dashboard_domanda_title))
-    _breadcrumbs.add_url(('#', page_title))
+        _breadcrumbs.reset()
+        _breadcrumbs.add_url((dashboard_domanda_url, dashboard_domanda_title))
+        _breadcrumbs.add_url(('#', page_title))
 
-    context = {
-        'page_title': page_title,
-        'breadcrumbs': _breadcrumbs,
-        'bando': bando,
-        'dipendente': dipendente,
-        'domanda_bando': domanda_bando,
-        'indicatori_ponderati': indicatori_ponderati,
-        #"categorie_titoli": categorie_titoli,
-    }
-    return render(request, "scelta_titolo_da_aggiungere.html",context=context)
+        context = {
+            'page_title': page_title,
+            'breadcrumbs': _breadcrumbs,
+            'bando': bando,
+            'dipendente': dipendente,
+            'domanda_bando': domanda_bando,
+            'indicatori_ponderati': indicatori_ponderati,
+            #"categorie_titoli": categorie_titoli,
+        }
+        
+        return render(request, "scelta_titolo_da_aggiungere.html",context=context)
 
 def importazione_incarichi(request, bando, domanda_bando, dipendente, id_code, id_sub_code = None, tipo = 'singolo'):
     descrizione_indicatore = domanda_bando.descr_ind_by_id_code(id_code)                     
