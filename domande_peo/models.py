@@ -17,6 +17,7 @@ from unical_template.models import TimeStampedModel, CreatedModifiedModel
 
 from .punteggio import PunteggioModuloDomandaBando, PunteggioDomandaBando
 from .utils import get_path_allegato
+from django.utils.translation import gettext_lazy as _
 
 
 class AbilitazioneBandoDipendente(TimeStampedModel):
@@ -259,7 +260,7 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
                                      default=False)
     motivazione = models.TextField(help_text="Motivazione disabilitazione",
                                    blank=True, default='')
-    punteggio_calcolato = models.FloatField(help_text="popolato da metodo .calcolo_punteggio",
+    punteggio_calcolato = models.FloatField(help_text="popolato dal metodo calcolo_punteggio",
                                             blank=True, null=True)
 
     punteggio_manuale = models.FloatField(help_text="punteggio manuale attribuito dalla commissione in alternativa al punteggio automatico",
@@ -269,6 +270,17 @@ class ModuloDomandaBando(PunteggioModuloDomandaBando,
     # dell'utente lato frontend. Es: in fase di calcolo del punteggio questo valore
     # verrebbe sfalsato
     modified = models.DateTimeField(blank=True, null=True)
+
+    class TipoCaricamentoModulo(models.TextChoices):
+        AUTOMATICO = 'automatico', _('Automatico')
+        MANUALE = 'manuale', _('Manuale')
+        AUTOMATICO_MOD = 'automatico_mod', _('Automatico (modificato)')
+        
+    tipo_caricamento_modulo = models.CharField(      
+        max_length=20,
+        choices=TipoCaricamentoModulo.choices,
+        default=TipoCaricamentoModulo.MANUALE,
+    )
 
     class Meta:
         verbose_name = 'Modulo compilato Bando del Dipendente'

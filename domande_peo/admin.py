@@ -41,13 +41,13 @@ class ModuloDomandaBandoInLines(admin.StackedInline):
                        'get_modulo_grafica',
                        'punteggio_calcolato',
                        'download_pdf',
-                       'created', 'modified')
+                       'created', 'modified','tipo_caricamento_modulo')
     fields = ('descrizione_indicatore',
               'get_modulo_anteprima',
               'punteggio_calcolato',
               'punteggio_manuale',
               ('get_modulo_grafica', 'download_pdf',),
-              ('created', 'modified'),
+              ('created', 'modified','tipo_caricamento_modulo'),
               ('disabilita','motivazione',))
     extra = 0
     classes = ['collapse',]

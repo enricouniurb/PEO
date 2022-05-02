@@ -27,7 +27,6 @@ from gestione_peo.settings import ETICHETTA_INSERIMENTI_ID
 from gestione_risorse_umane.models import Dipendente, PosizioneEconomica, LivelloPosizioneEconomica
 
 
-
 def get_fname_allegato(domanda_bando_id, bando_id):
     return "domanda_{}-{}.pdf".format(domanda_bando_id, bando_id)
 
@@ -291,8 +290,9 @@ def aggiungi_titolo_from_db(request,
                          domanda_bando,
                          dipendente,                       
                          log=False,
-                         checked=False):
-
+                         checked=False,
+                         tipo_caricamento_modulo = 'automatico'):
+    
     form = descrizione_indicatore.get_form(data = datadb,                                           
                                            domanda_bando=domanda_bando)
     if form.is_valid() or checked:
@@ -304,6 +304,7 @@ def aggiungi_titolo_from_db(request,
                 modulo_compilato = json.dumps(datadb, indent = 2),
                 descrizione_indicatore = descrizione_indicatore,
                 modified=timezone.localtime(),
+                tipo_caricamento_modulo=tipo_caricamento_modulo
                 )
 
         msg = 'Inserimento {} - Etichetta: {} - effettuato con successo!'.format(mdb, datadb[ETICHETTA_INSERIMENTI_ID])   
@@ -433,6 +434,9 @@ def modifica_titolo_form(request,
 
         # salva il modulo
         set_as_dict(mdb, json_response)
+        if mdb.tipo_caricamento_modulo == 'automatico':
+             mdb.tipo_caricamento_modulo = 'automatico_mod'
+             mdb.save()
         # data di modifica
         mdb.mark_as_modified()
         #Allega il messaggio al redirect

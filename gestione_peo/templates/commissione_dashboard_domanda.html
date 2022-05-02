@@ -131,6 +131,12 @@
                         <div class="ui list" style="color: grey;">
                             <div class=""><i>Creato</i>: {{ ins.created|date:"j F Y H:i" }}</div>
                             <div class=""><i>Modificato</i>: {{ ins.modified|date:"j F Y H:i" }}</div>
+                            {% if ins.tipo_caricamento_modulo == 'automatico' %}
+                            <div class=""><i>(titolo caricato automaticamente)</i></div>
+                            {% endif %}
+                            {% if ins.tipo_caricamento_modulo == 'automatico_mod' %}
+                            <div class=""><i>(titolo caricato automaticamente e modificato)</i></div>
+                            {% endif %}
                         </div>
                     </td>
                     <td>
