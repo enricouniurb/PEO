@@ -205,7 +205,18 @@ def scelta_titolo_da_aggiungere(request, bando_id):
                 importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bb', 'Bb-C','multiplo')   
                 importazione_incarichi(request, bando, domanda_bando, dipendente, 'Bc', None, 'multiplo')
                   
+        #importazione punteggio prestazioni individuali
+        prestazione_individuale = PrestazioneIndividuale.objects.filter(
+                        matricola=dipendente.matricola).first()
 
+        if (prestazione_individuale):
+            domanda_bando.punteggio_prestazione_individuale = prestazione_individuale.punteggio_finale
+            domanda_bando.save()
+            indicatore_poderato = domanda_bando.ind_ponderato_by_id_code('C')  
+            msg = 'Inserimento {} - effettuato con successo!'.format(indicatore_poderato)   
+            #Allega il messaggio al redirect
+            messages.success(request, msg)
+         
 
     if not domanda_bando.is_active:
         return render(request, 'custom_message.html',

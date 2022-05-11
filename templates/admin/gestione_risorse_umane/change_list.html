@@ -44,15 +44,15 @@
 {% block search %}
 
 {{ block.super }}
-<div>
+<div>         
     <h2 id="import_h" style="margin-right: 280px; width: auto;">{% trans "Import" %}</h2>
     <div class="toggable">
-        <form action="{% url 'risorse_umane:import_file' %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'risorse_umane:import_file' nome_modello=cl.model_admin %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="import_file">{% trans "File to import" %}:
                 <input type="file" name="file_to_import">
             </label>
-            
+            <input type="hidden" name="next" value="{{ request.path }}">            
             <input type="submit" class="file_submit" value="{% trans 'Import' %}">
         </form>
     </div>

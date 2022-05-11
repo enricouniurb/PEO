@@ -70,7 +70,15 @@ class DomandaBando(TimeStampedModel, PunteggioDomandaBando):
     punteggio_anzianita_manuale = models.FloatField('Punteggio assegnato all\'anzianità interna MANUALE',
                                                     help_text="impostato manualmente",
                                                     blank=True, null=True)
-    punteggio_calcolato = models.FloatField(help_text="popolato da metodo .calcolo_punteggio_domanda,"
+
+    punteggio_prestazione_individuale = models.FloatField('Punteggio prestazione individuale',                            
+                            blank=True, null=True)
+
+    punteggio_prestazione_individuale_manuale = models.FloatField('Punteggio prestazione individuale MANUALE',
+                            help_text="impostato manualmente",
+                            blank=True, null=True)                        
+
+    punteggio_calcolato = models.FloatField(help_text="popolato da metodo calcolo_punteggio_domanda,"
                                                       " comprensivo di quello derivante dall'anzianità",
                                             blank=True, null=True)
     progressione_accettata = models.BooleanField(default=False,
@@ -158,7 +166,12 @@ class DomandaBando(TimeStampedModel, PunteggioDomandaBando):
             descr_ind = ip.descrizioneindicatore_set.filter(id_code=id_code).first()
             if descr_ind:
                 return descr_ind
-        
+    
+    def ind_ponderato_by_id_code(self, id_code):
+        """
+        Torna il primo DescrizioneIndicatore id_code 
+        """
+        return self.bando.indicatoreponderato_set.filter(id_code=id_code).first()        
 
     def valida(self):
         """

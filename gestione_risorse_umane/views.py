@@ -114,12 +114,12 @@ def upload_carta_identita(request):
 
 
 @user_passes_test(lambda u:u.is_staff)
-def import_file(request):
+def import_file(request, nome_modello):
     file_to_import = request.FILES.get('file_to_import')
     if not file_to_import:        
        pass
-
-    if request.path == '/formazionedipendente/import_file':    
+    url = request.POST.get('next', '/')
+    if nome_modello == 'gestione_risorse_umane.FormazioneDipendenteAdmin':    
         # content here
         url = reverse('admin:gestione_risorse_umane_formazionedipendente_changelist')
         if not file_to_import:
@@ -151,7 +151,37 @@ def import_file(request):
                     data_fine= datetime.strptime(column[5], '%d/%m/%Y')if column[4] else None,
                     durata_ore = round(float(column[6].replace(',','.')),2) if column[6] else None                    
                 )
-        context = {}
+        context = {}      
+ 
+    if nome_modello == 'gestione_risorse_umane.PrestazioneIndividualeAdmin':    
+        # content here
+        url = reverse('admin:gestione_risorse_umane_prestazioneindividuale_changelist')
+        if not file_to_import:
+            return HttpResponseRedirect(url)
+        
+        csv_file = request.FILES['file_to_import']
+        # let's check if it is a csv file
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'THIS IS NOT A CSV FILE')
+
+        data_set = ''
+        try:
+            data_set = csv_file.read().decode(settings.DEFAULT_CHARSET)    
+        except:
+            csv_file.seek(0)
+            data_set = csv_file.read().decode('cp1252')     
+        
+        # setup a stream which is when we loop through each line we are able to handle a data in a stream
+        io_string = io.StringIO(data_set)
+        next(io_string)
+        for column in csv.reader(io_string, delimiter=';', quotechar="|"):
+            if (column[0]):
+                _, created = PrestazioneIndividuale.objects.update_or_create(
+                    matricola=_get_matricola(column[0]),
+                    partecipante=column[1],
+                    punteggio_finale=column[2],                    
+                )
+        context = {}        
  
     return HttpResponseRedirect(url)
 

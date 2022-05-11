@@ -88,13 +88,20 @@ class PunteggioDomandaBando(object):
             #         bonus = punteggio_categoria*mesi_permanenza*(self.bando.agevolazione_fatmol-1)
             #         punteggio += bonus
             
-        return punteggio
+        return punteggio if punteggio > 0 else 0
 
     def get_punteggio_anzianita(self):
         if self.punteggio_anzianita_manuale != None:
             punteggio =  self.punteggio_anzianita_manuale
         else:
             punteggio = self.calcola_punteggio_anzianita_automatico()
+        return float("{:.2f}".format(punteggio))
+
+    def get_prestazione_individuale(self):
+        if self.punteggio_prestazione_individuale_manuale != None:
+            punteggio =  self.punteggio_prestazione_individuale_manuale
+        else:
+            punteggio = self.punteggio_prestazione_individuale if self.punteggio_prestazione_individuale != None else 0 #calcola_punteggio_prestazione_individuale() 
         return float("{:.2f}".format(punteggio))
 
     def calcolo_punteggio_sub_descr(self,
@@ -321,15 +328,27 @@ class PunteggioDomandaBando(object):
                    p_indicatore,
                    messaggi]
 
-        # Se si somma punteggio anzianità di servizio interna
-        if indicatore.add_punteggio_anzianita:
+
+        if indicatore.id_code == 'D':
+            # Anzianità Dipendente Università
             p_indicatore = self.get_punteggio_anzianita()
             p_indicatore_senza_soglie = self.get_punteggio_anzianita()
+
+        if indicatore.id_code == 'C':
+            # Prestazione individuale
+            p_indicatore = self.get_prestazione_individuale()  
+            p_indicatore_senza_soglie = self.get_prestazione_individuale()  
+
+        # # Se si somma punteggio anzianità di servizio interna
+        # eliminata questione add punteggio di anzianità viene sempre aggiunta se presente l'indicatore D 
+        # if indicatore.add_punteggio_anzianita:
+        #     p_indicatore = self.get_punteggio_anzianita()
+        #     p_indicatore_senza_soglie = self.get_punteggio_anzianita()
 
         # Per ogni DescrizioneIndicatore dell'Indicatore in questione
         # con calcolo_punteggio_automatico = True
 
-        if indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True):
+        if indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True) or indicatore.id_code == 'C' or indicatore.id_code == 'D':
             for descr_ind in indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True):
                 # Punteggio DescrInd incrementa punteggio Indicatore
                 results_descr_ind = self.calcolo_punteggio_max_descr_ind(descr_ind=descr_ind,

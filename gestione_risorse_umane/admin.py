@@ -260,3 +260,27 @@ class FunzioneNominaAdmin(admin.ModelAdmin):
 
     list_per_page = 300
     actions = [scarica_template]
+
+
+@admin.register(PrestazioneIndividuale)
+class PrestazioneIndividualeAdmin(admin.ModelAdmin):
+    list_display = ('matricola', 'partecipante', 'punteggio_finale')
+    list_filter = ('matricola', 'partecipante')
+    search_fields = ('matricola', 'partecipante')
+    readonly_fields = ('dipendente',) 
+
+   
+    fieldsets = (
+             (None, {
+                        # 'classes': ('collapse',),
+                        'fields' : (
+                                      ('matricola', 'dipendente'),  
+                                      ('partecipante'),                                         
+                                      ('punteggio_finale')                                                           
+                                    )
+                       },
+             ),
+    )
+
+    list_per_page = 300
+    actions = [scarica_template]

@@ -197,7 +197,9 @@ class Bando(TimeStampedModel):
         senza questo indicatore, l'anzianità non viene presa in considerazione
         nel calcolo del punteggio
         """
-        indicatore_anzianita = self.indicatoreponderato_set.filter(add_punteggio_anzianita=True).first()
+        #eliminato add_punteggio_anzianita
+        #indicatore_anzianita = self.indicatoreponderato_set.filter(add_punteggio_anzianita=True).first()
+        indicatore_anzianita = self.indicatoreponderato_set.filter(id_code = 'D').first()
         if indicatore_anzianita:
             return "({}) {}".format(indicatore_anzianita.id_code,
                                     indicatore_anzianita.nome)
@@ -242,12 +244,6 @@ class IndicatorePonderato(TimeStampedModel):
     note = models.TextField(help_text=("es. Solo ai candidati in possesso"
                                        " di un'anzianità di servizio di almeno 3 anni..."),
                             blank=True, default='')
-    add_punteggio_anzianita = models.BooleanField("Somma Punteggio Anzianità Servizio",
-                                                  default=False,
-                                                  help_text=("Se attivo, al punteggio derivante dagli inserimenti"
-                                                             " del Dipendente, verrà sommato il punteggio relativo"
-                                                             " all'anzianità di servizio (UniUrb), rispettando"
-                                                             " sempre il max ottenibile"))
 
     # non_visibile_utente = models.BooleanField("Non visibile all'utente",
     #                                               default=False,

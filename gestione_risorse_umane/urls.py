@@ -21,5 +21,5 @@ app_name="risorse_umane"
 urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('aggiorna_carta_identita', upload_carta_identita, name='upload_carta_identita'),
-    path('formazionedipendente/import_file', import_file, name='import_file'),
+    path('<str:nome_modello>/import_file', import_file, name='import_file'),    
 ]

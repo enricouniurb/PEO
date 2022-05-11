@@ -328,3 +328,29 @@ class FunzioneNomina(TimeStampedModel):
 
     def __str__(self):
         return '({}) {} {}'.format(self.funzione, self.descr, self.id_code if self.id_code else '')
+
+class PrestazioneIndividuale(TimeStampedModel):
+    """
+    """
+    matricola = models.CharField(max_length=6, blank=False, null=False, primary_key=True)
+        
+    dipendente = models.ForeignKey(Dipendente, on_delete=models.CASCADE, null=True, blank=True)
+
+    partecipante = models.CharField(max_length=254, blank=True, default='', help_text="Valore letto in fase di importazione")
+
+    valutazione = models.DecimalField(default=0.0, max_digits=5, decimal_places=2, null=True, blank=False)
+
+    punteggio_finale = models.PositiveIntegerField(help_text="punteggio",
+                                              blank=True, default=0)   
+
+    ordinamento = models.PositiveIntegerField(help_text="posizione nell'ordinamento",
+                                              blank=True, default=0)   
+
+    is_active = models.BooleanField('Attivo', default=True)
+
+    class Meta:        
+        verbose_name = _('Prestazione individuale')
+        verbose_name_plural = _('Prestazioni individuali')
+
+    def __str__(self):
+        return '({}) {} {}'.format(self.matricola, self.partecipante, self.punteggio_finale)

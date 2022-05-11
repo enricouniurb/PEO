@@ -169,7 +169,10 @@ def export_graduatoria_indicatori_ponderati_csv(queryset, fopen,
                     indicatore = indicatori_ponderati.filter(id_code=id_code).first()    
                     if id_code == 'D':
                         # Anzianità Dipendente Università
-                        p_indicatore = domanda.get_punteggio_anzianita()                       
+                        p_indicatore = domanda.get_punteggio_anzianita()    
+                    elif id_code == 'C':
+                        # Prestazione individuale
+                        p_indicatore = domanda.get_prestazione_individuale()                
                     else:    
                                        
                         for descr_ind in indicatore.descrizioneindicatore_set.filter(calcolo_punteggio_automatico=True):   

@@ -209,7 +209,9 @@ class DomandaBandoAdmin(admin.ModelAdmin):
                        'download_pdf',
                        'get_dipendente_matricola',
                        'get_dipendente_nome',
-                       'get_dipendente_cognome',)
+                       'get_dipendente_cognome',
+                       'punteggio_prestazione_individuale',
+                       )
     actions = [calcolo_punteggio_domanda,
                calcolo_punteggio_domanda_ignora_disabilitati,
                download_report_graduatoria,
@@ -226,6 +228,7 @@ class DomandaBandoAdmin(admin.ModelAdmin):
                 ('numero_protocollo',), ('data_protocollazione',),
                 ('livello', 'data_presa_servizio', 'data_ultima_progressione'),
                 ('punteggio_anzianita','punteggio_anzianita_manuale',),
+                ('punteggio_prestazione_individuale','punteggio_prestazione_individuale_manuale',),
                 'punteggio_calcolato',
                 ('is_active', 'progressione_accettata',),
                 ('commento_punteggio',),
@@ -252,6 +255,10 @@ class DomandaBandoAdmin(admin.ModelAdmin):
     def punteggio_anzianita(self,obj):
         return obj.get_punteggio_anzianita()
     punteggio_anzianita.short_description = 'Punteggio assegnato all\'anzianità'
+
+    # def punteggio_prestazione_individuale(self, obj):
+    #     return obj.get_prestazione_individuale()
+    # punteggio_prestazione_individuale.short_description = 'Punteggio assegnato per la prestazione individuale'
 
     def download_pdf(self, obj):
         url = reverse('domande_peo:download_domanda_pdf',
