@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from datetime import datetime
+from django.contrib import messages
 
 from gestione_peo.models import *
 from gestione_peo.utils import get_commissioni_attive, get_commissioni_in_corso
@@ -128,7 +129,8 @@ def import_file(request, nome_modello):
         csv_file = request.FILES['file_to_import']
         # let's check if it is a csv file
         if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'THIS IS NOT A CSV FILE')
+            messages.error(request, 'Non è un file di tipo CSV')
+            return HttpResponseRedirect(url)
 
         data_set = ''
         try:
@@ -162,7 +164,8 @@ def import_file(request, nome_modello):
         csv_file = request.FILES['file_to_import']
         # let's check if it is a csv file
         if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'THIS IS NOT A CSV FILE')
+            messages.error(request, 'Non è un file di tipo CSV')
+            return HttpResponseRedirect(url)
 
         data_set = ''
         try:
