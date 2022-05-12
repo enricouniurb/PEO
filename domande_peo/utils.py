@@ -228,6 +228,7 @@ def export_graduatoria_csv(queryset, fopen,
             intestazione2.append('({}) {}'.format(di.id_code, di.nome))
             lista_id_descr.append(di.id_code)
     intestazione += intestazione2
+    intestazione.append('Qualità delle prestazioni individuali')
     intestazione.append('Anzianità presso Università')
     intestazione.append('Punti')
     writer.writerow(intestazione)
@@ -261,6 +262,9 @@ def export_graduatoria_csv(queryset, fopen,
                                                                         categoria_economica=livello,
                                                                         ignora_disabilitati=ignora_disabilitati)[1]
                     riga.append(punteggio.__str__().replace('.', replace_dot_with))
+                
+                # Qualità delle prestazioni indivuali
+                riga.append(domanda.get_prestazione_individuale().__str__().replace('.', replace_dot_with))
                 # Anzianità Dipendente Università
                 riga.append(domanda.get_punteggio_anzianita().__str__().replace('.', replace_dot_with))
 
