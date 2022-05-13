@@ -185,7 +185,8 @@ if 'djangosaml2'  in INSTALLED_APPS:
 
     AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
-        'djangosaml2.backends.Saml2Backend',
+        #'djangosaml2.backends.Saml2Backend',
+        'gestione_peo.authentication.ModifiedSaml2Backend',
     )
 
     LOGIN_URL = '/saml2/login/'
